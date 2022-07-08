@@ -92,7 +92,7 @@ var Hit_HorizontalPower = 0;
 var AddedContactGravity = 0;
 
 function floor(f) {
-    return Math.floor(f);
+    return Math.trunc(f);
 }
 
 function LinearInterpolateToNewRange(value, prevMin, prevMax, nextMin, nextMax) {
@@ -354,10 +354,10 @@ function calculateHorizontalAngle() {
     let iVar1 = BattingAngleRanges[inputDirection][isCharge][frameOfContact][1];
     iVar1 -= iVar2;
     if (iVar1 < 0) {
-        iVar2 += StaticRandomInt1 - Math.floor(StaticRandomInt1 / -iVar1) * -iVar1;
+        iVar2 += StaticRandomInt1 - floor(StaticRandomInt1 / -iVar1) * -iVar1;
     }
     else if (0 < iVar1) {
-        iVar2 += StaticRandomInt1 - Math.floor(StaticRandomInt1 / iVar1) * iVar1;
+        iVar2 += StaticRandomInt1 - floor(StaticRandomInt1 / iVar1) * iVar1;
     }
     iVar2 += 0x400;
     if (inMemBatter.AtBat_BatterHand != Righty) {
@@ -804,12 +804,16 @@ function displayValues() {
 
     s = ""
 
-    s += "Horzontal Hit Angle: " + (Hit_HorizontalAngle - 0x400) * 360/4096 + "\n";
-    s += "Vertical Hit Angle: " + (Hit_VerticalAngle) * 360/4096 + "\n";
+    s += "Horzontal Hit Angle: " + Hit_HorizontalAngle + "\n";
+    s += "Vertical Hit Angle: " + Hit_VerticalAngle + "\n";
     s += "Power: " + Hit_HorizontalPower + "\n";
 
+    s += "\n"
+
+    s += "Horzontal Hit Angle (in degrees): " + (Hit_HorizontalAngle - 0x400) * 360/4096 + "\n";
+    s += "Vertical Hit Angle (in degrees): " + (Hit_VerticalAngle) * 360/4096 + "\n";
+
     output.innerText = s;
-    // output.innerText = JSON.stringify(inMemBatter).replaceAll(",", ",\n").replaceAll("{", "{\n").replaceAll("}", "\n}");
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
