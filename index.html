@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+</style>
+
+<head>
+    <script src="index.js"></script>
+    <meta charset="utf-8">
+    <title>Batting Calculation</title>
+
+</head>
+<label for="batterID">Batter ID</label>
+<select id="batterID" name="batterID">
+    <option value="0">(0) Mario</option>
+    <option value="1">(1) Luigi</option>
+    <option value="2">(2) DK</option>
+    <option value="3">(3) Diddy</option>
+    <option value="4">(4) Peach</option>
+    <option value="5">(5) Daisy</option>
+    <option value="6">(6) Yoshi</option>
+    <option value="7">(7) Baby Mario</option>
+    <option value="8">(8) Baby Luigi</option>
+    <option value="9">(9) Bowser</option>
+    <option value="10">(10) Wario</option>
+    <option value="11">(11) Waluigi</option>
+    <option value="12">(12) Koopa(R)</option>
+    <option value="13">(13) Toad(R)</option>
+    <option value="14">(14) Boo</option>
+    <option value="15">(15) Toadette</option>
+    <option value="16">(16) Shy Guy(R)</option>
+    <option value="17">(17) Birdo</option>
+    <option value="18">(18) Monty</option>
+    <option value="19">(19) Bowser Jr</option>
+    <option value="20">(20) Paratroopa(R)</option>
+    <option value="21">(21) Pianta(B)</option>
+    <option value="22">(22) Pianta(R)</option>
+    <option value="23">(23) Pianta(Y)</option>
+    <option value="24">(24) Noki(B)</option>
+    <option value="25">(25) Noki(R)</option>
+    <option value="26">(26) Noki(G)</option>
+    <option value="27">(27) Bro(H)</option>
+    <option value="28">(28) Toadsworth</option>
+    <option value="29">(29) Toad(B)</option>
+    <option value="30">(30) Toad(Y)</option>
+    <option value="31">(31) Toad(G)</option>
+    <option value="32">(32) Toad(P)</option>
+    <option value="33">(33) Magikoopa(B)</option>
+    <option value="34">(34) Magikoopa(R)</option>
+    <option value="35">(35) Magikoopa(G)</option>
+    <option value="36">(36) Magikoopa(Y)</option>
+    <option value="37">(37) King Boo</option>
+    <option value="38">(38) Petey</option>
+    <option value="39">(39) Dixie</option>
+    <option value="40">(40) Goomba</option>
+    <option value="41">(41) Paragoomba</option>
+    <option value="42">(42) Koopa(G)</option>
+    <option value="43">(43) Paratroopa(G)</option>
+    <option value="44">(44) Shy Guy(B)</option>
+    <option value="45">(45) Shy Guy(Y)</option>
+    <option value="46">(46) Shy Guy(G)</option>
+    <option value="47">(47) Shy Guy(Bk)</option>
+    <option value="48">(48) Dry Bones(Gy)</option>
+    <option value="49">(49) Dry Bones(G)</option>
+    <option value="50">(50) Dry Bones(R)</option>
+    <option value="51">(51) Dry Bones(B)</option>
+    <option value="52">(52) Bro(F)</option>
+    <option value="53">(53) Bro(B)</option>
+</select><label>(short) 80890972</label><br><br>
+
+<label for="pitcherID">Pitcher ID</label>
+<select id="pitcherID" name="pitcherID">
+    <option value="0">(0) Mario</option>
+    <option value="1">(1) Luigi</option>
+    <option value="2">(2) DK</option>
+    <option value="3">(3) Diddy</option>
+    <option value="4">(4) Peach</option>
+    <option value="5">(5) Daisy</option>
+    <option value="6">(6) Yoshi</option>
+    <option value="7">(7) Baby Mario</option>
+    <option value="8">(8) Baby Luigi</option>
+    <option value="9">(9) Bowser</option>
+    <option value="10">(10) Wario</option>
+    <option value="11">(11) Waluigi</option>
+    <option value="12">(12) Koopa(R)</option>
+    <option value="13">(13) Toad(R)</option>
+    <option value="14">(14) Boo</option>
+    <option value="15">(15) Toadette</option>
+    <option value="16">(16) Shy Guy(R)</option>
+    <option value="17">(17) Birdo</option>
+    <option value="18">(18) Monty</option>
+    <option value="19">(19) Bowser Jr</option>
+    <option value="20">(20) Paratroopa(R)</option>
+    <option value="21">(21) Pianta(B)</option>
+    <option value="22">(22) Pianta(R)</option>
+    <option value="23">(23) Pianta(Y)</option>
+    <option value="24">(24) Noki(B)</option>
+    <option value="25">(25) Noki(R)</option>
+    <option value="26">(26) Noki(G)</option>
+    <option value="27">(27) Bro(H)</option>
+    <option value="28">(28) Toadsworth</option>
+    <option value="29">(29) Toad(B)</option>
+    <option value="30">(30) Toad(Y)</option>
+    <option value="31">(31) Toad(G)</option>
+    <option value="32">(32) Toad(P)</option>
+    <option value="33">(33) Magikoopa(B)</option>
+    <option value="34">(34) Magikoopa(R)</option>
+    <option value="35">(35) Magikoopa(G)</option>
+    <option value="36">(36) Magikoopa(Y)</option>
+    <option value="37">(37) King Boo</option>
+    <option value="38">(38) Petey</option>
+    <option value="39">(39) Dixie</option>
+    <option value="40">(40) Goomba</option>
+    <option value="41">(41) Paragoomba</option>
+    <option value="42">(42) Koopa(G)</option>
+    <option value="43">(43) Paratroopa(G)</option>
+    <option value="44">(44) Shy Guy(B)</option>
+    <option value="45">(45) Shy Guy(Y)</option>
+    <option value="46">(46) Shy Guy(G)</option>
+    <option value="47">(47) Shy Guy(Bk)</option>
+    <option value="48">(48) Dry Bones(Gy)</option>
+    <option value="49">(49) Dry Bones(G)</option>
+    <option value="50">(50) Dry Bones(R)</option>
+    <option value="51">(51) Dry Bones(B)</option>
+    <option value="52">(52) Bro(F)</option>
+    <option value="53">(53) Bro(B)</option>
+</select><label>(short) 80890ada</label><br><br>
+
+<label for="isAI">AI</label>
+<input id="isAI" name="isAI" type="checkbox"/><label>(bool) 8089098a</label><br><br>
+
+<label for="handedness">Handedness</label>
+<select name="handedness" id="handedness">
+    <option value="0">(0) Righty</option>
+    <option value="1">(1) Lefty</option>
+</select><label>(byte) 8089098b</label><br><br>
+
+<label for="batterX">Batter X Position</label>
+<input id="batterX" name="batterX" type="text"/><label>(float) 8089095c</label><br><br>
+
+<label for="ballX">Ball X Position</label>
+<input id="ballX" name="ballX" type="text"/><label>(float) 80890934</label><br><br>
+
+<label for="chemOnBase">Chem on Base</label>
+<select id="chemOnBase" name="chemOnBase">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+</select><label>(byte) 808909ba</label><br><br>
+
+<label for="slapChargeStarBunt">Slap/Charge/Star/Bunt</label>
+<select name="slapChargeStarBunt" id="slapChargeStarBunt">
+    <option value="0">(0) Slap</option>
+    <option value="1">(1) Charge</option>
+    <option value="2">(2) Star</option>
+    <option value="3">(3) Bunt</option>
+</select><label>(byte) 8089099b</label><br><br>
+
+<label for="pitchType">Pitch Curve/Charge/ChangeUp</label>
+<select name="pitchType" id="pitchType">
+    <option value="0">Curve</option>
+    <option value="1">Charge</option>
+    <option value="2">Perfect Charge</option>
+    <option value="3">Change Up</option>
+</select><label>(byte) 80890b21, (byte) 80890b1f</label><br><br>
+
+
+<label for="chargeUp">Charge Up</label>
+<input id="chargeUp" name="chargeUp" type="text"/><label>(float) 80890968</label><br><br>
+
+<label for="chargeDown">Charge Down</label>
+<input id="chargeDown" name="chargeDown" type="text"/><label>(float) 8089096c</label><br><br>
+
+<label for="frameOfContact">Frame of Contact</label>
+<select id="frameOfContact" name="frameOfContact">
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+</select><label>(short) 80890976</label><br><br>
+
+
+<label for="randomInt1">Random Int 1</label>
+<input id="randomInt1" name="randomInt1" placeholder="Optional" type="text"/><label>(uint) 80892684</label><br><br>
+
+<label for="randomInt2">Random Int 2</label>
+<input id="randomInt2" name="randomInt2" placeholder="Optional" type="text"/><label>(uint) 80892688</label><br><br>
+
+<label for="randomCounter">Random Counter</label>
+<input id="randomCounter" name="randomCounter" placeholder="Optional" type="text"/><label>(ushort) 8089269C</label><br><br>
+
+
+<label>Input Stick</label><br>
+<label for="inputUp">Up</label>
+<input id="inputUp" name="inputUp" type="checkbox" />
+
+<label for="inputDown">Down</label>
+<input id="inputDown" name="inputDown" type="checkbox" />
+
+<label for="inputLeft">Left</label>
+<input id="inputLeft" name="inputLeft" type="checkbox" />
+
+<label for="inputRight">Right</label>
+<input id="inputRight" name="inputRight" type="checkbox" /><br><br>
+
+<input id="submitData" type="submit" />
+<div>
+    <b id="outputText"></b>
+</div>
+
+</html>
