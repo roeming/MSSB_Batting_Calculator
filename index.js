@@ -981,6 +981,7 @@ function calculateHitGround()
             foundHomerun = true;
         }
     }
+    Display_Output["Hit Ground"] = {"Point": CalculatedPoints[CalculatedPoints.length-1], "Distance" :Math.sqrt(CalculatedPoints[CalculatedPoints.length-1].X**2 + CalculatedPoints[CalculatedPoints.length-1].Z**2)}
     console.log(CalculatedPoints)
     console.log(isHomeRun)
 }
