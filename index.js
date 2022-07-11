@@ -18,7 +18,7 @@ const SHORT_ARRAY_ARRAY_ARRAY_ARRAY_807b67cc = [[[[-50, 50], [50, 100], [100, 30
 
 const BallHitArray = [[[100, 130, -110], [140, 145, -100], [145, 150, -110], [140, 145, -100], [100, 130, -110]], [[140, 150, -120], [162, 177, -160], [160, 170, 0], [162, 177, -160], [140, 150, -120]]];
 
-const StarSwingExitVelocityArray = [[[150, 160, -150], [160, 170, -150], [170, 180, -100], [160, 170, -150], [150, 160, -150]], [[150, 160, -250], [160, 170, -250], [170, 180, -250], [160, 170, -250], [150, 160, -250]]];
+const StarSwingExitVelocityArray = [[[150, 160, -150], [160, 170, -150], [170, 180, -100], [160, 170, -150], [150, 160, -150]], [[150, 160, -250], [160, 170, -250], [170, 180, -250], [160, 170, -250], [150, 160, -250]], [[170, 180, -300], [170, 180, -300], [190, 200, -300], [170, 180, -300], [170, 180, -300]]];
 
 const FLOAT_ARRAY_ARRAY_807b7480 = [[1.0, 1.0], [1.0, 0.8], [1.0, 0.5]];
 
@@ -33,6 +33,10 @@ const SHORT_ARRAY_ARRAY_807b6af4 = [[0, 0], [500, 550], [500, 550]];
 const CaptainStarSwingExitVelocityArray = [[[140, 150, 0], [150, 160, 150], [160, 170, 150], [150, 160, 150], [140, 150, 0]], [[120, 130, 0], [130, 150, 50], [160, 170, 100], [130, 150, 50], [120, 130, 0]]];
 
 const RandomBattingFactors_ChemLinkMult0 = [1.0, 1.1, 1.25, 1.5];
+
+const BattingExtensions = [[-0.85, 0.15], [-0.35, 0.35]]
+
+const FLOAT_ARRAY_ARRAY_807b72bc = [[0.5, 0.001, 0.003], [0.25, 0.006, 0.008]]
 
 var StaticRandomInt1 = 7769; // <= 32767
 var StaticRandomInt2 = 5359; // <= 32767
@@ -86,10 +90,12 @@ const PushStickAway = 2;
 
 var inMemBatter = undefined;
 var inMemPitcher = undefined;
+var inMemBall = undefined;
 var Hit_HorizontalAngle = 0;
 var Hit_VerticalAngle = 0;
 var Hit_HorizontalPower = 0;
 var AddedContactGravity = 0;
+var Display_Output = {};
 
 function floor(f) {
     return Math.trunc(f);
@@ -146,18 +152,24 @@ function calculateContact() {
     if (inMemBatter.AtBat_BatterHand == Lefty) {
         diffInX = -diffInX;
     }
+
+    Display_Output["DiffInX"] = diffInX;
+
     if (diffInX >= 0.0) {
         inMemBatter.CalculatedBallPos = 100.0 * (diffInX / BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeFar) + 100.0;
     }
     else {
         inMemBatter.CalculatedBallPos = -(100.0 * (diffInX / BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeNear) - 100.0);
     }
+
     if (inMemBatter.CalculatedBallPos < 0.0) {
         inMemBatter.CalculatedBallPos = 0.0;
     }
     if (200.0 < inMemBatter.CalculatedBallPos) {
         inMemBatter.CalculatedBallPos = 200.0;
     }
+
+    Display_Output["Contact Point"] = inMemBatter.CalculatedBallPos;
 
     // Higher is better, makes ranges larger
     contactSize = contactSize / 100.0;
@@ -352,6 +364,15 @@ function calculateHorizontalAngle() {
     let frameOfContact = inMemBatter.Frame_SwingContact1;
     let iVar2 = BattingAngleRanges[inputDirection][isCharge][frameOfContact][0];
     let iVar1 = BattingAngleRanges[inputDirection][isCharge][frameOfContact][1];
+
+
+    Display_Output["Horizontal Range"] =
+        [
+            BattingAngleRanges[inputDirection][isCharge][frameOfContact][0] + 0x400,
+            BattingAngleRanges[inputDirection][isCharge][frameOfContact][1] + 0x400
+        ];
+
+
     iVar1 -= iVar2;
     if (iVar1 < 0) {
         iVar2 += StaticRandomInt1 - floor(StaticRandomInt1 / -iVar1) * -iVar1;
@@ -376,6 +397,8 @@ function calculateVerticalAngle() {
     upDown = 0;
     slapOrCharge = inMemBatter.Batter_Contact_SlapChargeBuntStar;
     pInput = inMemBatter.ControllerInput;
+
+    let handledVerticalZones = false;
 
     captainStarSwing = inMemBatter.AtBat_Mystery_CaptainStarSwing;
     if (captainStarSwing == 0) {
@@ -477,6 +500,10 @@ function calculateVerticalAngle() {
                     lowerRange = SHORT_ARRAY_ARRAY_ARRAY_ARRAY_807b67cc[slapOrCharge][inMemBatter.Batter_ContactType][weightedRandomIndex][0];
                     higherRange = SHORT_ARRAY_ARRAY_ARRAY_ARRAY_807b67cc[slapOrCharge][inMemBatter.Batter_ContactType][weightedRandomIndex][1];
 
+                    Display_Output["Vertical Zones"] = SHORT_ARRAY_ARRAY_ARRAY_ARRAY_807b67cc[slapOrCharge][inMemBatter.Batter_ContactType];
+                    Display_Output["Vertical Zone Chances"] = [local_28, local_27, local_26, local_25, local_24];
+                    Display_Output["Selected Vertical Zone"] = weightedRandomIndex;
+                    handledVerticalZones = true;
                 }
                 else {
                     lowerRange = SHORT_ARRAY_ARRAY_807b6af4[iVar5][0];
@@ -499,6 +526,15 @@ function calculateVerticalAngle() {
         lowerRange = CaptainStarSwingBattingVerticalAngleRanges[captainStarSwing - 1][inMemBatter.Batter_ContactType][0];
         higherRange = CaptainStarSwingBattingVerticalAngleRanges[captainStarSwing - 1][inMemBatter.Batter_ContactType][1];
     }
+
+    if (!handledVerticalZones) {
+        Display_Output["Vertical Zones"] = [[lowerRange, higherRange]];
+        Display_Output["Vertical Zone Chances"] = [100];
+        Display_Output["Selected Vertical Zone"] = 0;
+    }
+
+    Display_Output["Vertical Range"] = [lowerRange, higherRange]
+
     sVar3 = lowerRange + (StaticRandomInt1 - floor(StaticRandomInt1 / (higherRange - lowerRange)) * (higherRange - lowerRange));
 
     Hit_VerticalAngle = sVar3;
@@ -636,6 +672,8 @@ function isEmptyOrSpaces(str) {
 }
 
 function parseValues() {
+    Display_Output = {};
+    inMemBall = {};
     inMemPitcher = {};
     let pitcher_id = document.getElementById("pitcherID").value;
     inMemPitcher.calced_cursedBall = stats[pitcher_id]["Cursed Ball"];
@@ -757,7 +795,8 @@ function parseValues() {
                             }
                         }
                     }
-                    else if (Team_CaptainRosterLoc[TeamBatting] == inMemBatter.AtBat_RosterID) {
+                    // else if (Team_CaptainRosterLoc[TeamBatting] == inMemBatter.AtBat_RosterID) {
+                    else if (false) {
                         if (starsForBatter < 1) {
                             inMemBatter.AtBat_Mystery_IsStarHit = false;
                         }
@@ -789,6 +828,163 @@ function parseValues() {
     }
 }
 
+function hitBall() {
+    return true;
+    let diffInX = inMemBatter.ballContact_X - inMemBatter.posX;
+    if (inMemBatter.AtBat_BatterHand == Lefty) {
+        diffInX = -diffInX;
+    }
+
+    let fVar1 = diffInX;
+    if (BattingExtensions[inMemBatter.AtBat_TrimmedBat][0] <= fVar1 - inMemBatter.posX) {
+        if (fVar1 - inMemBatter.posX <= BattingExtensions[inMemBatter.AtBat_TrimmedBat][1]) {
+            return true;
+        }
+    }
+    return false;
+}
+function mssbConvertToRadians(param_1)
+{    
+    if (param_1 < 0) {
+      param_1 += 0x1000;
+    }
+    if (0xfff < param_1) {
+      param_1 += -0x1000;
+    }
+    dVar1 = (Math.PI * (param_1 << 1)) / 4096;
+    if (Math.PI < dVar1) {
+      dVar1 = -(2*Math.PI - dVar1);
+    }
+    return dVar1;
+}
+
+function convertPowerToVelocity() {
+    inMemBall.ballVelocity = {X:0, Y:0, Z:0};
+    inMemBall.ballAcceleration = {X:0, Y:0, Z:0};
+
+    let power = Hit_HorizontalPower * 0.5;
+    let horizontalAngle = mssbConvertToRadians(Hit_HorizontalAngle);
+    let verticalAngle = mssbConvertToRadians(Hit_VerticalAngle);
+
+    let s_verticalAngle = Math.sin(verticalAngle);
+    let dVar6 = s_verticalAngle;
+
+    let c_verticalAngle = Math.cos(verticalAngle);
+
+    let dVar7 = power * c_verticalAngle;
+    let c_horizontalAngle = Math.cos(horizontalAngle);
+    let dVar9 = c_horizontalAngle;
+
+    let s_horizontalAngle = Math.sin(horizontalAngle);
+    let dVar8 = s_horizontalAngle;
+
+    verticalAngle = dVar9 * dVar7;
+    s_verticalAngle = 100.0;
+    horizontalAngle = dVar8 * dVar7;
+    inMemBall.ballVelocity.X = verticalAngle / s_verticalAngle;
+    inMemBall.ballAcceleration.Y = AddedContactGravity;
+    inMemBall.ballVelocity.Y = (power * dVar6) / s_verticalAngle;
+    inMemBall.ballAcceleration.X = 0.0;
+    inMemBall.ballAcceleration.Z = 0.0;
+    inMemBall.ballVelocity.Z = horizontalAngle / s_verticalAngle;
+
+    if ((inMemBatter.Batter_IsBunting == false) && (Hit_HorizontalAngle < 0x901 || 0xeff < Hit_HorizontalAngle)) {
+        // has Super Curve
+        iVar2 = [0xe, 0x35, 0x25].find(x => x == inMemBatter.Batter_CharID) != undefined ? 1 : 0;
+        if (inMemBatter.nonCaptainStarSwingContact == 3) {
+            iVar2 = 1;
+        }
+        fVar1 = inMemBatter.CalculatedBallPos;
+        if (100.0 < inMemBatter.CalculatedBallPos) {
+            fVar1 = 200.0 - inMemBatter.CalculatedBallPos;
+        }
+        iVar4 = Hit_VerticalAngle;
+        fvar1 = (1.0 - (1.0 - fVar1 * 0.01) * FLOAT_ARRAY_ARRAY_807b72bc[iVar2][0]);
+        if ((0x180 < iVar4) && (iVar4 < 0x401)) {
+            uVar3 = iVar4 - 0x180;
+            fVar1 =  uVar3;
+            if (512.0 < uVar3) {
+                fVar1 = 512.0;
+            }
+            fvar1 = fvar1 * (1.0 - fVar1 * 1.0 / 512.0);
+        }
+        iVar4 = Hit_HorizontalAngle;
+        if ((iVar4 < 0xc01) && (0xff < iVar4)) {
+            if (0x700 < iVar4) {
+                iVar4 = 0x700;
+            }
+        }
+        else {
+            iVar4 = 0x100;
+        }
+        if (inMemBatter.AtBat_BatterHand != Righty) {
+            iVar4 = 0x800 - iVar4;
+        }
+        if (iVar4 < 0x460) {
+            fVar1 = (0x460 - iVar4) / 864.0;
+        }
+        else {
+            fVar1 = (0x460 - iVar4) / 672.0;
+        }
+        fVar2 = (fvar1 * fVar1);
+        if (0.0 <= fVar2) {
+            if (0.0 < fVar1) {
+                horizontalAngle = -dVar9;
+                verticalAngle = dVar8;
+            }
+        }
+      else {
+            fVar2 = -fVar2;
+            horizontalAngle = dVar9;
+            verticalAngle = -dVar8;
+        }
+        inMemBall.ballAcceleration.Z = (horizontalAngle * fVar2) * FLOAT_ARRAY_ARRAY_807b72bc[iVar2][2];
+        inMemBall.ballAcceleration.X = (verticalAngle * fVar2) * FLOAT_ARRAY_ARRAY_807b72bc[iVar2][1];
+        if (0.0 < inMemBall.ballAcceleration.Z) {
+            inMemBall.ballAcceleration.Z = -inMemBall.ballAcceleration.Z;
+        }
+        if (inMemBatter.AtBat_BatterHand != Righty) {
+            inMemBall.ballAcceleration.X = -inMemBall.ballAcceleration.X;
+        }
+    }
+    console.log(inMemBall.ballVelocity);
+    console.log(inMemBall.ballAcceleration);
+}
+
+var CalculatedPoints = [];
+var isHomeRun = false;
+
+function calculateHitGround()
+{
+    let p = { X: 0, Y: BatterHitbox[inMemBatter.Batter_CharID].PitchingHeight, Z: 0 }
+    CalculatedPoints = []
+    
+    let v = inMemBall.ballVelocity;
+    let a = inMemBall.ballAcceleration;
+
+    const airResistance = 0.996;
+    const gravity = 0.00275;
+    
+    isHomeRun = false;
+    let foundHomerun = false;
+    while (p.Y > 0)
+    {
+        CalculatedPoints.push(p);
+        p = { X: p.X + v.X, Y: p.Y + v.Y, Z: p.Z + v.Z };
+
+        v.X = v.X * airResistance + a.X;
+        v.Y = (v.Y - gravity) * airResistance + a.Y;
+        v.Z = v.Z * airResistance + a.Z;
+        if (Math.sqrt(p.X ** 2 + p.Z ** 2) >= 100 && p.Y > 5 && !foundHomerun)
+        {
+            isHomeRun = true;
+            foundHomerun = true;
+        }
+    }
+    console.log(CalculatedPoints)
+    console.log(isHomeRun)
+}
+
 function calculateValues() {
     calculateContact();
 
@@ -797,38 +993,270 @@ function calculateValues() {
     calculateVerticalAngle();
 
     calculateHitPower();
+
+    convertPowerToVelocity();
+
+    calculateHitGround();
+}
+
+var horizontalCanvas = undefined;
+var verticalCanvas = undefined;
+var batCanvas = undefined;
+var contactCanvas = undefined;
+
+function valueToDegrees(v) {
+    return (v / 4096) * 360;
+}
+
+function degreesToRadians(d) {
+    return d * Math.PI / 180;
+}
+
+function degreeToPoint(d, length) {
+    return { "X": Math.cos(degreesToRadians(d)) * length, "Y": -Math.sin(degreesToRadians(d)) * length }
+}
+
+function anglesToArc(vals, flip = false) {
+    let selectedAngle1 = degreesToRadians(360 - valueToDegrees(vals[0]));
+    let selectedAngle2 = degreesToRadians(360 - valueToDegrees(vals[1]));
+
+    if (inMemBatter.AtBat_BatterHand == Lefty && flip) {
+        selectedAngle1 = Math.PI - selectedAngle1;
+        selectedAngle2 = Math.PI - selectedAngle2;
+    }
+    let selectedAngleBegin = Math.min(selectedAngle1, selectedAngle2);
+    let selectedAngleEnd = Math.max(selectedAngle1, selectedAngle2);
+    return [selectedAngleBegin, selectedAngleEnd]
+}
+
+function drawVerticalGraph() {
+    let ctx = verticalCanvas.getContext('2d');
+    ctx.clearRect(0, 0, verticalCanvas.width, verticalCanvas.height);
+    ctx.font = "10px Arial";
+
+    // Set line width
+    ctx.lineWidth = 1;
+
+    // Set fill Color
+    let blackColor = "#000000FF"
+    ctx.fillStyle = blackColor;
+    ctx.strokeStyle = blackColor;
+
+    // Make Lines
+    let offset = { "X": 20, "Y": 250 }
+    let origin = { "X": 0, "Y": 0 }
+    let length = 190;
+    let highRange = degreeToPoint(90, length);
+    let lowRange = degreeToPoint(0, length);
+
+    // Draw Range lines
+    ctx.beginPath();
+    ctx.moveTo(highRange.X + offset.X, highRange.Y + offset.Y);
+    ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+    ctx.lineTo(lowRange.X + offset.X, lowRange.Y + offset.Y);
+    ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Selected Region
+    selectedAngles = anglesToArc(Display_Output["Vertical Range"])
+
+    let arcLength = length * 0.7;
+    let i = 0;
+    let transparency = "80";
+    Display_Output["Vertical Zones"].forEach(element => {
+        // Draw vertical regions
+        theseAngles = anglesToArc(element);
+        let this_length = arcLength + (length * 0.1) * (i % 3);
+        let this_transparency = transparency;
+
+        if (i == Display_Output["Selected Vertical Zone"]) {
+            this_length = length;
+            this_transparency = "FF"
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y);
+        ctx.arc(origin.X + offset.X, origin.Y + offset.Y, this_length, theseAngles[0], theseAngles[1]);
+        ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+        let fill = ["#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"][i % 7] + this_transparency;
+        ctx.fillStyle = fill;
+        ctx.fill();
+
+        ctx.fillStyle = blackColor;
+        text_point = degreeToPoint(valueToDegrees((element[0] + element[1]) / 2), this_length)
+        ctx.fillText(Display_Output["Vertical Zone Chances"][i] + "%", text_point.X + offset.X, text_point.Y + offset.Y);
+        i += 1;
+    });
+
+    ctx.strokeStyle = blackColor;
+
+    // Draw point
+
+    outfield = 100;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y);
+
+    function pointToRender(x, y)
+    {
+        return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
+    }
+    
+    CalculatedPoints.forEach(element => {
+        let newP = pointToRender(element.Z, element.Y);
+        ctx.lineTo(newP.X, newP.Y);
+
+    });
+    ctx.stroke();
+}
+
+function drawHorizontalGraph() {
+    let ctx = horizontalCanvas.getContext('2d');
+    ctx.clearRect(0, 0, horizontalCanvas.width, horizontalCanvas.height);
+
+    // Set line width
+    ctx.lineWidth = 1;
+
+    // Wall
+
+    let offset = { "X": horizontalCanvas.width / 2, "Y": 250 }
+    let origin = { "X": 0, "Y": 0 }
+    let length = 190;
+    let leftPole = degreeToPoint(135, length);
+    let RightPole = degreeToPoint(45, length);
+
+    // Draw foul lines
+    ctx.beginPath();
+    ctx.moveTo(leftPole.X + offset.X, leftPole.Y + offset.Y);
+    ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+    ctx.lineTo(RightPole.X + offset.X, RightPole.Y + offset.Y);
+    ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Draw horizontal region
+    ctx.beginPath();
+    ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y);
+    let angles = anglesToArc(Display_Output["Horizontal Range"], true);
+
+    let angleBegin = angles[0];
+    let angleEnd = angles[1];
+    ctx.arc(origin.X + offset.X, origin.Y + offset.Y, length, angleBegin, angleEnd);
+    ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+    // ctx2.arc(origin.X + offset.X, origin.Y + offset.Y, length, degreesToRadian(360 - 111), degreesToRadian(360 - 45));
+    ctx.fillStyle = "#FF000040";
+    ctx.fill();
+
+    // Draw point
+    let outfield = 100;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y);
+
+    function pointToRender(x, y)
+    {
+        return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
+    }
+    
+    CalculatedPoints.forEach(element => {
+        let newP = pointToRender(element.X, element.Z);
+        ctx.lineTo(newP.X, newP.Y);
+
+    });
+    ctx.stroke();
+}
+
+function drawBatGraph() {
+    return;
+    let ctx = batCanvas.getContext('2d');
+    ctx.fillRect(0, 0, batCanvas.width, batCanvas.height);
+    let canvasWidth = batCanvas.width;
+    let canvasHeight = batCanvas.height;
+
+    let batImg = undefined;
+    if (inMemBatter.AtBat_BatterHand == Righty) {
+        batImg = document.getElementById("batImg");
+    }
+    else {
+        batImg = document.getElementById("batImg");
+    }
+
+    let batWidth = batImg.width;
+    let batHeight = batImg.height;
+
+    let widthMult = canvasWidth / batWidth;
+    let batOffset = (canvasHeight - batHeight * widthMult) / 2;
+
+    batWidth = batWidth * widthMult;
+    batHeight = batHeight * widthMult;
+
+    let ballImg = document.getElementById("ballImg");
+    let ballHeight = ballImg.width;
+
+    function normalizeBallPos(pos) {
+        let near = BattingExtensions[inMemBatter.AtBat_TrimmedBat][0];
+        let far = BattingExtensions[inMemBatter.AtBat_TrimmedBat][1];
+
+        let normalized = (pos - near) / (far - near);
+
+        return (normalized * canvasWidth);
+    }
+    normalizedBallPos = normalizeBallPos(Display_Output.DiffInX);
+    // normalizedBallPos = canvasWidth/2;
+    let ballPos = normalizedBallPos - (ballHeight / 2);
+    let ballOffset = (batOffset + (batOffset + batHeight)) / 2 - ballHeight / 2;
+
+    ctx.drawImage(batImg, 0, batOffset, batWidth, batHeight);
+    ctx.drawImage(ballImg, ballPos, ballOffset, ballHeight, ballHeight);
+}
+
+function drawContactGraph()
+{
+
+}
+
+function renderTrajectories() {
+    drawVerticalGraph();
+    drawHorizontalGraph();
+    drawBatGraph();
+    drawContactGraph();
 }
 
 function displayValues() {
     let output = document.getElementById("outputText");
-
-    s = ""
-
-    s += "Horzontal Hit Angle: " + Hit_HorizontalAngle + "\n";
-    s += "Vertical Hit Angle: " + Hit_VerticalAngle + "\n";
-    s += "Power: " + Hit_HorizontalPower + "\n";
-
-    s += "\n"
-
-    s += "Horzontal Hit Angle (in degrees): " + (Hit_HorizontalAngle - 0x400) * 360/4096 + "\n";
-    s += "Vertical Hit Angle (in degrees): " + (Hit_VerticalAngle) * 360/4096 + "\n";
-
-    output.innerText = s;
+    Display_Output["Horzontal Hit Angle"] = Hit_HorizontalAngle;
+    Display_Output["Vertical Hit Angle"] = Hit_VerticalAngle;
+    Display_Output["Power"] = Hit_HorizontalPower;
+    Display_Output["Horzontal Hit Angle (in degrees)"] = (Hit_HorizontalAngle - 0x400) * 360 / 4096;
+    Display_Output["Vertical Hit Angle (in degrees)"] = (Hit_VerticalAngle) * 360 / 4096;
+    Display_Output["ball"] = inMemBall; 
+    output.innerText = JSON.stringify(Display_Output).replaceAll(",", ",\n").replaceAll("{", "{\n").replaceAll("}", "\n}").replaceAll("[", "[\n").replaceAll("]", "\n]");
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
-    document.getElementById("submitData").onclick = function (ev) {
-        try{
+    horizontalCanvas = document.getElementById("horizontalOutput");
+    verticalCanvas = document.getElementById("verticalOutput");
+    // batCanvas = document.getElementById("batOutput");
+    contactCanvas = document.getElementById("contactOutput");
 
-            parseValues();
-            
-            calculateValues();
-            
-            displayValues();
-        }catch(ex)
-        {
+    document.getElementById("submitData").onclick = async function (ev) {
+        try {
+            for (i = 0; i < 1; i++) {
+                parseValues();
+                if (!hitBall()) {
+                    alert("These values would not make contact with the ball");
+                    return;
+                }
+                calculateValues();
+                displayValues();
+                renderTrajectories();
+                // await new Promise(r => setTimeout(r, 1));
+            }
+        } catch (ex) {
             console.log(ex)
             alert(ex);
         }
     };
+
 });
