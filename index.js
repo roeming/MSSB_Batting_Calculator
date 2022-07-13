@@ -276,6 +276,7 @@ function calculateContact() {
             }
         }
     }
+    Display_Output.Contact = ["Near Sour", "Near Nice", "Perfect", "Far Nice", "Far Sour"][inMemBatter.Batter_ContactType]
     return;
 }
 
@@ -1214,6 +1215,57 @@ function drawBatGraph() {
 
 function drawContactGraph()
 {
+    let ctx = contactCanvas.getContext('2d');
+    ctx.clearRect(0, 0, contactCanvas.width, contactCanvas.height);
+    let canvasWidth = contactCanvas.width;
+    let canvasHeight = contactCanvas.height;
+
+    let transparency = "40";
+
+    let colors = ["#FF0000", "#0000FF", "#00FF00", "#0000FF", "#FF0000"];
+
+    let start_pixel = canvasWidth * 0.03; 
+    let end_pixel = canvasWidth * 0.97;
+
+    let line_length = end_pixel - start_pixel; 
+
+    let box_height = canvasHeight * 0.1;
+    let mid_height = canvasHeight / 2;
+
+    
+    // mid line
+    ctx.strokeStyle = "#000000FF";
+    ctx.beginPath();
+    ctx.moveTo(start_pixel, mid_height);
+    ctx.lineTo(end_pixel, mid_height);
+    ctx.stroke();
+
+    let contact_pos = inMemBatter.CalculatedBallPos / 200;
+
+    
+    calc_regions = [0, inMemBatter.RightNiceThreshold, inMemBatter.RightPerfectThreshold, inMemBatter.LeftPerfectThreshold, inMemBatter.LeftNiceThreshold, 200]
+    region_names = ["Near Sour", "Near Nice", "Perfect", "Far Nice", "Far Sour"]
+    ctx.font = "10px Arial";
+    for (i = 0; i < calc_regions.length - 1; i++)
+    {
+        ctx.fillStyle = colors[i] + transparency;
+        let this_begin  = (calc_regions[i] / 200)       * line_length + start_pixel;
+        let this_end    = (calc_regions[i + 1] / 200)   * line_length + start_pixel;
+        ctx.fillRect(this_begin, mid_height + box_height, this_end - this_begin, -2 * box_height);
+        
+        text_height = mid_height + (-1)**i * (box_height + 20);
+        ctx.fillStyle = colors[i] + "ff";
+        ctx.fillText(region_names[i], this_begin, text_height);
+    }
+
+    // contact line
+    ctx.strokeStyle = "#000000FF";
+    ctx.fillStyle = "#000000FF";
+    ctx.beginPath();
+    ctx.moveTo(start_pixel + line_length * contact_pos, mid_height - box_height);
+    ctx.lineTo(start_pixel + line_length * contact_pos, mid_height + box_height);
+    ctx.stroke();
+    ctx.fillText(Math.round(inMemBatter.CalculatedBallPos, 2), start_pixel + line_length * contact_pos, mid_height - box_height);
 
 }
 
@@ -1232,7 +1284,7 @@ function displayValues() {
     Display_Output["Horzontal Hit Angle (in degrees)"] = (Hit_HorizontalAngle - 0x400) * 360 / 4096;
     Display_Output["Vertical Hit Angle (in degrees)"] = (Hit_VerticalAngle) * 360 / 4096;
     Display_Output["ball"] = inMemBall; 
-    output.innerText = JSON.stringify(Display_Output).replaceAll(",", ",\n").replaceAll("{", "{\n").replaceAll("}", "\n}").replaceAll("[", "[\n").replaceAll("]", "\n]");
+    output.innerText = JSON.stringify(Display_Output, null, 4);
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
