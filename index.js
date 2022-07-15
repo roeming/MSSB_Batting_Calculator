@@ -148,7 +148,7 @@ function calculateContact() {
         contactSize = inMemBatter.Batter_Bunting;
     }
 
-    let diffInX = inMemBatter.ballContact_X - inMemBatter.posX;
+    let diffInX = inMemBatter.interstitialBallContact_X - inMemBatter.posX;
     if (inMemBatter.AtBat_BatterHand == Lefty) {
         diffInX = -diffInX;
     }
@@ -830,15 +830,11 @@ function parseValues() {
 }
 
 function hitBall() {
-    return true;
-    let diffInX = inMemBatter.ballContact_X - inMemBatter.posX;
-    if (inMemBatter.AtBat_BatterHand == Lefty) {
-        diffInX = -diffInX;
-    }
+    let fVar1 = inMemBatter.ballContact_X;
 
-    let fVar1 = diffInX;
     if (BattingExtensions[inMemBatter.AtBat_TrimmedBat][0] <= fVar1 - inMemBatter.posX) {
         if (fVar1 - inMemBatter.posX <= BattingExtensions[inMemBatter.AtBat_TrimmedBat][1]) {
+            inMemBatter.interstitialBallContact_X = fVar1;
             return true;
         }
     }
@@ -984,7 +980,7 @@ function calculateHitGround()
     }
     Display_Output["Hit Ground"] = {"Point": CalculatedPoints[CalculatedPoints.length-1], "Distance" :Math.sqrt(CalculatedPoints[CalculatedPoints.length-1].X**2 + CalculatedPoints[CalculatedPoints.length-1].Z**2)}
     console.log(CalculatedPoints)
-    console.log(isHomeRun)
+    // console.log(isHomeRun)
 }
 
 function calculateValues() {
@@ -1219,54 +1215,249 @@ function drawContactGraph()
     ctx.clearRect(0, 0, contactCanvas.width, contactCanvas.height);
     let canvasWidth = contactCanvas.width;
     let canvasHeight = contactCanvas.height;
-
-    let transparency = "40";
-
-    let colors = ["#FF0000", "#0000FF", "#00FF00", "#0000FF", "#FF0000"];
-
-    let start_pixel = canvasWidth * 0.03; 
-    let end_pixel = canvasWidth * 0.97;
-
-    let line_length = end_pixel - start_pixel; 
-
-    let box_height = canvasHeight * 0.1;
-    let mid_height = canvasHeight / 2;
-
     
-    // mid line
-    ctx.strokeStyle = "#000000FF";
-    ctx.beginPath();
-    ctx.moveTo(start_pixel, mid_height);
-    ctx.lineTo(end_pixel, mid_height);
-    ctx.stroke();
-
-    let contact_pos = inMemBatter.CalculatedBallPos / 200;
-
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#000000FF"
+    let transparency = "ff";
     
-    calc_regions = [0, inMemBatter.RightNiceThreshold, inMemBatter.RightPerfectThreshold, inMemBatter.LeftPerfectThreshold, inMemBatter.LeftNiceThreshold, 200]
-    region_names = ["Near Sour", "Near Nice", "Perfect", "Far Nice", "Far Sour"]
-    ctx.font = "10px Arial";
-    for (i = 0; i < calc_regions.length - 1; i++)
+    let colors = ["#FF0000", "#FFFF00", "#00FF00", "#FFFF00", "#FF0000"];
+    let lefty = inMemBatter.AtBat_BatterHand == Lefty;
+    
+    let boxWidth = 250;
+    let boxHeight = 250;
+    let boxOffsetX = 30;
+    let boxOffsetY = canvasHeight - boxHeight - 5;
+
+    let stripWidth = 20;
+    let stripGap = 10;
+
+    const bottomOfTheBoxY = boxHeight + boxOffsetY;
+
+    // main box
+    ctx.strokeRect(boxOffsetX, boxOffsetY, boxWidth, boxHeight);
+    
+    // top strip
+    let topStripBeginY = boxOffsetY - stripGap;
+    let topStripEndY = boxOffsetY - stripGap - stripWidth;
+    // ctx.fillStyle = colors[1] + transparency;
+    
+    // bottom strip
+    let sideStripBeginX = boxOffsetX + boxWidth + stripGap;
+    let sideStripEndX = boxOffsetX + boxWidth + stripGap + stripWidth;
+    // ctx.fillStyle = colors[2] + transparency;
+
+    const ZeroContact = boxOffsetY + boxHeight;
+    const TwoHundredContact = boxOffsetY;
+    
+    
+    function convertContactToY(c)
     {
-        ctx.fillStyle = colors[i] + transparency;
-        let this_begin  = (calc_regions[i] / 200)       * line_length + start_pixel;
-        let this_end    = (calc_regions[i + 1] / 200)   * line_length + start_pixel;
-        ctx.fillRect(this_begin, mid_height + box_height, this_end - this_begin, -2 * box_height);
-        
-        text_height = mid_height + (-1)**i * (box_height + 20);
-        ctx.fillStyle = colors[i] + "ff";
-        ctx.fillText(region_names[i], this_begin, text_height);
+        return ((200-c) / 200) * (ZeroContact - TwoHundredContact) + TwoHundredContact;
     }
 
-    // contact line
-    ctx.strokeStyle = "#000000FF";
-    ctx.fillStyle = "#000000FF";
-    ctx.beginPath();
-    ctx.moveTo(start_pixel + line_length * contact_pos, mid_height - box_height);
-    ctx.lineTo(start_pixel + line_length * contact_pos, mid_height + box_height);
-    ctx.stroke();
-    ctx.fillText(Math.round(inMemBatter.CalculatedBallPos, 2), start_pixel + line_length * contact_pos, mid_height - box_height);
+    function normalToXCoord(x)
+    {
+        return boxOffsetX + boxWidth * x;
+    }
+    
+    let hFar = BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeFar;
+    let hNear = BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeNear;
 
+    let nearReach = BattingExtensions[inMemBatter.AtBat_TrimmedBat][0];
+    let farReach = BattingExtensions[inMemBatter.AtBat_TrimmedBat][1];
+
+    function positionToNormal(x)
+    {
+        return (x - nearReach) / (farReach - nearReach);
+    }
+
+    let midpoint = (0 - nearReach) / (farReach - nearReach);
+    let hitPoint = positionToNormal(inMemBatter.interstitialBallContact_X - inMemBatter.posX);
+
+    if (lefty) {
+        let nTemp = -nearReach;
+        let fTemp = -farReach;
+
+        farReach = nTemp;
+        nearReach = fTemp;
+
+        midpoint = 1.0 - midpoint;
+        hitPoint = 1.0 - hitPoint;
+    }
+    
+    let midpointX = normalToXCoord(midpoint);
+
+    // draw inflection point
+    // ctx.beginPath();
+    // ctx.moveTo(midpointX, boxOffsetY);
+    // ctx.lineTo(midpointX, boxOffsetY + boxHeight);
+    // ctx.stroke();
+
+    function calcContactFar(x) {
+        return 100.0 * (x / hFar) + 100.0;
+    }
+
+    function reverseCalcContactFar(x)
+    {
+        return (x - 100.0) * (hFar / 100.0);
+    }
+
+    function calcContactNear(x) {
+        return -100.0 * (x / hNear) + 100.0;
+    }
+
+    function reverseCalcContactNear(x)
+    {
+        return (x - 100.0) * (hNear / -100.0);
+    }
+
+    // draw path
+    let begin_chart = [0, undefined];
+    let mid_chart = [midpoint, 100];
+    let end_chart = [1, undefined];
+    
+    begin_chart[1] = calcContactNear(nearReach);
+    end_chart[1] = calcContactFar(farReach);
+
+    if(begin_chart[1] < 0)
+    {
+        begin_chart[0] = positionToNormal(reverseCalcContactNear(0));
+        begin_chart[1] = 0;
+    }
+    else if(begin_chart > 200)
+    {
+        begin_chart[0] = positionToNormal(reverseCalcContactNear(200));
+        begin_chart[1] = 200;
+    }
+
+    if(end_chart[1] < 0)
+    {
+        end_chart[0] = positionToNormal(reverseCalcContactFar(0));
+        end_chart[1] = 0;
+    }
+    else if(end_chart[1] > 200)
+    {
+        end_chart[0] = positionToNormal(reverseCalcContactFar(200));
+        end_chart[1] = 200;
+    }
+    
+    ctx.strokeStyle = "#4000FFFF";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(normalToXCoord(begin_chart[0]), convertContactToY(begin_chart[1]));
+    ctx.lineTo(normalToXCoord(mid_chart[0]), convertContactToY(mid_chart[1]));
+    ctx.lineTo(normalToXCoord(end_chart[0]), convertContactToY(end_chart[1]));
+    ctx.stroke();
+    ctx.strokeStyle = "#000000FF";
+
+
+    // get lines for contact
+    let contactYs = [];
+    contactYs.push(convertContactToY(200));
+    let contactXs = [];
+    contactXs.push(normalToXCoord(1));
+
+    ctx.lineWidth = 1;
+    ctx.setLineDash([1,2]);
+    
+    i = 0;
+    ctx.fillStyle = "#000000FF";
+    let lefty_scale = lefty? -1: 1;
+    [inMemBatter.LeftNiceThreshold, inMemBatter.LeftPerfectThreshold, inMemBatter.RightPerfectThreshold, inMemBatter.RightNiceThreshold].forEach(e => {
+        let fy = convertContactToY(e);
+
+        ctx.beginPath();
+        ctx.moveTo(sideStripEndX, fy);
+        let verticalEnd = undefined;
+        if(e < 100)
+        {
+            verticalEnd = reverseCalcContactNear(e);
+        }
+        else{
+            verticalEnd = reverseCalcContactFar(e);
+        }
+
+        let fx = normalToXCoord(positionToNormal(verticalEnd));
+
+        if(positionToNormal(verticalEnd) > 1 )
+        {
+            ctx.lineTo(boxOffsetX + boxWidth, fy);
+            ctx.stroke();
+            
+            fx = normalToXCoord(1)
+        }
+        else if(positionToNormal(verticalEnd) < 0)
+        {
+            ctx.lineTo(boxOffsetX, fy);
+            ctx.stroke();
+
+            fx = normalToXCoord(0)
+        }
+        else
+        {
+            ctx.lineTo(fx, fy);
+            ctx.lineTo(fx, topStripEndY);
+            ctx.stroke();
+
+            ctx.font = "10px Arial";
+            ctx.fillText(lefty_scale * verticalEnd.toFixed(4), fx, topStripEndY - 5 - 10 * (i%2));
+        }
+        
+        contactYs.push(fy)
+        contactXs.push(fx)
+        ctx.fillText(e.toFixed(2), sideStripEndX + 5 + 35 * (i==2), fy);
+        i++
+    });
+    contactYs.push(convertContactToY(0));
+    contactXs.push(normalToXCoord(0));
+    
+    ctx.setLineDash([]);
+    
+    ctx.fillText(lefty_scale * nearReach, boxOffsetX - 30, (topStripBeginY + topStripEndY)/2);
+    ctx.fillText(lefty_scale * farReach, boxOffsetX + boxWidth + 5, (topStripBeginY + topStripEndY)/2);
+    ctx.fillText(200, sideStripEndX + 5, convertContactToY(200));
+    ctx.fillText(0, sideStripEndX + 5, convertContactToY(0));
+    
+    // draw bat up top
+    for(let i = 0; i < contactXs.length - 1; i++)
+    {
+        ctx.fillStyle = colors[i] + transparency;
+        ctx.fillRect(contactXs[i], topStripBeginY, contactXs[i+1] - contactXs[i], -stripWidth)
+    }
+
+    // draw bat on side
+    for(let i = 0; i < contactYs.length - 1; i++)
+    {
+        ctx.fillStyle = colors[i] + transparency;
+        ctx.fillRect(sideStripBeginX, contactYs[i], stripWidth, contactYs[i+1] - contactYs[i])
+    }
+
+    ctx.strokeRect(boxOffsetX, topStripBeginY, boxWidth, -stripWidth);
+    ctx.strokeRect(sideStripBeginX, boxOffsetY, stripWidth, boxHeight);
+
+    let batImg = document.getElementById("batImg");
+    if(inMemBatter.AtBat_BatterHand == Lefty)
+    {
+        batImg = document.getElementById("batFlippedImg");
+    }
+
+    ctx.drawImage(batImg, boxOffsetX, topStripEndY, boxWidth, stripWidth);
+    
+    // Draw current contact
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(sideStripBeginX + stripWidth, convertContactToY(inMemBatter.CalculatedBallPos));
+    ctx.lineTo(normalToXCoord(hitPoint), convertContactToY(inMemBatter.CalculatedBallPos));
+    ctx.lineTo(normalToXCoord(hitPoint), boxOffsetY - stripGap - stripWidth);
+    ctx.stroke();
+
+    // Draw the ball
+    let ballImg = document.getElementById("ballImg");
+    let ballWidth = 20;
+    let ballMid = [normalToXCoord(hitPoint) - (ballWidth) / 2, convertContactToY(inMemBatter.CalculatedBallPos) - (ballWidth) / 2];
+    
+    ctx.drawImage(ballImg, ballMid[0], ballMid[1], ballWidth, ballWidth)
+    
 }
 
 function renderTrajectories() {
