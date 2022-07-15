@@ -737,6 +737,13 @@ function randomInputs()
     randRange(document.getElementById("randomInt1"), 0, 2**15 - 1, 0);
     randRange(document.getElementById("randomInt2"), 0, 2**15 - 1, 0);
     randRange(document.getElementById("randomCounter"), 0, 2**15 - 1, 0);
+
+    let r1 = Math.random() * 3;
+    let r2 = Math.random() * 3;
+    document.getElementById("inputUp").checked      = r1 <= 1;     
+    document.getElementById("inputDown").checked    = r1 >= 2;
+    document.getElementById("inputLeft").checked    = r2 <= 1;
+    document.getElementById("inputRight").checked   = r2 >= 2;
 }
 
 function parseInputs()
