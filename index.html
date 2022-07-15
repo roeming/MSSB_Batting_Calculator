@@ -10,6 +10,7 @@
     <title>Batting Calculation</title>
 
 </head>
+
 <label for="batterID">Batter ID</label>
 <select id="batterID" name="batterID">
     <option value="0">(0) Mario</option>
@@ -154,7 +155,7 @@
     <option value="0">(0) Slap</option>
     <option value="1">(1) Charge</option>
     <option value="2">(2) Star</option>
-    <option value="3">(3) Bunt</option>
+    <!-- <option value="3">(3) Bunt</option> -->
 </select><label>(byte) 8089099b</label><br><br>
 
 <label for="pitchType">Pitch Curve/Charge/ChangeUp</label>
@@ -209,7 +210,8 @@
 <label for="inputRight">Right</label>
 <input id="inputRight" name="inputRight" type="checkbox" /><br><br>
 
-<input id="submitData" type="submit" /><br>
+<input id="submitData" type="submit" value="Calculate"/><br><br>
+<input id="randomData" type="submit" value="Random Data"/><br><br>
 
 <img id="ballImg" src="ball.png" hidden="true"><br>
 <img id="batImg" src="bat transparent.png" hidden="true"><br>

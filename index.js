@@ -16,7 +16,7 @@ const UINT_ARRAY_ARRAY_807b7134 = [[100, 100, 1118480, 1118480, 0], [100, 100, 1
 
 const SHORT_ARRAY_ARRAY_ARRAY_ARRAY_807b67cc = [[[[-50, 50], [50, 100], [100, 300], [300, 400], [400, 500]], [[50, 150], [150, 200], [200, 250], [250, 300], [300, 350]], [[50, 150], [150, 200], [150, 200], [200, 300], [300, 350]], [[50, 150], [150, 200], [200, 250], [250, 300], [300, 350]], [[-50, 50], [50, 100], [100, 300], [300, 400], [400, 500]]], [[[400, 450], [450, 500], [500, 550], [550, 600], [550, 600]], [[50, 100], [100, 150], [300, 400], [350, 450], [400, 500]], [[100, 200], [350, 400], [450, 500], [500, 550], [530, 580]], [[50, 100], [100, 150], [300, 400], [350, 450], [400, 500]], [[400, 450], [450, 500], [500, 550], [550, 600], [550, 600]]]];
 
-const BallHitArray = [[[100, 130, -110], [140, 145, -100], [145, 150, -110], [140, 145, -100], [100, 130, -110]], [[140, 150, -120], [162, 177, -160], [160, 170, 0], [162, 177, -160], [140, 150, -120]]];
+const BallHitArray = [[[100, 130, -110], [140, 145, -100], [145, 150, -110], [140, 145, -100], [100, 130, -110]], [[140, 150, -120], [162, 177, -160], [160, 170, 0], [162, 177, -160], [140, 150, -120]], [[120, 130, -200], [140, 150, -200], [160, 170, -200], [140, 150, -200], [120, 130, -200]], [[150, 160, -300], [170, 190, -300], [190, 200, -300], [170, 190, -300], [150, 160, -300]], [[130, 140, -200], [145, 155, -300], [160, 170, -300], [145, 155, -300], [130, 140, -200]], [[140, 150, -150], [190, 200, -200], [200, 210, -180], [190, 200, -200], [140, 150, -150]]];
 
 const StarSwingExitVelocityArray = [[[150, 160, -150], [160, 170, -150], [170, 180, -100], [160, 170, -150], [150, 160, -150]], [[150, 160, -250], [160, 170, -250], [170, 180, -250], [160, 170, -250], [150, 160, -250]], [[170, 180, -300], [170, 180, -300], [190, 200, -300], [170, 180, -300], [170, 180, -300]]];
 
@@ -26,11 +26,11 @@ const FieldTrajectories = [[1.0, 1.0, 1.0, 1.0, 1.0], [0.85, 0.95, 1.0, 1.05, 1.
 
 const NonCaptainStarSwingBattingVerticalAngleRanges = [[[250, 300], [300, 350], [350, 400], [400, 450], [450, 500]], [[50, 100], [50, 100], [50, 100], [50, 100], [50, 100]], [[120, 160], [160, 200], [160, 200], [160, 200], [120, 160]]];
 
-const CaptainStarSwingBattingVerticalAngleRanges = [[[59, 61], [59, 61], [59, 61], [59, 61], [59, 61]], [[-101, -99], [-101, -99], [-101, -99], [-101, -99], [-101, -99]], [[350, 400], [350, 400], [350, 400], [350, 400], [350, 400]], [[450, 500], [450, 500], [450, 500], [450, 500], [450, 500]], [[120, 160], [160, 200], [160, 200], [160, 200], [120, 160]]];
+const CaptainStarSwingBattingVerticalAngleRanges = [[[59, 61], [59, 61], [59, 61], [59, 61], [59, 61]], [[-101, -99], [-101, -99], [-101, -99], [-101, -99], [-101, -99]], [[350, 400], [350, 400], [350, 400], [350, 400], [350, 400]], [[450, 500], [450, 500], [450, 500], [450, 500], [450, 500]], [[120, 160], [160, 200], [160, 200], [160, 200], [120, 160]], [[250, 300], [250, 300], [250, 300], [250, 300], [250, 300]], [[64, 80], [64, 80], [64, 80], [64, 80], [64, 80]], [[64, 80], [64, 80], [64, 80], [64, 80], [64, 80]], [[350, 400], [350, 400], [350, 400], [350, 400], [350, 400]], [[200, 250], [200, 250], [200, 250], [200, 250], [200, 250]], [[350, 600], [350, 600], [350, 600], [350, 600], [350, 600]], [[350, 600], [350, 600], [350, 600], [350, 600], [350, 600]]];
 
 const SHORT_ARRAY_ARRAY_807b6af4 = [[0, 0], [500, 550], [500, 550]];
 
-const CaptainStarSwingExitVelocityArray = [[[140, 150, 0], [150, 160, 150], [160, 170, 150], [150, 160, 150], [140, 150, 0]], [[120, 130, 0], [130, 150, 50], [160, 170, 100], [130, 150, 50], [120, 130, 0]]];
+const CaptainStarSwingExitVelocityArray = [[[140, 150, 0], [150, 160, 150], [160, 170, 150], [150, 160, 150], [140, 150, 0]], [[120, 130, 0], [130, 150, 50], [160, 170, 100], [130, 150, 50], [120, 130, 0]], [[90, 100, 80], [100, 110, 80], [110, 120, 80], [100, 110, 80], [90, 100, 80]], [[60, 70, 80], [70, 80, 80], [70, 80, 80], [70, 80, 80], [60, 70, 80]], [[170, 180, -120], [170, 180, -130], [190, 200, -125], [170, 180, -135], [170, 180, -125]], [[150, 160, -140], [150, 160, -150], [160, 170, -150], [150, 160, -150], [150, 160, -140]], [[170, 180, 0], [170, 180, 0], [190, 200, 0], [170, 180, 0], [170, 180, 0]], [[160, 170, 0], [160, 170, 0], [180, 190, 0], [160, 170, 0], [160, 170, 0]], [[90, 130, -650], [90, 130, -650], [90, 130, -650], [90, 130, -650], [90, 130, -650]], [[140, 160, -400], [140, 160, -400], [140, 160, -400], [140, 160, -400], [140, 160, -400]], [[130, 140, -100], [140, 150, -100], [150, 160, -100], [140, 150, -100], [130, 140, -100]], [[130, 140, -100], [140, 150, -100], [150, 160, -100], [140, 150, -100], [130, 140, -100]]];
 
 const RandomBattingFactors_ChemLinkMult0 = [1.0, 1.1, 1.25, 1.5];
 
@@ -401,7 +401,7 @@ function calculateVerticalAngle() {
 
     let handledVerticalZones = false;
 
-    captainStarSwing = inMemBatter.AtBat_Mystery_CaptainStarSwing;
+    let captainStarSwing = inMemBatter.AtBat_Mystery_CaptainStarSwing;
     if (captainStarSwing == 0) {
         if (inMemBatter.AtBat_MoonShot == false) {
             noncaptainStarSwing = inMemBatter.nonCaptainStarSwingContact;
@@ -672,13 +672,121 @@ function isEmptyOrSpaces(str) {
     return str === null || str.match(/^ *$/) !== null;
 }
 
+var readValues = undefined;
+
+function randomInputs()
+{
+    function randIndex(box)
+    {
+        box.selectedIndex = floor(Math.random() * box.options.length);
+    }
+
+    function randRange(box, min, max, fixedpoint = -1)
+    {
+        let range = max - min;
+        let value = Math.random() * range + min;
+        if(fixedpoint >= 0)
+        {
+            value = value.toFixed(fixedpoint);
+        }
+        box.value = value;
+    }
+
+    randIndex(document.getElementById("pitcherID"));
+    randIndex(document.getElementById("pitchType"));
+    randIndex(document.getElementById("batterID"));
+
+    let batter_id = document.getElementById("batterID").value;
+    
+    randRange(document.getElementById("ballX"), BattingExtensions[BatterHitbox[batter_id].TrimmedBat][0], BattingExtensions[BatterHitbox[batter_id].TrimmedBat][1], 4);
+    document.getElementById("batterX").value = 0;
+    randIndex(document.getElementById("handedness"));
+    randIndex(document.getElementById("chemOnBase"));
+    randIndex(document.getElementById("slapChargeStarBunt"));
+    
+    if(document.getElementById("slapChargeStarBunt").value < 1)
+    {
+        randIndex(document.getElementById("frameOfContact"));
+    }
+    else
+    {
+        document.getElementById("frameOfContact").selectedIndex = Math.random() * (document.getElementById("frameOfContact").options.length - 1) + 1
+        let rand = Math.random() * 3.1;
+        if(rand < 1)
+        {
+            randRange(document.getElementById("chargeUp"), 0, 0);
+            randRange(document.getElementById("chargeDown"), 0, 0);        
+        }
+        else if(rand < 2)
+        {
+            randRange(document.getElementById("chargeUp"), 0, 1, 3);
+            randRange(document.getElementById("chargeDown"), 0, 0);
+        }
+        else if(rand < 3)
+        {
+            randRange(document.getElementById("chargeUp"), 1, 1);
+            randRange(document.getElementById("chargeDown"), 0, 1, 3);        
+        }
+        else
+        {
+            randRange(document.getElementById("chargeUp"), 1, 1);
+            randRange(document.getElementById("chargeDown"), 1, 1);
+        }
+    }
+
+    randRange(document.getElementById("randomInt1"), 0, 2**15 - 1, 0);
+    randRange(document.getElementById("randomInt2"), 0, 2**15 - 1, 0);
+    randRange(document.getElementById("randomCounter"), 0, 2**15 - 1, 0);
+}
+
+function parseInputs()
+{
+    readValues = {};
+    readValues.pitcher_id = pitcher_id = document.getElementById("pitcherID").value;
+    readValues.pitcherChargeVal = document.getElementById("pitchType").value;
+
+    if (!isEmptyOrSpaces(document.getElementById("randomInt1").value)) {
+        readValues.StaticRandomInt1 = parseInt(document.getElementById("randomInt1").value);
+    }
+
+    if (!isEmptyOrSpaces(document.getElementById("randomInt2").value)) {
+        readValues.StaticRandomInt2 = parseInt(document.getElementById("randomInt2").value);
+    }
+
+    if (!isEmptyOrSpaces(document.getElementById("randomCounter").value)) {
+        readValues.USHORT_8089269c = parseInt(document.getElementById("randomCounter").value);
+    }
+
+    readValues.batter_id = document.getElementById("batterID").value;
+
+    readValues.ballContact_X = parseFloat(document.getElementById("ballX").value);
+    readValues.posX = parseFloat(document.getElementById("batterX").value);
+
+    readValues.AtBat_BatterHand = document.getElementById("handedness").value;
+
+    readValues.Batter_Contact_SlapChargeBuntStar = document.getElementById("slapChargeStarBunt").value;
+
+    readValues.Up = document.getElementById("inputUp").checked;
+    readValues.Down = document.getElementById("inputDown").checked;
+    readValues.Left = document.getElementById("inputLeft").checked;
+    readValues.Right = document.getElementById("inputRight").checked;
+
+    readValues.chargeUp = parseFloat(document.getElementById("chargeUp").value);
+    readValues.chargeDown = parseFloat(document.getElementById("chargeDown").value);
+
+    readValues.RandomBattingFactors_ChemLinksOnBase = document.getElementById("chemOnBase").value;
+
+    readValues.frameOfContact = document.getElementById("frameOfContact").value;
+
+    readValues.isAI = document.getElementById("isAI").checked ? 1 : 0;
+}
+
 function parseValues() {
     Display_Output = {};
     inMemBall = {};
     inMemPitcher = {};
-    let pitcher_id = document.getElementById("pitcherID").value;
-    inMemPitcher.calced_cursedBall = stats[pitcher_id]["Cursed Ball"];
-    let pitcherChargeVal = document.getElementById("pitchType").value;
+    inMemPitcher.calced_cursedBall = stats[readValues.pitcher_id]["Cursed Ball"];
+    let pitcherChargeVal = readValues.pitcherChargeVal;
     if (pitcherChargeVal == 0) {
         inMemPitcher.Pitcher_TypeOfPitch = PitchCurve;
         inMemPitcher.ChargePitchType = PitchChargeType_None;
@@ -696,44 +804,48 @@ function parseValues() {
         inMemPitcher.ChargePitchType = PitchChargeType_None;
     }
 
-    if (!isEmptyOrSpaces(document.getElementById("randomInt1").value)) {
-        StaticRandomInt1 = parseInt(document.getElementById("randomInt1").value);
+    let StaticRandomInt1 = undefined;
+    let StaticRandomInt2 = undefined;
+    let USHORT_8089269c = undefined;
+
+    if (readValues.StaticRandomInt1 != undefined) {
+        StaticRandomInt1 = readValues.StaticRandomInt1;
     }
-    else {
-        StaticRandomInt1 = floor(Math.random() * 2 ** 15 - 1)
+    else{
+        StaticRandomInt1 = floor(Math.random() * 2 ** 15 - 1);
     }
 
-    if (!isEmptyOrSpaces(document.getElementById("randomInt2").value)) {
-        StaticRandomInt2 = parseInt(document.getElementById("randomInt2").value);
+    if (readValues.StaticRandomInt2 != undefined) {
+        StaticRandomInt2 = readValues.StaticRandomInt2;
     }
     else {
         StaticRandomInt2 = floor(Math.random() * 2 ** 15 - 1)
     }
 
-    if (!isEmptyOrSpaces(document.getElementById("randomCounter").value)) {
-        USHORT_8089269c = parseInt(document.getElementById("randomCounter").value);
+    if (readValues.USHORT_8089269c != undefined) {
+        USHORT_8089269c = readValues.USHORT_8089269c;
     }
-    else {
+    else{   
         USHORT_8089269c = floor(Math.random() * 2 ** 15 - 1)
     }
 
     inMemBatter = {};
-    let id = document.getElementById("batterID").value;
+    let id = readValues.batter_id;
 
     inMemBatter.Batter_CharID = id;
     inMemBatter.AtBat_Mystery_BatDirection = 0;
     inMemBatter.AtBat_TrimmedBat = BatterHitbox[id]["TrimmedBat"] == 0.0 ? 0 : 1;
 
-    inMemBatter.ballContact_X = parseFloat(document.getElementById("ballX").value);
-    inMemBatter.posX = parseFloat(document.getElementById("batterX").value);
+    inMemBatter.ballContact_X = readValues.ballContact_X;
+    inMemBatter.posX = readValues.posX;
 
-    inMemBatter.AtBat_BatterHand = document.getElementById("handedness").value;
+    inMemBatter.AtBat_BatterHand = readValues.AtBat_BatterHand;
 
-    inMemBatter.Batter_Contact_SlapChargeBuntStar = document.getElementById("slapChargeStarBunt").value;
+    inMemBatter.Batter_Contact_SlapChargeBuntStar = readValues.Batter_Contact_SlapChargeBuntStar;
     inMemBatter.Batter_IsBunting = inMemBatter.Batter_Contact_SlapChargeBuntStar == Bunt;
 
-    inMemBatter.BatterAtPlate_BatterCharge_Up = parseFloat(document.getElementById("chargeUp").value);
-    inMemBatter.BatterAtPlate_BatterCharge_Down = parseFloat(document.getElementById("chargeDown").value);
+    inMemBatter.BatterAtPlate_BatterCharge_Up = readValues.chargeUp;
+    inMemBatter.BatterAtPlate_BatterCharge_Down = readValues.chargeDown;
     inMemBatter.AtBat_IsFullyCharged = inMemBatter.BatterAtPlate_BatterCharge_Up == 1.0;
 
     inMemBatter.Batter_SlapHitPower = stats[id]["Slap Hit Power"]
@@ -745,18 +857,18 @@ function parseValues() {
     inMemBatter.BatterAtPlate_TrajectoryNearFar = stats[id]["Horizontal Hit Trajectory"];
     inMemBatter.AtBat_HitTrajectoryLow = stats[id]["Vertical Hit Trajectory"];
 
-    inMemBatter.RandomBattingFactors_ChemLinksOnBase = document.getElementById("chemOnBase").value;
-    inMemBatter.Frame_SwingContact1 = document.getElementById("frameOfContact").value;
+    inMemBatter.RandomBattingFactors_ChemLinksOnBase = readValues.RandomBattingFactors_ChemLinksOnBase;
+    inMemBatter.Frame_SwingContact1 = readValues.frameOfContact
 
-    inMemBatter.x7a_AI_Maybe = document.getElementById("isAI").checked ? 1 : 0;
+    inMemBatter.x7a_AI_Maybe = readValues.isAI;
 
     inMemBatter.AtBat_MoonShot = false;
 
     inMemBatter.ControllerInput = {
-        "Up": document.getElementById("inputUp").checked,
-        "Down": document.getElementById("inputDown").checked,
-        "Left": document.getElementById("inputLeft").checked,
-        "Right": document.getElementById("inputRight").checked,
+        "Up"    : readValues.Up,
+        "Down"  : readValues.Down,
+        "Left"  : readValues.Left,
+        "Right" : readValues.Right
     };
 
     inMemBatter.AtBat_CaptainStarHitPitch = stats[id]["Captain Star Hit/Pitch"];
@@ -1485,22 +1597,33 @@ document.addEventListener('DOMContentLoaded', function (event) {
     contactCanvas = document.getElementById("contactOutput");
 
     document.getElementById("submitData").onclick = async function (ev) {
-        try {
-            for (i = 0; i < 1; i++) {
-                parseValues();
-                if (!hitBall()) {
-                    alert("These values would not make contact with the ball");
-                    return;
-                }
-                calculateValues();
-                displayValues();
-                renderTrajectories();
-                // await new Promise(r => setTimeout(r, 1));
-            }
-        } catch (ex) {
-            console.log(ex)
-            alert(ex);
-        }
+        parseInputs();
+        parseValues();
+        calculateBall();
+    };
+
+    document.getElementById("randomData").onclick = async function(ev){
+        randomInputs();
+        parseInputs();
+        parseValues();
+        calculateBall();
     };
 
 });
+
+function calculateBall()
+{
+    try {
+        if (!hitBall()) {
+            alert("These values would not make contact with the ball");
+            return;
+        }
+        calculateValues();
+        displayValues();
+        renderTrajectories();
+            // await new Promise(r => setTimeout(r, 1));
+    } catch (ex) {
+        console.log(ex)
+        alert(ex);
+    }
+}
