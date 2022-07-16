@@ -1331,7 +1331,8 @@ function drawBatGraph() {
 function drawContactGraph()
 {
     let ctx = contactCanvas.getContext('2d');
-    ctx.clearRect(0, 0, contactCanvas.width, contactCanvas.height);
+    ctx.fillStyle = "#ffffffff"
+    ctx.fillRect(0, 0, contactCanvas.width, contactCanvas.height);
     let canvasWidth = contactCanvas.width;
     let canvasHeight = contactCanvas.height;
     
