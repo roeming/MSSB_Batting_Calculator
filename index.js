@@ -1119,7 +1119,8 @@ function calculateValues() {
 
 var horizontalCanvas = undefined;
 var verticalCanvas = undefined;
-var batCanvas = undefined;
+var scaleCanvas = undefined;
+var allBatsCanvas = undefined;
 var contactCanvas = undefined;
 
 function valueToDegrees(v) {
@@ -1285,48 +1286,174 @@ function drawHorizontalGraph() {
     ctx.stroke();
 }
 
-function drawBatGraph() {
+function drawAllBatsGraph()
+{
+    let ctx = allBatsCanvas.getContext('2d');
+    let batImg = document.getElementById("batImg");
+    let flippedBatImg = document.getElementById("batFlippedImg");
+    let scale_0_100 = document.getElementById("scale0100");
+    let scale_100_200 = document.getElementById("scale100200");
+
+    let canvasHeight = allBatsCanvas.height;
+    let canvasWidth = allBatsCanvas.width;
+    
+    ctx.fillStyle = "#FFFFFFFF";
+    ctx.fillRect(0, 0, allBatsCanvas.width, allBatsCanvas.height);
+    let left_side = -0.85;
+    let right_side = 0.85;
+
+    function valueToX(x)
+    {
+        let a = (x - left_side) / (right_side - left_side) * canvasWidth;
+        return a;
+    }
+
+    let section_height = canvasHeight / 54;
+    let bat_height = section_height / 3;
+    
+    let font_size = bat_height / 2;
+
+    ctx.strokeStyle = "#000000FF";
+    ctx.fillStyle = "#FFFFFFFF";
+    ctx.font = font_size + "px Arial";
+
+    
+    for (let i = 0; i < 54; i++)
+    {
+        let hFar = BatterHitbox[i].HorizontalRangeFar;
+        let hNear = BatterHitbox[i].HorizontalRangeNear;
+
+        function calcContactFar(x) {
+            return 100.0 * (x / hFar) + 100.0;
+        }
+    
+        function reverseCalcContactFar(x)
+        {
+            return (x - 100.0) * (hFar / 100.0);
+        }
+    
+        function calcContactNear(x) {
+            return -100.0 * (x / hNear) + 100.0;
+        }
+    
+        function reverseCalcContactNear(x)
+        {
+            return (x - 100.0) * (hNear / -100.0);
+        }
+
+        let start_y = i * section_height;
+        let near = BattingExtensions[BatterHitbox[i].TrimmedBat][0];
+        let far = BattingExtensions[BatterHitbox[i].TrimmedBat][1];
+
+
+        // draw bat
+        let near_x = valueToX(near);
+        let far_x = valueToX(far);
+        let length = far_x - near_x;
+
+        ctx.fillStyle = "#FF0000FF";
+        ctx.fillRect(0, start_y + bat_height, canvasWidth, bat_height);
+        ctx.drawImage(scale_0_100, valueToX(0), start_y + bat_height     ,valueToX(hNear) - valueToX(0), bat_height);
+        ctx.drawImage(scale_100_200, valueToX(0), start_y + bat_height     ,valueToX(hFar) - valueToX(0), bat_height);
+        ctx.drawImage(batImg, near_x, start_y + bat_height, length, bat_height);
+        
+        ctx.fillStyle = "#FFFFFFFF"
+        ctx.fillRect(valueToX(left_side), start_y + bat_height, near_x - valueToX(left_side), bat_height)
+        ctx.fillRect(valueToX(right_side), start_y + bat_height, far_x - valueToX(right_side), bat_height)
+        
+        near_x = valueToX(-far);
+        far_x = valueToX(-near);
+        ctx.fillStyle = "#FF0000FF";
+        ctx.fillRect(0, start_y + (bat_height*2), canvasWidth, bat_height);
+        ctx.drawImage(scale_0_100, valueToX(0), start_y + (bat_height*2)     ,valueToX(hNear) - valueToX(0), bat_height);
+        ctx.drawImage(scale_100_200, valueToX(0), start_y + (bat_height*2)     ,valueToX(hFar) - valueToX(0), bat_height);
+        ctx.drawImage(flippedBatImg, near_x, start_y + (bat_height*2), length, bat_height);
+
+        ctx.fillStyle = "#FFFFFFFF";
+        ctx.fillRect(valueToX(left_side), start_y + (bat_height*2), near_x - valueToX(left_side), bat_height)
+        ctx.fillRect(valueToX(right_side), start_y + (bat_height*2), far_x - valueToX(right_side), bat_height)
+
+        ctx.beginPath();
+        ctx.moveTo(0, start_y);
+        ctx.lineTo(canvasWidth, start_y);
+        ctx.stroke();
+        
+        ctx.fillStyle = "#000000FF";
+        ctx.fillText(stats[i].Name, 0, start_y + font_size);
+    }
+}
+
+
+function drawScaleGraph() {
+    let ctx = scaleCanvas.getContext('2d');
+    ctx.clearRect(0, 0, scaleCanvas.width, scaleCanvas.height);
+    let canvasWidth = scaleCanvas.width;
+    let canvasHeight = scaleCanvas.height;
+
+    let gradient_transparency = "FF";
+    let grad = ctx.createLinearGradient(0, 0, 0, canvasHeight);    
+    grad.addColorStop(0, "red");
+    grad.addColorStop(0.25, "yellow");
+    grad.addColorStop(0.5, "green");
+    grad.addColorStop(0.75, "yellow");
+    grad.addColorStop(1, "red");
+    
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, scaleCanvas.width, scaleCanvas.height);
+
+    let maxMark = 200;
+    ctx.strokeStyle = "#000000FF";
+    ctx.lineWidth = 2;
+
+    for (let i = 0; i <= maxMark; i += 10) {
+        let y_coord = (maxMark - i) / maxMark * canvasHeight;
+
+
+        let font_size = 50;
+        ctx.font = font_size + "px Arial";
+
+        let text_height = font_size;
+        let text_width = (font_size * i.toString().length) / 2;
+
+        let start_x = canvasWidth / 2 - text_width / 2;
+        let start_y = y_coord + font_size / 3;
+
+        let end_y = start_y-text_height;
+        let end_x = start_x + text_width;
+
+        if (i == 0) {
+            start_y -= text_height / 2
+            
+            ctx.beginPath();
+            ctx.moveTo(0, y_coord);
+            ctx.lineTo(canvasWidth, y_coord);
+            ctx.stroke();
+        }
+        else if (i == 200) {
+            start_y += text_height / 2
+
+            ctx.beginPath();
+            ctx.moveTo(0, y_coord);
+            ctx.lineTo(canvasWidth, y_coord);
+            ctx.stroke();
+        }
+        else {
+            ctx.beginPath();
+            ctx.moveTo(0, y_coord);
+            ctx.lineTo(start_x, y_coord);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(end_x, y_coord);
+            ctx.lineTo(canvasWidth, y_coord);
+            ctx.stroke();
+        }
+
+        ctx.fillStyle = "#000000FF";
+        ctx.fillText(i, start_x, start_y)
+    }
+
     return;
-    let ctx = batCanvas.getContext('2d');
-    ctx.fillRect(0, 0, batCanvas.width, batCanvas.height);
-    let canvasWidth = batCanvas.width;
-    let canvasHeight = batCanvas.height;
-
-    let batImg = undefined;
-    if (inMemBatter.AtBat_BatterHand == Righty) {
-        batImg = document.getElementById("batImg");
-    }
-    else {
-        batImg = document.getElementById("batImg");
-    }
-
-    let batWidth = batImg.width;
-    let batHeight = batImg.height;
-
-    let widthMult = canvasWidth / batWidth;
-    let batOffset = (canvasHeight - batHeight * widthMult) / 2;
-
-    batWidth = batWidth * widthMult;
-    batHeight = batHeight * widthMult;
-
-    let ballImg = document.getElementById("ballImg");
-    let ballHeight = ballImg.width;
-
-    function normalizeBallPos(pos) {
-        let near = BattingExtensions[inMemBatter.AtBat_TrimmedBat][0];
-        let far = BattingExtensions[inMemBatter.AtBat_TrimmedBat][1];
-
-        let normalized = (pos - near) / (far - near);
-
-        return (normalized * canvasWidth);
-    }
-    normalizedBallPos = normalizeBallPos(Display_Output.DiffInX);
-    // normalizedBallPos = canvasWidth/2;
-    let ballPos = normalizedBallPos - (ballHeight / 2);
-    let ballOffset = (batOffset + (batOffset + batHeight)) / 2 - ballHeight / 2;
-
-    ctx.drawImage(batImg, 0, batOffset, batWidth, batHeight);
-    ctx.drawImage(ballImg, ballPos, ballOffset, ballHeight, ballHeight);
 }
 
 function drawContactGraph()
@@ -1338,8 +1465,8 @@ function drawContactGraph()
     let canvasHeight = contactCanvas.height;
     
     ctx.lineWidth = 1;
-    ctx.strokeStyle = "#000000FF"
     let transparency = "FF";
+    ctx.strokeStyle = "#000000" + transparency
     
     let colors = ["#FF0000", "#FFFF00", "#00FF00", "#FFFF00", "#FF0000"];
     
@@ -1642,7 +1769,8 @@ function drawContactGraph()
 function renderTrajectories() {
     drawVerticalGraph();
     drawHorizontalGraph();
-    drawBatGraph();
+    // drawScaleGraph();
+    // drawAllBatsGraph();
     drawContactGraph();
 }
 
@@ -1660,8 +1788,9 @@ function displayValues() {
 document.addEventListener('DOMContentLoaded', function (event) {
     horizontalCanvas = document.getElementById("horizontalOutput");
     verticalCanvas = document.getElementById("verticalOutput");
-    // batCanvas = document.getElementById("batOutput");
+    scaleCanvas = document.getElementById("scaleGraph");
     contactCanvas = document.getElementById("contactOutput");
+    allBatsCanvas = document.getElementById("allBatsGraph");
 
     document.getElementById("submitData").onclick = async function (ev) {
         parseInputs();
