@@ -10,7 +10,7 @@ const contact_ChemLinkMultipliers = [1.0, 1.05, 1.1, 1.2];
 
 const BattingAngleRanges = [[[[0, 0], [0, 0], [-700, -500], [-500, -350], [-400, -250], [-350, -100], [-150, 250], [200, 300], [250, 400], [350, 550], [550, 700], [0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [-600, -400], [-400, -200], [-300, -100], [-200, 200], [100, 400], [300, 450], [350, 600], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]], [[[0, 0], [0, 0], [-750, -500], [-500, -300], [-300, -150], [-150, 200], [200, 400], [300, 450], [400, 600], [500, 600], [600, 700], [0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [-600, -400], [-400, -200], [-300, 100], [100, 400], [100, 400], [200, 500], [500, 700], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]], [[[0, 0], [0, 0], [-700, -600], [-600, -400], [-450, -350], [-400, -300], [-350, -200], [-200, 150], [150, 300], [300, 700], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], [[0, 0], [0, 0], [0, 0], [-550, -300], [-400, -200], [-300, -100], [-300, -100], [-100, 200], [200, 450], [450, 650], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]]]];
 
-const BattingVerticalAngleRanges = [[[[[0, 10, 20, 30, 40], [20, 20, 20, 20, 20], [10, 25, 30, 25, 10], [20, 20, 20, 20, 20], [40, 30, 20, 10, 0]], [[0, 10, 20, 30, 40], [20, 20, 20, 20, 20], [10, 25, 30, 25, 10], [20, 20, 20, 20, 20], [40, 30, 20, 10, 0]]], [[[10, 0, 20, 30, 40], [20, 22, 22, 28, 8], [20, 25, 25, 25, 5], [20, 22, 22, 28, 8], [10, 0, 20, 30, 40]], [[10, 0, 20, 30, 40], [20, 22, 22, 28, 8], [20, 25, 25, 25, 5], [20, 22, 22, 28, 8], [10, 0, 20, 30, 40]]]], [[[[0, 10, 20, 30, 40], [5, 5, 15, 40, 35], [5, 5, 20, 40, 35], [5, 5, 15, 40, 35], [40, 30, 20, 10, 0]], [[0, 10, 20, 30, 40], [5, 5, 15, 40, 35], [5, 5, 20, 40, 35], [5, 5, 15, 40, 35], [40, 30, 20, 10, 0]]], [[[5, 0, 10, 40, 45], [5, 21, 12, 29, 33], [5, 23, 15, 27, 30], [5, 21, 12, 29, 33], [5, 0, 10, 40, 45]], [[5, 0, 10, 40, 45], [5, 21, 12, 29, 33], [5, 23, 15, 27, 30], [5, 21, 12, 29, 33], [5, 0, 10, 40, 45]]]], [[[[10, 20, 20, 20, 30], [35, 40, 15, 5, 5], [30, 40, 20, 5, 5], [35, 40, 15, 5, 5], [40, 30, 20, 5, 5]], [[10, 20, 20, 20, 30], [35, 40, 15, 5, 5], [30, 40, 20, 5, 5], [35, 40, 15, 5, 5], [40, 30, 20, 5, 5]]], [[[10, 0, 20, 30, 40], [35, 30, 22, 10, 3], [30, 30, 25, 15, 0], [35, 30, 22, 10, 3], [10, 0, 20, 30, 40]], [[10, 0, 20, 30, 40], [35, 30, 22, 10, 3], [30, 30, 25, 15, 0], [35, 30, 22, 10, 3], [10, 0, 20, 30, 40]]]]];
+const BattingVerticalAngleWeights = [[[[[0, 10, 20, 30, 40], [20, 20, 20, 20, 20], [10, 25, 30, 25, 10], [20, 20, 20, 20, 20], [40, 30, 20, 10, 0]], [[0, 10, 20, 30, 40], [20, 20, 20, 20, 20], [10, 25, 30, 25, 10], [20, 20, 20, 20, 20], [40, 30, 20, 10, 0]]], [[[10, 0, 20, 30, 40], [20, 22, 22, 28, 8], [20, 25, 25, 25, 5], [20, 22, 22, 28, 8], [10, 0, 20, 30, 40]], [[10, 0, 20, 30, 40], [20, 22, 22, 28, 8], [20, 25, 25, 25, 5], [20, 22, 22, 28, 8], [10, 0, 20, 30, 40]]]], [[[[0, 10, 20, 30, 40], [5, 5, 15, 40, 35], [5, 5, 20, 40, 35], [5, 5, 15, 40, 35], [40, 30, 20, 10, 0]], [[0, 10, 20, 30, 40], [5, 5, 15, 40, 35], [5, 5, 20, 40, 35], [5, 5, 15, 40, 35], [40, 30, 20, 10, 0]]], [[[5, 0, 10, 40, 45], [5, 21, 12, 29, 33], [5, 23, 15, 27, 30], [5, 21, 12, 29, 33], [5, 0, 10, 40, 45]], [[5, 0, 10, 40, 45], [5, 21, 12, 29, 33], [5, 23, 15, 27, 30], [5, 21, 12, 29, 33], [5, 0, 10, 40, 45]]]], [[[[10, 20, 20, 20, 30], [35, 40, 15, 5, 5], [30, 40, 20, 5, 5], [35, 40, 15, 5, 5], [40, 30, 20, 5, 5]], [[10, 20, 20, 20, 30], [35, 40, 15, 5, 5], [30, 40, 20, 5, 5], [35, 40, 15, 5, 5], [40, 30, 20, 5, 5]]], [[[10, 0, 20, 30, 40], [35, 30, 22, 10, 3], [30, 30, 25, 15, 0], [35, 30, 22, 10, 3], [10, 0, 20, 30, 40]], [[10, 0, 20, 30, 40], [35, 30, 22, 10, 3], [30, 30, 25, 15, 0], [35, 30, 22, 10, 3], [10, 0, 20, 30, 40]]]]];
 
 const UINT_ARRAY_ARRAY_807b7134 = [[100, 100, 1118480, 1118480, 0], [100, 100, 1118480, 1118480, 2], [101, 102, 1118480, 1118480, 1], [90, 90, 1118480, 1118480, 0], [94, 95, 1118480, 1118480, 0], [102, 103, 1118480, 1118480, 1], [90, 90, 1118480, 17825792, 0], [85, 90, 1118480, 1118480, 0], [102, 103, 1118480, 1118480, 1], [100, 100, 1118480, 1118480, 0], [95, 100, 1118480, 1118480, 2], [104, 105, 1118480, 1118480, 1], [60, 60, 1118480, 1118480, 0], [70, 75, 1118480, 1118480, 0], [87, 90, 1118480, 1118480, 1], [70, 70, 1118480, 1118480, 0], [80, 85, 1118480, 1118480, 0], [105, 110, 1118480, 1118480, 1], [50, 50, 1114384, 1114384, 0]];
 
@@ -40,7 +40,7 @@ const FLOAT_ARRAY_ARRAY_807b72bc = [[0.5, 0.001, 0.003], [0.25, 0.006, 0.008]]
 
 var StaticRandomInt1 = 7769; // <= 32767
 var StaticRandomInt2 = 5359; // <= 32767
-var USHORT_8089269c = 1828; // <= 65535
+var USHORT_8089269c = 1828; // <= 32767
 
 const RightSour = 0;
 const RightNice = 1;
@@ -174,7 +174,7 @@ function calculateContact() {
     // Higher is better, makes ranges larger
     contactSize = contactSize / 100.0;
     // Contact sizes are only based on slap/charge and trimming, and AI
-    let big_Array = BallContactArray_807b6294[inMemBatter.AtBat_TrimmedBat][inMemBatter.Batter_Contact_SlapChargeBuntStar][inMemBatter.x7a_AI_Maybe];
+    let big_Array = BallContactArray_807b6294[inMemBatter.AtBat_TrimmedBat][inMemBatter.Batter_Contact_SlapChargeBuntStar][inMemBatter.EasyBatting];
     let b0 = big_Array[0];
     let b1 = big_Array[1];
     let b2 = big_Array[2];
@@ -419,14 +419,14 @@ function calculateVerticalAngle() {
                     }
                 }
 
-                pabVar4 = BattingVerticalAngleRanges[inMemBatter.AtBat_HitTrajectoryLow][slapOrCharge][inMemBatter.x7a_AI_Maybe][inMemBatter.Batter_ContactType];
+                pabVar4 = BattingVerticalAngleWeights[inMemBatter.AtBat_HitTrajectoryLow][slapOrCharge][inMemBatter.EasyBatting][inMemBatter.Batter_ContactType];
                 let local_28 = pabVar4[0];
                 let local_27 = pabVar4[1];
                 let local_26 = pabVar4[2];
                 let local_25 = pabVar4[3];
                 let local_24 = pabVar4[4];
 
-                uVar4 = UINT_ARRAY_ARRAY_807b7134[inMemBatter.Batter_HitType][3 - inMemBatter.x7a_AI_Maybe];
+                uVar4 = UINT_ARRAY_ARRAY_807b7134[inMemBatter.Batter_HitType][3 - inMemBatter.EasyBatting];
                 uVar6 = UINT_ARRAY_ARRAY_807b7134[inMemBatter.Batter_HitType][4];
                 uVar5 = uVar4 & 0xf000000;
                 if (uVar5 == 0) {
@@ -524,6 +524,7 @@ function calculateVerticalAngle() {
         }
     }
     else {
+        // Captain Star Swings
         lowerRange = CaptainStarSwingBattingVerticalAngleRanges[captainStarSwing - 1][inMemBatter.Batter_ContactType][0];
         higherRange = CaptainStarSwingBattingVerticalAngleRanges[captainStarSwing - 1][inMemBatter.Batter_ContactType][1];
     }
@@ -622,7 +623,7 @@ function calculateHitPower() {
         power = (power * RandomBattingFactors_ChemLinkMult0[inMemBatter.RandomBattingFactors_ChemLinksOnBase]);
     }
     if (-1 < inMemBatter.Batter_HitType) {
-        power = (power * UINT_ARRAY_ARRAY_807b7134[inMemBatter.Batter_HitType][1 - inMemBatter.x7a_AI_Maybe]) / 100.0;
+        power = (power * UINT_ARRAY_ARRAY_807b7134[inMemBatter.Batter_HitType][1 - inMemBatter.EasyBatting]) / 100.0;
     }
     fVar1 = (calcedDistance * ((power / 100.0) * (1.0 - 0.8) + 0.8));
 
@@ -785,7 +786,7 @@ function parseInputs()
 
     readValues.frameOfContact = document.getElementById("frameOfContact").value;
 
-    readValues.isAI = document.getElementById("isAI").checked ? 1 : 0;
+    readValues.EasyBatting = document.getElementById("isEasyBatting").checked ? 1 : 0;
 }
 
 function parseValues() {
@@ -868,7 +869,7 @@ function parseValues() {
     inMemBatter.RandomBattingFactors_ChemLinksOnBase = readValues.RandomBattingFactors_ChemLinksOnBase;
     inMemBatter.Frame_SwingContact1 = readValues.frameOfContact
 
-    inMemBatter.x7a_AI_Maybe = readValues.isAI;
+    inMemBatter.EasyBatting = readValues.EasyBatting;
 
     inMemBatter.AtBat_MoonShot = false;
 
@@ -979,7 +980,7 @@ function convertPowerToVelocity() {
     inMemBall.ballVelocity = {X:0, Y:0, Z:0};
     inMemBall.ballAcceleration = {X:0, Y:0, Z:0};
 
-    let power = Hit_HorizontalPower * 0.5;
+    let half_power = Hit_HorizontalPower * 0.5;
     let horizontalAngle = mssbConvertToRadians(Hit_HorizontalAngle);
     let verticalAngle = mssbConvertToRadians(Hit_VerticalAngle);
 
@@ -988,19 +989,19 @@ function convertPowerToVelocity() {
 
     let c_verticalAngle = Math.cos(verticalAngle);
 
-    let dVar7 = power * c_verticalAngle;
+    let half_power_x_cos_vert_angle = half_power * c_verticalAngle;
     let c_horizontalAngle = Math.cos(horizontalAngle);
-    let dVar9 = c_horizontalAngle;
+    let cos_horizontalAngle = c_horizontalAngle;
 
     let s_horizontalAngle = Math.sin(horizontalAngle);
     let dVar8 = s_horizontalAngle;
 
-    verticalAngle = dVar9 * dVar7;
+    verticalAngle = cos_horizontalAngle * half_power_x_cos_vert_angle;
     s_verticalAngle = 100.0;
-    horizontalAngle = dVar8 * dVar7;
+    horizontalAngle = dVar8 * half_power_x_cos_vert_angle;
     inMemBall.ballVelocity.X = verticalAngle / s_verticalAngle;
     inMemBall.ballAcceleration.Y = AddedContactGravity;
-    inMemBall.ballVelocity.Y = (power * dVar6) / s_verticalAngle;
+    inMemBall.ballVelocity.Y = (half_power * dVar6) / s_verticalAngle;
     inMemBall.ballAcceleration.X = 0.0;
     inMemBall.ballAcceleration.Z = 0.0;
     inMemBall.ballVelocity.Z = horizontalAngle / s_verticalAngle;
@@ -1046,13 +1047,13 @@ function convertPowerToVelocity() {
         fVar2 = (fvar1 * fVar1);
         if (0.0 <= fVar2) {
             if (0.0 < fVar1) {
-                horizontalAngle = -dVar9;
+                horizontalAngle = -cos_horizontalAngle;
                 verticalAngle = dVar8;
             }
         }
       else {
             fVar2 = -fVar2;
-            horizontalAngle = dVar9;
+            horizontalAngle = cos_horizontalAngle;
             verticalAngle = -dVar8;
         }
         inMemBall.ballAcceleration.Z = (horizontalAngle * fVar2) * FLOAT_ARRAY_ARRAY_807b72bc[iVar2][2];
