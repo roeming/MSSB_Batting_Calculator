@@ -812,9 +812,9 @@ function parseValues() {
         inMemPitcher.ChargePitchType = PitchChargeType_None;
     }
 
-    let StaticRandomInt1 = undefined;
-    let StaticRandomInt2 = undefined;
-    let USHORT_8089269c = undefined;
+    StaticRandomInt1 = undefined;
+    StaticRandomInt2 = undefined;
+    USHORT_8089269c = undefined;
 
     if (readValues.StaticRandomInt1 != undefined) {
         StaticRandomInt1 = readValues.StaticRandomInt1;
@@ -981,92 +981,102 @@ function convertPowerToVelocity() {
     inMemBall.ballAcceleration = {X:0, Y:0, Z:0};
 
     let half_power = Hit_HorizontalPower * 0.5;
+
     let horizontalAngle = mssbConvertToRadians(Hit_HorizontalAngle);
     let verticalAngle = mssbConvertToRadians(Hit_VerticalAngle);
 
     let s_verticalAngle = Math.sin(verticalAngle);
-    let dVar6 = s_verticalAngle;
-
     let c_verticalAngle = Math.cos(verticalAngle);
 
     let half_power_x_cos_vert_angle = half_power * c_verticalAngle;
+
     let c_horizontalAngle = Math.cos(horizontalAngle);
-    let cos_horizontalAngle = c_horizontalAngle;
-
     let s_horizontalAngle = Math.sin(horizontalAngle);
-    let dVar8 = s_horizontalAngle;
 
-    verticalAngle = cos_horizontalAngle * half_power_x_cos_vert_angle;
-    s_verticalAngle = 100.0;
-    horizontalAngle = dVar8 * half_power_x_cos_vert_angle;
-    inMemBall.ballVelocity.X = verticalAngle / s_verticalAngle;
-    inMemBall.ballAcceleration.Y = AddedContactGravity;
-    inMemBall.ballVelocity.Y = (half_power * dVar6) / s_verticalAngle;
+    let x_groundVelocity = c_horizontalAngle * half_power_x_cos_vert_angle;
+    let z_groundVelocity = s_horizontalAngle * half_power_x_cos_vert_angle;
+    
+    inMemBall.ballVelocity.X = x_groundVelocity / 100.0;
+    inMemBall.ballVelocity.Y = (half_power * s_verticalAngle) / 100.0;
+    inMemBall.ballVelocity.Z = z_groundVelocity / 100.0;
+
     inMemBall.ballAcceleration.X = 0.0;
+    inMemBall.ballAcceleration.Y = AddedContactGravity;
     inMemBall.ballAcceleration.Z = 0.0;
-    inMemBall.ballVelocity.Z = horizontalAngle / s_verticalAngle;
 
     if ((inMemBatter.Batter_IsBunting == false) && (Hit_HorizontalAngle < 0x901 || 0xeff < Hit_HorizontalAngle)) {
         // has Super Curve
-        iVar2 = [0xe, 0x35, 0x25].find(x => x == inMemBatter.Batter_CharID) != undefined ? 1 : 0;
+        let hasSuperCurve = [0xe, 0x35, 0x25].find(x => x == inMemBatter.Batter_CharID) != undefined ? 1 : 0;
+
+        // non-captain star swing 3 has super curve
         if (inMemBatter.nonCaptainStarSwingContact == 3) {
-            iVar2 = 1;
+            hasSuperCurve = 1;
         }
-        fVar1 = inMemBatter.CalculatedBallPos;
+
+        // if contact above 100, flip it
+        let contact = inMemBatter.CalculatedBallPos;
         if (100.0 < inMemBatter.CalculatedBallPos) {
-            fVar1 = 200.0 - inMemBatter.CalculatedBallPos;
+            contact = 200.0 - inMemBatter.CalculatedBallPos;
         }
-        iVar4 = Hit_VerticalAngle;
-        fvar1 = (1.0 - (1.0 - fVar1 * 0.01) * FLOAT_ARRAY_ARRAY_807b72bc[iVar2][0]);
-        if ((0x180 < iVar4) && (iVar4 < 0x401)) {
-            uVar3 = iVar4 - 0x180;
-            fVar1 =  uVar3;
+
+        let vAngle = Hit_VerticalAngle;
+        let fVar1 = (1.0 - (1.0 - contact * 0.01) * FLOAT_ARRAY_ARRAY_807b72bc[hasSuperCurve][0]);
+
+        if ((0x180 < vAngle) && (vAngle < 0x401)) {
+            uVar3 = vAngle - 0x180;
+            contact =  uVar3;
             if (512.0 < uVar3) {
-                fVar1 = 512.0;
+                contact = 512.0;
             }
-            fvar1 = fvar1 * (1.0 - fVar1 * 1.0 / 512.0);
+            fVar1 = fVar1 * (1.0 - contact * 1.0 / 512.0);
         }
-        iVar4 = Hit_HorizontalAngle;
-        if ((iVar4 < 0xc01) && (0xff < iVar4)) {
-            if (0x700 < iVar4) {
-                iVar4 = 0x700;
+
+        let hAngle = Hit_HorizontalAngle;
+        
+        if ((hAngle < 0xc01) && (0xff < hAngle)) {
+            if (0x700 < hAngle) {
+                hAngle = 0x700;
             }
         }
         else {
-            iVar4 = 0x100;
+            hAngle = 0x100;
         }
         if (inMemBatter.AtBat_BatterHand != Righty) {
-            iVar4 = 0x800 - iVar4;
+            hAngle = 0x800 - hAngle;
         }
-        if (iVar4 < 0x460) {
-            fVar1 = (0x460 - iVar4) / 864.0;
+        if (hAngle < 0x460) {
+            contact = (0x460 - hAngle) / 864.0;
         }
         else {
-            fVar1 = (0x460 - iVar4) / 672.0;
+            contact = (0x460 - hAngle) / 672.0;
         }
-        fVar2 = (fvar1 * fVar1);
-        if (0.0 <= fVar2) {
-            if (0.0 < fVar1) {
-                horizontalAngle = -cos_horizontalAngle;
-                verticalAngle = dVar8;
+        
+        contact = (fVar1 * contact);
+        if (0.0 <= contact) {
+            if (0.0 < contact) {
+                z_groundVelocity = -c_horizontalAngle;
+                x_groundVelocity = s_horizontalAngle;
             }
         }
-      else {
-            fVar2 = -fVar2;
-            horizontalAngle = cos_horizontalAngle;
-            verticalAngle = -dVar8;
+        else {
+            contact = -contact;
+            z_groundVelocity = c_horizontalAngle;
+            x_groundVelocity = -s_horizontalAngle;
         }
-        inMemBall.ballAcceleration.Z = (horizontalAngle * fVar2) * FLOAT_ARRAY_ARRAY_807b72bc[iVar2][2];
-        inMemBall.ballAcceleration.X = (verticalAngle * fVar2) * FLOAT_ARRAY_ARRAY_807b72bc[iVar2][1];
+
+        // finalize acceleration 
+        inMemBall.ballAcceleration.Z = (z_groundVelocity * contact) * FLOAT_ARRAY_ARRAY_807b72bc[hasSuperCurve][2];
+        inMemBall.ballAcceleration.X = (x_groundVelocity * contact) * FLOAT_ARRAY_ARRAY_807b72bc[hasSuperCurve][1];
+
+        // if z is backwards, flip it
         if (0.0 < inMemBall.ballAcceleration.Z) {
             inMemBall.ballAcceleration.Z = -inMemBall.ballAcceleration.Z;
         }
+        // if batting lefty, flip it
         if (inMemBatter.AtBat_BatterHand != Righty) {
             inMemBall.ballAcceleration.X = -inMemBall.ballAcceleration.X;
         }
     }
-    console.log(inMemBall.ballVelocity);
-    console.log(inMemBall.ballAcceleration);
 }
 
 var CalculatedPoints = [];
