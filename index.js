@@ -1080,38 +1080,31 @@ function convertPowerToVelocity() {
 }
 
 var CalculatedPoints = [];
-var isHomeRun = false;
 
 function calculateHitGround()
 {
     let p = { X: 0, Y: BatterHitbox[inMemBatter.Batter_CharID].PitchingHeight, Z: 0 }
     CalculatedPoints = []
     
-    let v = inMemBall.ballVelocity;
-    let a = inMemBall.ballAcceleration;
+    let v = JSON.parse(JSON.stringify(inMemBall.ballVelocity));
+    let a = JSON.parse(JSON.stringify(inMemBall.ballAcceleration));
 
     const airResistance = 0.996;
     const gravity = 0.00275;
     
-    isHomeRun = false;
-    let foundHomerun = false;
     while (p.Y > 0)
     {
-        CalculatedPoints.push(p);
-        p = { X: p.X + v.X, Y: p.Y + v.Y, Z: p.Z + v.Z };
+        CalculatedPoints.push({ X: p.X, Y: p.Y, Z: p.Z });
+        p.X = p.X + v.X;
+        p.Y = p.Y + v.Y;
+        p.Z = p.Z + v.Z;
 
         v.X = v.X * airResistance + a.X;
         v.Y = (v.Y - gravity) * airResistance + a.Y;
         v.Z = v.Z * airResistance + a.Z;
-        if (Math.sqrt(p.X ** 2 + p.Z ** 2) >= 100 && p.Y > 5 && !foundHomerun)
-        {
-            isHomeRun = true;
-            foundHomerun = true;
-        }
     }
-    Display_Output["Hit Ground"] = {"Point": CalculatedPoints[CalculatedPoints.length-1], "Distance" :Math.sqrt(CalculatedPoints[CalculatedPoints.length-1].X**2 + CalculatedPoints[CalculatedPoints.length-1].Z**2)}
+    Display_Output["Hit Ground"] = { "Frames": CalculatedPoints.length, "Point": CalculatedPoints[CalculatedPoints.length - 1], "Distance": Math.sqrt(CalculatedPoints[CalculatedPoints.length - 1].X ** 2 + CalculatedPoints[CalculatedPoints.length - 1].Z ** 2) }
     console.log(CalculatedPoints)
-    // console.log(isHomeRun)
 }
 
 function calculateValues() {
