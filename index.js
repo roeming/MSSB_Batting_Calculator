@@ -42,11 +42,11 @@ var StaticRandomInt1 = 7769; // <= 32767
 var StaticRandomInt2 = 5359; // <= 32767
 var USHORT_8089269c = 1828; // <= 32767
 
-const RightSour = 0;
-const RightNice = 1;
+const LeftSour = 0;
+const LeftNice = 1;
 const Perfect = 2;
-const LeftNice = 3;
-const LeftSour = 4;
+const RightNice = 3;
+const RightSour = 4;
 
 const Righty = 0;
 const Lefty = 1;
@@ -179,23 +179,29 @@ function calculateContact() {
     let b1 = big_Array[1];
     let b2 = big_Array[2];
     let b3 = big_Array[3];
-    inMemBatter.RightNiceThreshold = contactSize * (big_Array[4] - b0) + b0;
-    inMemBatter.RightPerfectThreshold = contactSize * (big_Array[5] - b1) + b1;
-    inMemBatter.LeftPerfectThreshold = contactSize * (big_Array[6] - b2) + b2;
-    inMemBatter.LeftNiceThreshold = contactSize * (big_Array[7] - b3) + b3;
+    
+    inMemBatter.LeftNiceThreshold = contactSize * (big_Array[4] - b0) + b0;
+    inMemBatter.LeftPerfectThreshold = contactSize * (big_Array[5] - b1) + b1;
+    inMemBatter.RightPerfectThreshold = contactSize * (big_Array[6] - b2) + b2;
+    inMemBatter.RightNiceThreshold = contactSize * (big_Array[7] - b3) + b3;
 
-    inMemBatter.Batter_ContactType = RightSour;
-    if (inMemBatter.RightNiceThreshold <= inMemBatter.CalculatedBallPos) {
-        inMemBatter.Batter_ContactType = RightNice;
+    Display_Output.LeftNiceThreshold = inMemBatter.LeftNiceThreshold;
+    Display_Output.LeftPerfectThreshold = inMemBatter.LeftPerfectThreshold;
+    Display_Output.RightPerfectThreshold = inMemBatter.RightPerfectThreshold;
+    Display_Output.RightNiceThreshold = inMemBatter.RightNiceThreshold;
 
-        if (inMemBatter.RightPerfectThreshold <= inMemBatter.CalculatedBallPos) {
+    inMemBatter.Batter_ContactType = LeftSour;
+    if (inMemBatter.LeftNiceThreshold <= inMemBatter.CalculatedBallPos) {
+        inMemBatter.Batter_ContactType = LeftNice;
+
+        if (inMemBatter.LeftPerfectThreshold <= inMemBatter.CalculatedBallPos) {
             inMemBatter.Batter_ContactType = Perfect;
 
-            if (inMemBatter.LeftPerfectThreshold <= inMemBatter.CalculatedBallPos) {
-                inMemBatter.Batter_ContactType = LeftNice;
+            if (inMemBatter.RightPerfectThreshold <= inMemBatter.CalculatedBallPos) {
+                inMemBatter.Batter_ContactType = RightNice;
 
-                if (inMemBatter.LeftNiceThreshold <= inMemBatter.CalculatedBallPos) {
-                    inMemBatter.Batter_ContactType = LeftSour;
+                if (inMemBatter.RightNiceThreshold <= inMemBatter.CalculatedBallPos) {
+                    inMemBatter.Batter_ContactType = RightSour;
                 }
             }
         }
@@ -203,28 +209,28 @@ function calculateContact() {
 
     if (inMemBatter.Batter_ContactType == Perfect) {
         if (inMemBatter.CalculatedBallPos >= 100.0) {
-            inMemBatter.field15_0x44 = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.RightPerfectThreshold) / (inMemBatter.LeftPerfectThreshold - inMemBatter.RightPerfectThreshold);
+            inMemBatter.field15_0x44 = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.LeftPerfectThreshold) / (inMemBatter.RightPerfectThreshold - inMemBatter.LeftPerfectThreshold);
         }
         else {
-            inMemBatter.field15_0x44 = (inMemBatter.CalculatedBallPos - inMemBatter.RightPerfectThreshold) / (inMemBatter.LeftPerfectThreshold - inMemBatter.RightPerfectThreshold);
+            inMemBatter.field15_0x44 = (inMemBatter.CalculatedBallPos - inMemBatter.LeftPerfectThreshold) / (inMemBatter.RightPerfectThreshold - inMemBatter.LeftPerfectThreshold);
         }
         if ((ContactPerfectThresholds[inMemBatter.Batter_Contact_SlapChargeBuntStar][0] <= inMemBatter.CalculatedBallPos) && (inMemBatter.CalculatedBallPos <= ContactPerfectThresholds[inMemBatter.Batter_Contact_SlapChargeBuntStar][1])) {
             inMemBatter.mostPerfectContact = true;
         }
     }
     else if (inMemBatter.Batter_ContactType < Perfect) {
-        if (inMemBatter.Batter_ContactType == RightSour) {
-            inMemBatter.field15_0x44 = inMemBatter.CalculatedBallPos / inMemBatter.RightNiceThreshold;
+        if (inMemBatter.Batter_ContactType == LeftSour) {
+            inMemBatter.field15_0x44 = inMemBatter.CalculatedBallPos / inMemBatter.LeftNiceThreshold;
         }
         else {
-            inMemBatter.field15_0x44 = (inMemBatter.CalculatedBallPos - inMemBatter.RightNiceThreshold) / (inMemBatter.RightPerfectThreshold - inMemBatter.RightNiceThreshold);
+            inMemBatter.field15_0x44 = (inMemBatter.CalculatedBallPos - inMemBatter.LeftNiceThreshold) / (inMemBatter.LeftPerfectThreshold - inMemBatter.LeftNiceThreshold);
         }
     }
-    else if (inMemBatter.Batter_ContactType < LeftSour) {
-        inMemBatter.field15_0x44 = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.LeftPerfectThreshold) / (inMemBatter.LeftNiceThreshold - inMemBatter.LeftPerfectThreshold);
+    else if (inMemBatter.Batter_ContactType < RightSour) {
+        inMemBatter.field15_0x44 = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.RightPerfectThreshold) / (inMemBatter.RightNiceThreshold - inMemBatter.RightPerfectThreshold);
     }
     else {
-        inMemBatter.field15_0x44 = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.LeftNiceThreshold) / (200.0 - inMemBatter.LeftNiceThreshold);
+        inMemBatter.field15_0x44 = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.RightNiceThreshold) / (200.0 - inMemBatter.RightNiceThreshold);
     }
     if (inMemBatter.AtBat_MoonShot != false) {
         if (inMemBatter.Batter_ContactType == Perfect) {
@@ -241,7 +247,7 @@ function calculateContact() {
         if (inMemBatter.Batter_ContactType == Perfect) {
             inMemBatter.Batter_HitType = PerfectSlap;
         }
-        else if ((inMemBatter.Batter_ContactType == RightNice) || (inMemBatter.Batter_ContactType == LeftNice)) {
+        else if ((inMemBatter.Batter_ContactType == LeftNice) || (inMemBatter.Batter_ContactType == RightNice)) {
             inMemBatter.Batter_HitType = NiceSlap;
         }
         // Adjust the HitType on a perfect pitch
@@ -276,7 +282,7 @@ function calculateContact() {
             }
         }
     }
-    Display_Output.Contact = ["Near Sour", "Near Nice", "Perfect", "Far Nice", "Far Sour"][inMemBatter.Batter_ContactType]
+    Display_Output.Contact = ["Left Sour", "Left Nice", "Perfect", "Right Nice", "Right Sour"][inMemBatter.Batter_ContactType]
     return;
 }
 
@@ -609,7 +615,7 @@ function calculateHitPower() {
     }
     if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 0) && (inMemBatter.nonCaptainStarSwingContact == 0)) {
         perfectNiceSour = 2;
-        if ((inMemBatter.Batter_ContactType == RightNice) || (inMemBatter.Batter_ContactType == LeftNice)) {
+        if ((inMemBatter.Batter_ContactType == LeftNice) || (inMemBatter.Batter_ContactType == RightNice)) {
             perfectNiceSour = 1;
         }
         else if (inMemBatter.Batter_ContactType == Perfect) {
@@ -1095,6 +1101,7 @@ function calculateHitGround()
     while (p.Y > 0)
     {
         CalculatedPoints.push({ X: p.X, Y: p.Y, Z: p.Z });
+        
         p.X = p.X + v.X;
         p.Y = p.Y + v.Y;
         p.Z = p.Z + v.Z;
@@ -1103,6 +1110,7 @@ function calculateHitGround()
         v.Y = (v.Y - gravity) * airResistance + a.Y;
         v.Z = v.Z * airResistance + a.Z;
     }
+
     Display_Output["Hit Ground"] = { "Frames": CalculatedPoints.length, "Point": CalculatedPoints[CalculatedPoints.length - 1], "Distance": Math.sqrt(CalculatedPoints[CalculatedPoints.length - 1].X ** 2 + CalculatedPoints[CalculatedPoints.length - 1].Z ** 2) }
     console.log(CalculatedPoints)
 }
@@ -1609,7 +1617,7 @@ function drawContactGraph()
     ctx.fillStyle = "#000000FF";
     ctx.setLineDash([5,5]);
     
-    [inMemBatter.LeftNiceThreshold, inMemBatter.LeftPerfectThreshold, inMemBatter.RightPerfectThreshold, inMemBatter.RightNiceThreshold].forEach(e => {
+    [inMemBatter.RightNiceThreshold, inMemBatter.RightPerfectThreshold, inMemBatter.LeftPerfectThreshold, inMemBatter.LeftNiceThreshold].forEach(e => {
         let fy = convertContactToY(e);
         
         ctx.beginPath();
