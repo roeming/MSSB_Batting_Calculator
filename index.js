@@ -122,6 +122,55 @@ function LinearInterpolateToNewRange(value, prevMin, prevMax, nextMin, nextMax) 
 
 }
 
+function individualCalcContactThresholds(charID, slapChargeStarBunt, chem, captain, easyBatting)
+{
+    let id = charID;
+    let trimmedBat = BatterHitbox[id].TrimmedBat == 1.0 ? 1 : 0;
+    let chargeUp = slapChargeStarBunt == 1 ? 0.5 : 0.0;
+    let contactSize = stats[id]["Slap Contact Spot Size"];
+    
+    if (captain && slapChargeStarBunt == 2) {
+        // if there was a star swing, make contact size 100
+        chargeUp = 0.0;
+        contactSize = 100.0;
+    }
+
+    if (slapChargeStarBunt == 3) {
+        if (chargeUp <= 0.0) {
+            // If not charging
+            if (chem != 0) {
+                // If there are chem links on base, make the contact size larger
+                contactSize *= contact_ChemLinkMultipliers[chem];
+            }
+        }
+        else {
+            // else there is a charge
+            contactSize = stats[id]["Charge Contact Spot Size"];
+        }
+    }
+    else {
+        // else bunting, use bunting contact size
+        contactSize = stats[id]["Bunting"];
+    }
+
+    // Higher is better, makes ranges larger
+    contactSize = contactSize / 100.0;
+    // Contact sizes are only based on slap/charge and trimming, and easy batting
+    let big_Array = BallContactArray_807b6294[trimmedBat][slapChargeStarBunt][easyBatting];
+    let b0 = big_Array[0];
+    let b1 = big_Array[1];
+    let b2 = big_Array[2];
+    let b3 = big_Array[3];
+    
+    return    {
+        LeftNiceThreshold : contactSize * (big_Array[4] - b0) + b0,
+        LeftPerfectThreshold : contactSize * (big_Array[5] - b1) + b1,
+        RightPerfectThreshold : contactSize * (big_Array[6] - b2) + b2,
+        RightNiceThreshold : contactSize * (big_Array[7] - b3) + b3
+    };
+}
+
+
 function calculateContact() {
     let chargeUp = inMemBatter.BatterAtPlate_BatterCharge_Up;
     let contactSize = inMemBatter.Batter_SlapContactSize;
@@ -209,10 +258,10 @@ function calculateContact() {
 
     if (inMemBatter.Batter_ContactType == Perfect) {
         if (inMemBatter.CalculatedBallPos >= 100.0) {
-            inMemBatter.field15_0x44 = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.LeftPerfectThreshold) / (inMemBatter.RightPerfectThreshold - inMemBatter.LeftPerfectThreshold);
+            inMemBatter.ContactQuality = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.LeftPerfectThreshold) / (inMemBatter.RightPerfectThreshold - inMemBatter.LeftPerfectThreshold);
         }
         else {
-            inMemBatter.field15_0x44 = (inMemBatter.CalculatedBallPos - inMemBatter.LeftPerfectThreshold) / (inMemBatter.RightPerfectThreshold - inMemBatter.LeftPerfectThreshold);
+            inMemBatter.ContactQuality = (inMemBatter.CalculatedBallPos - inMemBatter.LeftPerfectThreshold) / (inMemBatter.RightPerfectThreshold - inMemBatter.LeftPerfectThreshold);
         }
         if ((ContactPerfectThresholds[inMemBatter.Batter_Contact_SlapChargeBuntStar][0] <= inMemBatter.CalculatedBallPos) && (inMemBatter.CalculatedBallPos <= ContactPerfectThresholds[inMemBatter.Batter_Contact_SlapChargeBuntStar][1])) {
             inMemBatter.mostPerfectContact = true;
@@ -220,17 +269,17 @@ function calculateContact() {
     }
     else if (inMemBatter.Batter_ContactType < Perfect) {
         if (inMemBatter.Batter_ContactType == LeftSour) {
-            inMemBatter.field15_0x44 = inMemBatter.CalculatedBallPos / inMemBatter.LeftNiceThreshold;
+            inMemBatter.ContactQuality = inMemBatter.CalculatedBallPos / inMemBatter.LeftNiceThreshold;
         }
         else {
-            inMemBatter.field15_0x44 = (inMemBatter.CalculatedBallPos - inMemBatter.LeftNiceThreshold) / (inMemBatter.LeftPerfectThreshold - inMemBatter.LeftNiceThreshold);
+            inMemBatter.ContactQuality = (inMemBatter.CalculatedBallPos - inMemBatter.LeftNiceThreshold) / (inMemBatter.LeftPerfectThreshold - inMemBatter.LeftNiceThreshold);
         }
     }
     else if (inMemBatter.Batter_ContactType < RightSour) {
-        inMemBatter.field15_0x44 = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.RightPerfectThreshold) / (inMemBatter.RightNiceThreshold - inMemBatter.RightPerfectThreshold);
+        inMemBatter.ContactQuality = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.RightPerfectThreshold) / (inMemBatter.RightNiceThreshold - inMemBatter.RightPerfectThreshold);
     }
     else {
-        inMemBatter.field15_0x44 = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.RightNiceThreshold) / (200.0 - inMemBatter.RightNiceThreshold);
+        inMemBatter.ContactQuality = 1.0 - (inMemBatter.CalculatedBallPos - inMemBatter.RightNiceThreshold) / (200.0 - inMemBatter.RightNiceThreshold);
     }
     if (inMemBatter.AtBat_MoonShot != false) {
         if (inMemBatter.Batter_ContactType == Perfect) {
@@ -283,6 +332,8 @@ function calculateContact() {
         }
     }
     Display_Output.Contact = ["Left Sour", "Left Nice", "Perfect", "Right Nice", "Right Sour"][inMemBatter.Batter_ContactType]
+    Display_Output.ContactQuality = inMemBatter.ContactQuality;
+    Display_Output.AbsoluteContact = inMemBatter.CalculatedBallPos;
     return;
 }
 
@@ -597,7 +648,7 @@ function calculateHitPower() {
     // High Value
     arrayV2 = contactArray[1];
     // 0x44 is a range 0-1 towards the better contact
-    calcedDistance = inMemBatter.field15_0x44 * (arrayV2 - arrayV1) + arrayV1;
+    calcedDistance = inMemBatter.ContactQuality * (arrayV2 - arrayV1) + arrayV1;
     // Non star swing
     if (inMemBatter.AtBat_Mystery_CaptainStarSwing == 0) {
         if (charged <= 0.0) {
@@ -793,6 +844,8 @@ function parseInputs()
     readValues.frameOfContact = document.getElementById("frameOfContact").value;
 
     readValues.EasyBatting = document.getElementById("isEasyBatting").checked ? 1 : 0;
+    
+    readValues.isStar = document.getElementById("isStar").checked ? 1 : 0;
 }
 
 function parseValues() {
@@ -868,6 +921,7 @@ function parseValues() {
 
     inMemBatter.Batter_SlapContactSize = stats[id]["Slap Contact Spot Size"];
     inMemBatter.Batter_ChargeContactSize = stats[id]["Charge Contact Spot Size"];
+    inMemBatter.Batter_Bunting = stats[id]["Bunting"];
 
     inMemBatter.BatterAtPlate_TrajectoryNearFar = stats[id]["Horizontal Hit Trajectory"];
     inMemBatter.AtBat_HitTrajectoryLow = stats[id]["Vertical Hit Trajectory"];
@@ -876,6 +930,7 @@ function parseValues() {
     inMemBatter.Frame_SwingContact1 = readValues.frameOfContact
 
     inMemBatter.EasyBatting = readValues.EasyBatting;
+    inMemBatter.isStar = readValues.isStar;
 
     inMemBatter.AtBat_MoonShot = false;
 
@@ -893,16 +948,15 @@ function parseValues() {
     inMemBatter.nonCaptainStarSwingContact = 0;
     inMemBatter.AtBat_Mystery_CaptainStarSwing = 0;
     inMemBatter.AtBat_Mystery_DidPopFlyOrGrounderConnect = false;
-    inMemBatter.AtBat_Mystery_IsStarHit = inMemBatter.Batter_Contact_SlapChargeBuntStar == Star;
 
     let starsForBatter = 4;
-    if (inMemBatter.Batter_Contact_SlapChargeBuntStar == Star) {
+    if (inMemBatter.isStar) {
         if (inMemBatter.Batter_IsBunting == false) {
             if (starsForBatter != 0) {
                 if ((inMemBatter.AtBat_IsFullyCharged == false) || (starsForBatter < 5)) {
                     if (inMemBatter.AtBat_CaptainStarHitPitch == 0) {
                         if ((starsForBatter < 1) || (inMemBatter.AtBat_NonCaptainStarSwing == 0)) {
-                            inMemBatter.AtBat_Mystery_IsStarHit = false;
+                            inMemBatter.isStar = false;
                         }
                         else {
                             inMemBatter.nonCaptainStarSwingContact = inMemBatter.AtBat_NonCaptainStarSwing;
@@ -926,14 +980,14 @@ function parseValues() {
                     // else if (Team_CaptainRosterLoc[TeamBatting] == inMemBatter.AtBat_RosterID) {
                     else if (false) {
                         if (starsForBatter < 1) {
-                            inMemBatter.AtBat_Mystery_IsStarHit = false;
+                            inMemBatter.isStar = false;
                         }
                         else {
                             inMemBatter.Batter_Contact_SlapChargeBuntStar = Star;
                         }
                     }
                     else if (starsForBatter < 2) {
-                        inMemBatter.AtBat_Mystery_IsStarHit = false;
+                        inMemBatter.isStar = false;
                     }
                     else {
                         inMemBatter.Batter_Contact_SlapChargeBuntStar = Star;
@@ -1298,6 +1352,7 @@ function drawHorizontalGraph() {
     ctx.stroke();
 }
 
+var allBatsBegin = 0;
 function drawAllBatsGraph()
 {
     let ctx = allBatsCanvas.getContext('2d');
@@ -1320,8 +1375,11 @@ function drawAllBatsGraph()
         return a;
     }
 
-    let section_height = canvasHeight / 54;
-    let bat_height = section_height / 3;
+    const numSections = 54;
+    const numBats = 9; 
+
+    let section_height = canvasHeight / numSections;
+    let bat_height = section_height / (numBats);
     
     let font_size = bat_height / 2;
 
@@ -1329,8 +1387,8 @@ function drawAllBatsGraph()
     ctx.fillStyle = "#FFFFFFFF";
     ctx.font = font_size + "px Arial";
 
-    
-    for (let i = 0; i < 54; i++)
+    offset = 0;
+    for (let i = 0; i < numSections; i++)
     {
         let hFar = BatterHitbox[i].HorizontalRangeFar;
         let hNear = BatterHitbox[i].HorizontalRangeNear;
@@ -1353,7 +1411,8 @@ function drawAllBatsGraph()
             return (x - 100.0) * (hNear / -100.0);
         }
 
-        let start_y = i * section_height;
+        let start_y = offset * section_height;
+        offset += 1;
         let near = BattingExtensions[BatterHitbox[i].TrimmedBat][0];
         let far = BattingExtensions[BatterHitbox[i].TrimmedBat][1];
 
@@ -1363,35 +1422,195 @@ function drawAllBatsGraph()
         let far_x = valueToX(far);
         let length = far_x - near_x;
 
+        let bat1_start = start_y + bat_height * 1;
+        let bat1_height = bat_height - 5;
+
+        let bat2_start = start_y + bat_height * 2 + 5;
+        let bat2_height = bat_height - 5;
+
+        // draw top bat
         ctx.fillStyle = "#FF0000FF";
-        ctx.fillRect(0, start_y + bat_height, canvasWidth, bat_height);
-        ctx.drawImage(scale_0_100, valueToX(0), start_y + bat_height     ,valueToX(hNear) - valueToX(0), bat_height);
-        ctx.drawImage(scale_100_200, valueToX(0), start_y + bat_height     ,valueToX(hFar) - valueToX(0), bat_height);
-        ctx.drawImage(batImg, near_x, start_y + bat_height, length, bat_height);
+        ctx.fillRect(0, bat1_start, canvasWidth, bat1_height);
+        ctx.drawImage(scale_0_100, valueToX(0), bat1_start, valueToX(hNear) - valueToX(0), bat1_height);
+        ctx.drawImage(scale_100_200, valueToX(0), bat1_start, valueToX(hFar) - valueToX(0), bat1_height);
+        ctx.drawImage(batImg, near_x, bat1_start, length, bat1_height);
         
         ctx.fillStyle = "#FFFFFFFF"
-        ctx.fillRect(valueToX(left_side), start_y + bat_height, near_x - valueToX(left_side), bat_height)
-        ctx.fillRect(valueToX(right_side), start_y + bat_height, far_x - valueToX(right_side), bat_height)
+        ctx.fillRect(valueToX(left_side), bat1_start, near_x - valueToX(left_side), bat1_height)
+        ctx.fillRect(valueToX(right_side), bat1_start, far_x - valueToX(right_side), bat1_height)
         
+        // draw bottom bat
         near_x = valueToX(-far);
         far_x = valueToX(-near);
         ctx.fillStyle = "#FF0000FF";
-        ctx.fillRect(0, start_y + (bat_height*2), canvasWidth, bat_height);
-        ctx.drawImage(scale_0_100, valueToX(0), start_y + (bat_height*2)     ,valueToX(hNear) - valueToX(0), bat_height);
-        ctx.drawImage(scale_100_200, valueToX(0), start_y + (bat_height*2)     ,valueToX(hFar) - valueToX(0), bat_height);
-        ctx.drawImage(flippedBatImg, near_x, start_y + (bat_height*2), length, bat_height);
+        ctx.fillRect(0, bat2_start, canvasWidth, bat2_height);
+        ctx.drawImage(scale_0_100, valueToX(0), bat2_start, valueToX(hNear) - valueToX(0), bat2_height);
+        ctx.drawImage(scale_100_200, valueToX(0), bat2_start,valueToX(hFar) - valueToX(0), bat2_height);
+        ctx.drawImage(flippedBatImg, near_x, bat2_start, length, bat2_height);
 
         ctx.fillStyle = "#FFFFFFFF";
-        ctx.fillRect(valueToX(left_side), start_y + (bat_height*2), near_x - valueToX(left_side), bat_height)
-        ctx.fillRect(valueToX(right_side), start_y + (bat_height*2), far_x - valueToX(right_side), bat_height)
+        ctx.fillRect(valueToX(left_side), bat2_start, near_x - valueToX(left_side), bat2_height)
+        ctx.fillRect(valueToX(right_side), bat2_start, far_x - valueToX(right_side), bat2_height)
+
+        //draw slap bats
+        let bat3_start = start_y + bat_height * 3;
+        let bat4_start = start_y + bat_height * 4;
+        let bat3_height = bat_height;
+        let bat4_height = bat_height;
+        let thresholds = individualCalcContactThresholds(i, 0, 0, stats[i]["Can Be Captain"] == 1 ? true : false, 0);
+        
+        thresholds = [
+            valueToX(reverseCalcContactNear(thresholds.LeftNiceThreshold)), 
+            valueToX(reverseCalcContactNear(thresholds.LeftPerfectThreshold)), 
+            valueToX(reverseCalcContactFar(thresholds.RightPerfectThreshold)), 
+            valueToX(reverseCalcContactFar(thresholds.RightNiceThreshold))
+        ];
+        // red background 
+        ctx.fillStyle = "#FF0000FF";
+        ctx.fillRect(0, bat3_start, canvasWidth, bat3_height * 2);
+        // yellow nice
+        ctx.fillStyle = "#FFFF00FF";
+        ctx.fillRect(thresholds[0], bat3_start, thresholds[3] - thresholds[0], bat3_height * 2);
+        // green perfect
+        ctx.fillStyle = "#00FF00FF";
+        ctx.fillRect(thresholds[1], bat3_start, thresholds[2] - thresholds[1], bat3_height * 2);
+
+        near_x = valueToX(near);
+        far_x = valueToX(far);
+        ctx.drawImage(batImg, near_x, bat3_start, length, bat3_height);
+        ctx.fillStyle = "#FFFFFFFF";
+        ctx.fillRect(valueToX(left_side), bat3_start, near_x - valueToX(left_side), bat3_height)
+        ctx.fillRect(valueToX(right_side), bat3_start, far_x - valueToX(right_side), bat3_height)
+
+        near_x = valueToX(-far);
+        far_x = valueToX(-near);
+        ctx.drawImage(flippedBatImg, near_x, bat4_start, length, bat4_height);
+        ctx.fillRect(valueToX(left_side), bat4_start, near_x - valueToX(left_side), bat4_height)
+        ctx.fillRect(valueToX(right_side), bat4_start, far_x - valueToX(right_side), bat4_height)
+
+        //draw charge bats
+        let bat5_start = start_y + bat_height * 5;
+        let bat6_start = start_y + bat_height * 6;
+        let bat5_height = bat_height;
+        let bat6_height = bat_height;
+        thresholds = individualCalcContactThresholds(i, 1, 0, stats[i]["Can Be Captain"] == 1 ? true : false, 0);
+        
+        thresholds = [
+            valueToX(reverseCalcContactNear(thresholds.LeftNiceThreshold)), 
+            valueToX(reverseCalcContactNear(thresholds.LeftPerfectThreshold)), 
+            valueToX(reverseCalcContactFar(thresholds.RightPerfectThreshold)), 
+            valueToX(reverseCalcContactFar(thresholds.RightNiceThreshold))
+        ];
+
+        // red background 
+        ctx.fillStyle = "#FF0000FF";
+        ctx.fillRect(0, bat5_start, canvasWidth, bat5_height * 2);
+        // yellow nice
+        ctx.fillStyle = "#FFFF00FF";
+        ctx.fillRect(thresholds[0], bat5_start, thresholds[3] - thresholds[0], bat5_height * 2);
+        // green perfect
+        ctx.fillStyle = "#00FF00FF";
+        ctx.fillRect(thresholds[1], bat5_start, thresholds[2] - thresholds[1], bat5_height * 2);
+
+        near_x = valueToX(near);
+        far_x = valueToX(far);
+        ctx.drawImage(batImg, near_x, bat5_start, length, bat5_height);
+        ctx.fillStyle = "#FFFFFFFF";
+        ctx.fillRect(valueToX(left_side), bat5_start, near_x - valueToX(left_side), bat5_height)
+        ctx.fillRect(valueToX(right_side), bat5_start, far_x - valueToX(right_side), bat5_height)
+
+        near_x = valueToX(-far);
+        far_x = valueToX(-near);
+        ctx.drawImage(flippedBatImg, near_x, bat6_start, length, bat6_height);
+        ctx.fillRect(valueToX(left_side), bat6_start, near_x - valueToX(left_side), bat6_height)
+        ctx.fillRect(valueToX(right_side), bat6_start, far_x - valueToX(right_side), bat6_height)
+
+        //draw star bats
+        let bat7_start = start_y + bat_height * 7;
+        let bat8_start = start_y + bat_height * 8;
+        let bat7_height = bat_height;
+        let bat8_height = bat_height;
+        thresholds = individualCalcContactThresholds(i, 2, 0, stats[i]["Can Be Captain"] == 1 ? true : false, 0);
+        
+        thresholds = [
+            valueToX(reverseCalcContactNear(thresholds.LeftNiceThreshold)), 
+            valueToX(reverseCalcContactNear(thresholds.LeftPerfectThreshold)), 
+            valueToX(reverseCalcContactFar(thresholds.RightPerfectThreshold)), 
+            valueToX(reverseCalcContactFar(thresholds.RightNiceThreshold))
+        ];
+
+        // red background 
+        ctx.fillStyle = "#FF0000FF";
+        ctx.fillRect(0, bat7_start, canvasWidth, bat7_height * 2);
+        // yellow nice
+        ctx.fillStyle = "#FFFF00FF";
+        ctx.fillRect(thresholds[0], bat7_start, thresholds[3] - thresholds[0], bat7_height * 2);
+        // green perfect
+        ctx.fillStyle = "#00FF00FF";
+        ctx.fillRect(thresholds[1], bat7_start, thresholds[2] - thresholds[1], bat7_height * 2);
+
+        near_x = valueToX(near);
+        far_x = valueToX(far);
+        ctx.drawImage(batImg, near_x, bat7_start, length, bat7_height);
+        ctx.fillStyle = "#FFFFFFFF";
+        ctx.fillRect(valueToX(left_side), bat7_start, near_x - valueToX(left_side), bat7_height)
+        ctx.fillRect(valueToX(right_side), bat7_start, far_x - valueToX(right_side), bat7_height)
+
+        near_x = valueToX(-far);
+        far_x = valueToX(-near);
+        ctx.drawImage(flippedBatImg, near_x, bat8_start, length, bat8_height);
+        ctx.fillRect(valueToX(left_side), bat8_start, near_x - valueToX(left_side), bat8_height)
+        ctx.fillRect(valueToX(right_side), bat8_start, far_x - valueToX(right_side), bat8_height)
 
         ctx.beginPath();
         ctx.moveTo(0, start_y);
         ctx.lineTo(canvasWidth, start_y);
         ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, bat3_start);
+        ctx.lineTo(canvasWidth, bat3_start);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, bat5_start);
+        ctx.lineTo(canvasWidth, bat5_start);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, bat7_start);
+        ctx.lineTo(canvasWidth, bat7_start);
+        ctx.stroke();
         
         ctx.fillStyle = "#000000FF";
         ctx.fillText(stats[i].Name, 0, start_y + font_size);
+
+        ctx.fillText("Slap", valueToX(far), bat3_start + font_size)
+
+        ctx.fillText("Charge", valueToX(far), bat5_start + font_size)
+        
+        ctx.fillText("Star", valueToX(far), bat7_start + font_size)
+    }
+    
+    ctx.font = 10 + "px Arial";
+    for (let i = left_side; i <= right_side + 0.01; i += 0.05)
+    {
+        i = Number.parseFloat(i.toFixed(2));
+        let dist = right_side - left_side;
+
+        let u = ((i - left_side) / dist) * canvasWidth; 
+
+        ctx.strokeStyle = "#00000040";
+        ctx.beginPath();
+        ctx.moveTo(u, 0);
+        ctx.lineTo(u, canvasHeight);
+        ctx.stroke();
+
+        for(let ii = 0; ii < numSections; ii++)
+        {
+            ctx.fillText(i.toFixed(2), u-10, canvasHeight * (ii / numSections) + (bat_height * 2) + 4);
+        }
+
     }
 }
 
@@ -1462,7 +1681,7 @@ function drawScaleGraph() {
         }
 
         ctx.fillStyle = "#000000FF";
-        ctx.fillText(i, start_x, start_y)
+        ctx.fillText(100-Math.abs(100-i), start_x, start_y)
     }
 
     return;

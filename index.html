@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
 <style>
-
+.wrapper{
+    display:grid;
+    width: fit-content;
+}
+.graphs{
+    grid-column: 1;
+    grid-row: 1;
+}
+.output{
+    grid-column: 2;
+    grid-row: 1;
+}
 </style>
 
 <head>
@@ -158,6 +169,9 @@
     <!-- <option value="3">(3) Bunt</option> -->
 </select><label>(byte) 8089099b</label><br><br>
 
+<label for="isStar">Is Star</label>
+<input id="isStar" name="isStar" type="checkbox"/><label>(bool) 808909b1</label><br><br>
+
 <label for="pitchType">Pitch Curve/Charge/ChangeUp</label>
 <select name="pitchType" id="pitchType">
     <option value="0">Curve</option>
@@ -221,12 +235,16 @@
 <!-- <img id="batFlippedImg" src="bat transparent lefty.png" hidden="true"><br> -->
 
 <!-- <canvas id="scaleGraph" width="200" height="1600"></canvas><br> -->
-<!-- <canvas id="allBatsGraph" width="1200" height="10000"></canvas><br> -->
-<canvas id="contactOutput" width="650", height="450"></canvas><br>
-<canvas id="verticalOutput" width="300", height="300" ></canvas><br>
-<canvas id="horizontalOutput" width="300", height="300"></canvas><br>
-<div>
-    <pre id="outputText"></pre>
-</div>
+<!-- <canvas id="allBatsGraph" width="1200" height="24030"></canvas><br> -->
+<div class="wrapper">
+    <div class="graphs">
+        <canvas id="contactOutput" width="650", height="450"></canvas><br>
+        <canvas id="verticalOutput" width="300", height="300" ></canvas><br>
+        <canvas id="horizontalOutput" width="300", height="300"></canvas><br>
+    </div>
+    <div class="output">
+        <pre id="outputText"></pre>
+    </div>
+</grid>
 
 </html>
