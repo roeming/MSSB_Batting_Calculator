@@ -453,7 +453,7 @@ function calculateHorizontalAngle() {
 function calculateVerticalAngle() {
     iVar5 = 0;
     upDown = 0;
-    slapOrCharge = inMemBatter.Batter_Contact_SlapChargeBuntStar;
+    slapOrCharge = inMemBatter.Batter_Contact_SlapChargeBuntStar != 0;
     pInput = inMemBatter.ControllerInput;
 
     let handledVerticalZones = false;
