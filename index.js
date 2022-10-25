@@ -1305,18 +1305,21 @@ function drawHorizontalGraph() {
 
     // Wall
 
-    let offset = { "X": horizontalCanvas.width / 2, "Y": 250 }
+    let offset = { "X": horizontalCanvas.width / 2, "Y": 300 }
     let origin = { "X": 0, "Y": 0 }
     let length = 190;
     let leftPole = degreeToPoint(135, length);
     let RightPole = degreeToPoint(45, length);
+    let scale = length / Math.sqrt(2*57*57); // converts length to m at mario stadium (since the foul pole is at (57,57))
 
-    // Draw foul lines
+    // Draw Mario Stadium boundaries
     ctx.beginPath();
     ctx.moveTo(leftPole.X + offset.X, leftPole.Y + offset.Y);
     ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
     ctx.lineTo(RightPole.X + offset.X, RightPole.Y + offset.Y);
-    ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+    ctx.lineTo(16*scale + offset.X, -100*scale + offset.Y);
+    ctx.lineTo(-14*scale + offset.X, -100*scale +offset.Y);
+    ctx.lineTo(-44*scale + offset.X, -78.7*scale + offset.Y);
     ctx.closePath();
     ctx.stroke();
 
@@ -1620,7 +1623,7 @@ function drawScaleGraph() {
     ctx.clearRect(0, 0, scaleCanvas.width, scaleCanvas.height);
     let canvasWidth = scaleCanvas.width;
     let canvasHeight = scaleCanvas.height;
-
+canvasHeight
     let gradient_transparency = "FF";
     let grad = ctx.createLinearGradient(0, 0, 0, canvasHeight);    
     grad.addColorStop(0, "red");
@@ -2053,4 +2056,9 @@ function calculateBall()
         console.log(ex)
         alert(ex);
     }
+}
+
+function isHomeRun()
+{ 
+
 }
