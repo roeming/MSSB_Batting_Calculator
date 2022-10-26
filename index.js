@@ -97,6 +97,7 @@ var Hit_HorizontalPower = 0;
 var AddedContactGravity = 0;
 var Display_Output = {};
 var homeRunInd = undefined;
+var outfieldWallDist = undefined;
 
 function floor(f) {
     return Math.trunc(f);
@@ -1233,7 +1234,8 @@ function drawVerticalGraph() {
     // Make Lines
     let offset = { "X": 20, "Y": 250 }
     let origin = { "X": 0, "Y": 0 }
-    let length = 190;
+    let length = 200;
+    let scale = length / outfieldWallDist;
     let highRange = degreeToPoint(90, length);
     let lowRange = degreeToPoint(0, length);
 
@@ -1241,6 +1243,8 @@ function drawVerticalGraph() {
     ctx.beginPath();
     ctx.moveTo(highRange.X + offset.X, highRange.Y + offset.Y);
     ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+    ctx.lineTo(lowRange.X + offset.X, lowRange.Y + offset.Y);
+    ctx.lineTo(lowRange.X + offset.X, lowRange.Y + offset.Y - 3*scale); //draw outfield wall
     ctx.lineTo(lowRange.X + offset.X, lowRange.Y + offset.Y);
     ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
     ctx.closePath();
@@ -1287,12 +1291,13 @@ function drawVerticalGraph() {
     ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y);
 
     function pointToRender(x, y)
-    {
-        return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
+    {        
+        return {X: offset.X + x * scale, Y: offset.Y - y * scale};
+        //return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
     }
     
     CalculatedPoints.forEach(element => {
-        let newP = pointToRender(element.Z, element.Y);
+        let newP = pointToRender(Math.sqrt(element.X*element.X + element.Z*element.Z), element.Y);
         ctx.lineTo(newP.X, newP.Y);
 
     });
@@ -2067,9 +2072,12 @@ function isHomeRun()
 { 
     function checkHeight(x, y, z, m, c) 
     {
-        if (z > m*x + c) {
+        wallZ = m*x+c;
+        outfieldWallDist = Math.sqrt(x*x + wallZ*wallZ);
+        if (z > wallZ) {
             if (y > 3) {// wall height of mario stadium
-                homeRunInd = true
+                homeRunInd = true;
+                outfieldWallDist = Math.sqrt(x*x + z*z);
             } 
         }
     }
@@ -2078,9 +2086,9 @@ function isHomeRun()
 
     CalculatedPoints.forEach(element => {
         if (homeRunInd == true) {
-            // nothing
-        } else if (element.X < -57) {
-            // nothing
+            // nothing 
+        } else if (element.X < -57) { //foul
+            outfieldWallDist = Math.sqrt(2*57*57);
         } else if (element.X < -44) {
             checkHeight(element.X, element.Y, element.Z, 1.65, 151.3)
         } else if (element.X < -14) {
@@ -2089,6 +2097,8 @@ function isHomeRun()
             checkHeight(element.X, element.Y, element.Z, 0, 100)
         } else if (element.X < 57) {
             checkHeight(element.X, element.Y, element.Z, -1.05, 116.8)
-        } else {} //foul 
+        } else { //foul  
+            outfieldWallDist = Math.sqrt(2*57*57);
+        } 
     });
 }
