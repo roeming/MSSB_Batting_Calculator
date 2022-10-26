@@ -1340,14 +1340,15 @@ function drawHorizontalGraph() {
     ctx.fill();
 
     // Draw point
-    let outfield = 100;
+    //let outfield = 75;
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y);
 
     function pointToRender(x, y)
     {
-        return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
+        return {X: offset.X + x * scale, Y: offset.Y - y * scale};
+        //return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
     }
     
     CalculatedPoints.forEach(element => {
