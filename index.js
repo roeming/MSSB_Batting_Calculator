@@ -96,6 +96,7 @@ var Hit_VerticalAngle = 0;
 var Hit_HorizontalPower = 0;
 var AddedContactGravity = 0;
 var Display_Output = {};
+var homeRunInd = undefined;
 
 function floor(f) {
     return Math.trunc(f);
@@ -1181,6 +1182,8 @@ function calculateValues() {
     convertPowerToVelocity();
 
     calculateHitGround();
+
+    isHomeRun();
 }
 
 var horizontalCanvas = undefined;
@@ -2016,6 +2019,7 @@ function displayValues() {
     Display_Output["Horzontal Hit Angle (in degrees)"] = (Hit_HorizontalAngle - 0x400) * 360 / 4096;
     Display_Output["Vertical Hit Angle (in degrees)"] = (Hit_VerticalAngle) * 360 / 4096;
     Display_Output["ball"] = inMemBall; 
+    Display_Output["Is homerun?"] = homeRunInd;
     output.innerText = JSON.stringify(Display_Output, null, 4);
 }
 
@@ -2060,5 +2064,30 @@ function calculateBall()
 
 function isHomeRun()
 { 
+    function checkHeight(x, y, z, m, c) 
+    {
+        if (z > m*x + c) {
+            if (y > 3) {// wall height of mario stadium
+                homeRunInd = true
+            } 
+        }
+    }
 
+    homeRunInd = false;
+
+    CalculatedPoints.forEach(element => {
+        if (homeRunInd == true) {
+            // nothing
+        } else if (element.X < -57) {
+            // nothing
+        } else if (element.X < -44) {
+            checkHeight(element.X, element.Y, element.Z, 1.65, 151.3)
+        } else if (element.X < -14) {
+            checkHeight(element.X, element.Y, element.Z, 0.69, 110.7)
+        } else if (element.X < 16) {
+            checkHeight(element.X, element.Y, element.Z, 0, 100)
+        } else if (element.X < 57) {
+            checkHeight(element.X, element.Y, element.Z, -1.05, 116.8)
+        } else {} //foul 
+    });
 }
