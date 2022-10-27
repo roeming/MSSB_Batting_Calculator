@@ -91,13 +91,15 @@ const PushStickAway = 2;
 var inMemBatter = undefined;
 var inMemPitcher = undefined;
 var inMemBall = undefined;
-var Hit_HorizontalAngle = 0;
-var Hit_VerticalAngle = 0;
-var Hit_HorizontalPower = 0;
+var Hit_HorizontalAngle = [];
+var Hit_VerticalAngle = [];
+var Hit_HorizontalPower = [];
 var AddedContactGravity = 0;
 var Display_Output = {};
-var homeRunInd = undefined;
-var outfieldWallDist = undefined;
+var homeRunInd = [];
+var outfieldWallDist = [];
+var hitToDraw = [];
+var numSims = 100;
 
 function floor(f) {
     return Math.trunc(f);
@@ -396,7 +398,7 @@ function WeightedRandomIndex(vals, count) {
     return 0;
 }
 
-function calculateHorizontalAngle() {
+function calculateHorizontalAngle(j) {
     let input = inMemBatter.ControllerInput;
 
     isCharge = inMemBatter.Batter_Contact_SlapChargeBuntStar != Slap ? 1 : 0;
@@ -449,10 +451,10 @@ function calculateHorizontalAngle() {
             iVar2 = 0x1800 - iVar2;
         }
     }
-    Hit_HorizontalAngle = AdjustBallAngle(iVar2);
+    Hit_HorizontalAngle[j] = AdjustBallAngle(iVar2);
 }
 
-function calculateVerticalAngle() {
+function calculateVerticalAngle(j) {
     iVar5 = 0;
     upDown = 0;
     slapOrCharge = inMemBatter.Batter_Contact_SlapChargeBuntStar != 0 ? 1 : 0;
@@ -598,24 +600,24 @@ function calculateVerticalAngle() {
 
     sVar3 = lowerRange + (StaticRandomInt1 - floor(StaticRandomInt1 / (higherRange - lowerRange)) * (higherRange - lowerRange));
 
-    Hit_VerticalAngle = sVar3;
+    Hit_VerticalAngle[j] = sVar3;
 
-    if (Hit_VerticalAngle < 0x401) {
-        if (Hit_VerticalAngle < -0x400) {
-            Hit_VerticalAngle += 0x1000;
-            Hit_HorizontalAngle = AdjustBallAngle(Hit_HorizontalAngle + 0x800);
+    if (Hit_VerticalAngle[j] < 0x401) {
+        if (Hit_VerticalAngle[j] < -0x400) {
+            Hit_VerticalAngle[j] += 0x1000;
+            Hit_HorizontalAngle[j] = AdjustBallAngle(Hit_HorizontalAngle[j] + 0x800);
         }
-        else if (Hit_VerticalAngle < 0) {
-            Hit_VerticalAngle += 0x1000;
+        else if (Hit_VerticalAngle[j] < 0) {
+            Hit_VerticalAngle[j] += 0x1000;
         }
     }
     else {
-        Hit_VerticalAngle = 0x800 - Hit_VerticalAngle;
-        Hit_HorizontalAngle = AdjustBallAngle(Hit_HorizontalAngle + 0x800);
+        Hit_VerticalAngle[j] = 0x800 - Hit_VerticalAngle[j];
+        Hit_HorizontalAngle[j] = AdjustBallAngle(Hit_HorizontalAngle[j] + 0x800);
     }
 }
 
-function calculateHitPower() {
+function calculateHitPower(j) {
     let uVar2 = 0;
     let niceSour = inMemBatter.Batter_ContactType;
     let charged = inMemBatter.BatterAtPlate_BatterCharge_Up;
@@ -688,7 +690,7 @@ function calculateHitPower() {
 
     AddedContactGravity = 0.00001 * contactArray[2];
     if (inMemBatter.AtBat_Mystery_CaptainStarSwing == 0) {
-        ballAngle = Hit_HorizontalAngle;
+        ballAngle = Hit_HorizontalAngle[j];
         if (ballAngle < 0x200) {
             niceSour = 0;
         }
@@ -724,7 +726,7 @@ function calculateHitPower() {
         fVar1 = (fVar1 * AtBat_MoonShotMultiplier);
     }
 
-    Hit_HorizontalPower = floor(fVar1);
+    Hit_HorizontalPower[j] = floor(fVar1);
     return;
 }
 
@@ -1038,14 +1040,14 @@ function mssbConvertToRadians(param_1)
     return dVar1;
 }
 
-function convertPowerToVelocity() {
+function convertPowerToVelocity(j) {
     inMemBall.ballVelocity = {X:0, Y:0, Z:0};
     inMemBall.ballAcceleration = {X:0, Y:0, Z:0};
 
-    let half_power = Hit_HorizontalPower * 0.5;
+    let half_power = Hit_HorizontalPower[j] * 0.5;
 
-    let horizontalAngle = mssbConvertToRadians(Hit_HorizontalAngle);
-    let verticalAngle = mssbConvertToRadians(Hit_VerticalAngle);
+    let horizontalAngle = mssbConvertToRadians(Hit_HorizontalAngle[j]);
+    let verticalAngle = mssbConvertToRadians(Hit_VerticalAngle[j]);
 
     let s_verticalAngle = Math.sin(verticalAngle);
     let c_verticalAngle = Math.cos(verticalAngle);
@@ -1066,7 +1068,7 @@ function convertPowerToVelocity() {
     inMemBall.ballAcceleration.Y = AddedContactGravity;
     inMemBall.ballAcceleration.Z = 0.0;
 
-    if ((inMemBatter.Batter_IsBunting == false) && (Hit_HorizontalAngle < 0x901 || 0xeff < Hit_HorizontalAngle)) {
+    if ((inMemBatter.Batter_IsBunting == false) && (Hit_HorizontalAngle[j] < 0x901 || 0xeff < Hit_HorizontalAngle[j])) {
         // has Super Curve
         let hasSuperCurve = [0xe, 0x35, 0x25].find(x => x == inMemBatter.Batter_CharID) != undefined ? 1 : 0;
 
@@ -1081,7 +1083,7 @@ function convertPowerToVelocity() {
             contact = 200.0 - inMemBatter.CalculatedBallPos;
         }
 
-        let vAngle = Hit_VerticalAngle;
+        let vAngle = Hit_VerticalAngle[j];
         let fVar1 = (1.0 - (1.0 - contact * 0.01) * FLOAT_ARRAY_ARRAY_807b72bc[hasSuperCurve][0]);
 
         if ((0x180 < vAngle) && (vAngle < 0x401)) {
@@ -1093,7 +1095,7 @@ function convertPowerToVelocity() {
             fVar1 = fVar1 * (1.0 - contact * 1.0 / 512.0);
         }
 
-        let hAngle = Hit_HorizontalAngle;
+        let hAngle = Hit_HorizontalAngle[j];
         
         if ((hAngle < 0xc01) && (0xff < hAngle)) {
             if (0x700 < hAngle) {
@@ -1143,10 +1145,10 @@ function convertPowerToVelocity() {
 
 var CalculatedPoints = [];
 
-function calculateHitGround()
+function calculateHitGround(j)
 {
     let p = { X: 0, Y: BatterHitbox[inMemBatter.Batter_CharID].PitchingHeight, Z: 0 }
-    CalculatedPoints = []
+    CalculatedPoints[j] = []
     
     let v = JSON.parse(JSON.stringify(inMemBall.ballVelocity));
     let a = JSON.parse(JSON.stringify(inMemBall.ballAcceleration));
@@ -1156,7 +1158,7 @@ function calculateHitGround()
     
     while (p.Y > 0)
     {
-        CalculatedPoints.push({ X: p.X, Y: p.Y, Z: p.Z });
+        CalculatedPoints[j].push({ X: p.X, Y: p.Y, Z: p.Z });
         
         p.X = p.X + v.X;
         p.Y = p.Y + v.Y;
@@ -1167,24 +1169,40 @@ function calculateHitGround()
         v.Z = v.Z * airResistance + a.Z;
     }
 
-    Display_Output["Hit Ground"] = { "Frames": CalculatedPoints.length, "Point": CalculatedPoints[CalculatedPoints.length - 1], "Distance": Math.sqrt(CalculatedPoints[CalculatedPoints.length - 1].X ** 2 + CalculatedPoints[CalculatedPoints.length - 1].Z ** 2) }
-    console.log(CalculatedPoints)
+    //Display_Output["Hit Ground"] = { "Frames": CalculatedPoints.length, "Point": CalculatedPoints[CalculatedPoints.length - 1], "Distance": Math.sqrt(CalculatedPoints[CalculatedPoints.length - 1].X ** 2 + CalculatedPoints[CalculatedPoints.length - 1].Z ** 2) }
+    //console.log(CalculatedPoints)
 }
 
 function calculateValues() {
     calculateContact();
+    
+    i = 0
+    while (i < numSims)
+    {
+        if (i > 0) {
+            StaticRandomInt1 = floor(Math.random()*32767);
+            StaticRandomInt2 = floor(Math.random()*32767);
+            USHORT_8089269c = floor(Math.random()*32767);
+        }
 
-    calculateHorizontalAngle();
+        calculateHorizontalAngle(i);
 
-    calculateVerticalAngle();
+        calculateVerticalAngle(i);
 
-    calculateHitPower();
+        calculateHitPower(i);
 
-    convertPowerToVelocity();
+        convertPowerToVelocity(i);
 
-    calculateHitGround();
+        calculateHitGround(i);
 
-    isHomeRun();
+        isHomeRun(i);
+
+        i = i + 1;
+    }
+
+    Display_Output["Hit Ground"] = { "Frames": CalculatedPoints[0].length, "Point": CalculatedPoints[0][CalculatedPoints[0].length - 1], "Distance": Math.sqrt(CalculatedPoints[0][CalculatedPoints[0].length - 1].X ** 2 + CalculatedPoints[0][CalculatedPoints[0].length - 1].Z ** 2) }
+    console.log(CalculatedPoints[0])
+
 }
 
 var horizontalCanvas = undefined;
@@ -1235,7 +1253,7 @@ function drawVerticalGraph() {
     let offset = { "X": 20, "Y": 250 }
     let origin = { "X": 0, "Y": 0 }
     let length = 200;
-    let scale = length / outfieldWallDist;
+    let scale = length / outfieldWallDist[0];
     let highRange = degreeToPoint(90, length);
     let lowRange = degreeToPoint(0, length);
 
@@ -1268,16 +1286,16 @@ function drawVerticalGraph() {
         }
 
         ctx.beginPath();
-        ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y - CalculatedPoints[0].Y);
-        ctx.arc(origin.X + offset.X, origin.Y + offset.Y - CalculatedPoints[0].Y, this_length, theseAngles[0], theseAngles[1]);
-        ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y - CalculatedPoints[0].Y);
+        ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y - CalculatedPoints[0][0].Y);
+        ctx.arc(origin.X + offset.X, origin.Y + offset.Y - CalculatedPoints[0][0].Y, this_length, theseAngles[0], theseAngles[1]);
+        ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y - CalculatedPoints[0][0].Y);
         let fill = ["#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"][i % 7] + this_transparency;
         ctx.fillStyle = fill;
         ctx.fill();
 
         ctx.fillStyle = blackColor;
         text_point = degreeToPoint(valueToDegrees((element[0] + element[1]) / 2), this_length)
-        ctx.fillText(Display_Output["Vertical Zone Chances"][i] + "%", text_point.X + offset.X, text_point.Y + offset.Y - CalculatedPoints[0].Y);
+        ctx.fillText(Display_Output["Vertical Zone Chances"][i] + "%", text_point.X + offset.X, text_point.Y + offset.Y - CalculatedPoints[0][0].Y);
         i += 1;
     });
 
@@ -1296,7 +1314,7 @@ function drawVerticalGraph() {
         //return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
     }
     
-    CalculatedPoints.forEach(element => {
+    hitToDraw.forEach(element => {
         let newP = pointToRender(Math.sqrt(element.X*element.X + element.Z*element.Z), element.Y);
         ctx.lineTo(newP.X, newP.Y);
 
@@ -1356,12 +1374,25 @@ function drawHorizontalGraph() {
         //return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
     }
     
-    CalculatedPoints.forEach(element => {
+    hitToDraw.forEach(element => {
         let newP = pointToRender(element.X, element.Z);
         ctx.lineTo(newP.X, newP.Y);
 
     });
     ctx.stroke();
+
+    // draw coordinates of random simulations
+    let i = 0
+
+    ctx.globalAlpha = 0.75;
+    while (i < numSims) {
+        ctx.beginPath();
+        ctx.arc(CalculatedPoints[i][CalculatedPoints[i].length-1].X*scale + offset.X, -CalculatedPoints[i][CalculatedPoints[i].length-1].Z*scale + offset.Y,2,0,2*Math.PI,false);
+        ctx.stroke();
+
+        i = i+1;
+    }
+    ctx.globalAlpha = 1;
 }
 
 var allBatsBegin = 0;
@@ -2010,6 +2041,8 @@ function drawContactGraph()
 }
 
 function renderTrajectories() {
+    hitToDraw = CalculatedPoints[0];
+
     drawVerticalGraph();
     drawHorizontalGraph();
     // drawScaleGraph();
@@ -2019,13 +2052,13 @@ function renderTrajectories() {
 
 function displayValues() {
     let output = document.getElementById("outputText");
-    Display_Output["Horzontal Hit Angle"] = Hit_HorizontalAngle;
-    Display_Output["Vertical Hit Angle"] = Hit_VerticalAngle;
-    Display_Output["Power"] = Hit_HorizontalPower;
-    Display_Output["Horzontal Hit Angle (in degrees)"] = (Hit_HorizontalAngle - 0x400) * 360 / 4096;
-    Display_Output["Vertical Hit Angle (in degrees)"] = (Hit_VerticalAngle) * 360 / 4096;
+    Display_Output["Horzontal Hit Angle"] = Hit_HorizontalAngle[0];
+    Display_Output["Vertical Hit Angle"] = Hit_VerticalAngle[0];
+    Display_Output["Power"] = Hit_HorizontalPower[0];
+    Display_Output["Horzontal Hit Angle (in degrees)"] = (Hit_HorizontalAngle[0] - 0x400) * 360 / 4096;
+    Display_Output["Vertical Hit Angle (in degrees)"] = (Hit_VerticalAngle[0]) * 360 / 4096;
     Display_Output["ball"] = inMemBall; 
-    Display_Output["Is homerun?"] = homeRunInd;
+    Display_Output["Is homerun?"] = homeRunInd[0];
     output.innerText = JSON.stringify(Display_Output, null, 4);
 }
 
@@ -2068,27 +2101,27 @@ function calculateBall()
     }
 }
 
-function isHomeRun()
+function isHomeRun(j)
 { 
     function checkHeight(x, y, z, m, c) 
     {
         wallZ = m*x+c;
-        outfieldWallDist = Math.sqrt(x*x + wallZ*wallZ);
+        outfieldWallDist[j] = Math.sqrt(x*x + wallZ*wallZ);
         if (z > wallZ) {
             if (y > 3) {// wall height of mario stadium
-                homeRunInd = true;
-                outfieldWallDist = Math.sqrt(x*x + z*z);
+                homeRunInd[j] = true;
+                outfieldWallDist[j] = Math.sqrt(x*x + z*z);
             } 
         }
     }
 
-    homeRunInd = false;
+    homeRunInd[j] = false;
 
-    CalculatedPoints.forEach(element => {
-        if (homeRunInd == true) {
+    CalculatedPoints[j].forEach(element => {
+        if (homeRunInd[j] == true) {
             // nothing 
         } else if (element.X < -57) { //foul
-            outfieldWallDist = Math.sqrt(2*57*57);
+            outfieldWallDist[j] = Math.sqrt(2*57*57);
         } else if (element.X < -44) {
             checkHeight(element.X, element.Y, element.Z, 1.65, 151.3)
         } else if (element.X < -14) {
@@ -2098,7 +2131,7 @@ function isHomeRun()
         } else if (element.X < 57) {
             checkHeight(element.X, element.Y, element.Z, -1.05, 116.8)
         } else { //foul  
-            outfieldWallDist = Math.sqrt(2*57*57);
+            outfieldWallDist[j] = Math.sqrt(2*57*57);
         } 
     });
 }
