@@ -1268,16 +1268,16 @@ function drawVerticalGraph() {
         }
 
         ctx.beginPath();
-        ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y);
-        ctx.arc(origin.X + offset.X, origin.Y + offset.Y, this_length, theseAngles[0], theseAngles[1]);
-        ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+        ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y - CalculatedPoints[0].Y);
+        ctx.arc(origin.X + offset.X, origin.Y + offset.Y - CalculatedPoints[0].Y, this_length, theseAngles[0], theseAngles[1]);
+        ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y - CalculatedPoints[0].Y);
         let fill = ["#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#0000FF", "#4B0082", "#9400D3"][i % 7] + this_transparency;
         ctx.fillStyle = fill;
         ctx.fill();
 
         ctx.fillStyle = blackColor;
         text_point = degreeToPoint(valueToDegrees((element[0] + element[1]) / 2), this_length)
-        ctx.fillText(Display_Output["Vertical Zone Chances"][i] + "%", text_point.X + offset.X, text_point.Y + offset.Y);
+        ctx.fillText(Display_Output["Vertical Zone Chances"][i] + "%", text_point.X + offset.X, text_point.Y + offset.Y - CalculatedPoints[0].Y);
         i += 1;
     });
 
