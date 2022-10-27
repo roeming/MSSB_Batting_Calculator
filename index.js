@@ -99,7 +99,7 @@ var Display_Output = {};
 var homeRunInd = [];
 var outfieldWallDist = [];
 var hitToDraw = [];
-var numSims = 100;
+var numSims = 200;
 
 function floor(f) {
     return Math.trunc(f);
@@ -1384,7 +1384,7 @@ function drawHorizontalGraph() {
     // draw coordinates of random simulations
     let i = 0
 
-    ctx.globalAlpha = 0.75;
+    ctx.globalAlpha = 0.25;
     while (i < numSims) {
         ctx.beginPath();
         ctx.arc(CalculatedPoints[i][CalculatedPoints[i].length-1].X*scale + offset.X, -CalculatedPoints[i][CalculatedPoints[i].length-1].Z*scale + offset.Y,2,0,2*Math.PI,false);
@@ -2058,7 +2058,8 @@ function displayValues() {
     Display_Output["Horzontal Hit Angle (in degrees)"] = (Hit_HorizontalAngle[0] - 0x400) * 360 / 4096;
     Display_Output["Vertical Hit Angle (in degrees)"] = (Hit_VerticalAngle[0]) * 360 / 4096;
     Display_Output["ball"] = inMemBall; 
-    Display_Output["Is homerun?"] = homeRunInd[0];
+    Display_Output["Is Home Run?"] = homeRunInd[0];
+    Display_Output["% of RNG that would've resulted in a Home Run"] = average(homeRunInd, homeRunInd.length);
     output.innerText = JSON.stringify(Display_Output, null, 4);
 }
 
@@ -2109,16 +2110,16 @@ function isHomeRun(j)
         outfieldWallDist[j] = Math.sqrt(x*x + wallZ*wallZ);
         if (z > wallZ) {
             if (y > 3) {// wall height of mario stadium
-                homeRunInd[j] = true;
+                homeRunInd[j] = 1;
                 outfieldWallDist[j] = Math.sqrt(x*x + z*z);
             } 
         }
     }
 
-    homeRunInd[j] = false;
+    homeRunInd[j] = 0;
 
     CalculatedPoints[j].forEach(element => {
-        if (homeRunInd[j] == true) {
+        if (homeRunInd[j] == 1) {
             // nothing 
         } else if (element.X < -57) { //foul
             outfieldWallDist[j] = Math.sqrt(2*57*57);
@@ -2134,4 +2135,16 @@ function isHomeRun(j)
             outfieldWallDist[j] = Math.sqrt(2*57*57);
         } 
     });
+}
+
+function average(array1, n)
+{
+    // Find sum of array element
+    sum = 0
+    i=0
+    while (i<n) {
+       sum += array1[i];
+       i+=1
+    }
+    return sum/n;
 }
