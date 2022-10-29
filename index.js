@@ -1216,6 +1216,7 @@ function calculateValues() {
 
     // check if hit was home run on other stadiums.
     let stadiumCounter = 0;
+    stadiumCounter = 0;
     while (stadiumCounter < 3) {
         isHomeRun(0, parseInt(stadiumCounter));
         hRSum += homeRunInd[stadiumCounter][0];
@@ -2097,7 +2098,7 @@ function displayValues() {
     Display_Output["ball"] = inMemBall; 
     Display_Output["Is Home Run?"] = homeRunInd[ChosenStadium][0];
     Display_Output["% of RNG that would've resulted in a Home Run"] = average(homeRunInd[ChosenStadium], homeRunInd[ChosenStadium].length);
-    Display_Output["% of stadiums that hit would've been a HR at"] = hRSum;
+    Display_Output["# of stadiums that hit would've been a HR at (out of 3)"] = hRSum;
     output.innerText = JSON.stringify(Display_Output, null, 4);
 }
 
