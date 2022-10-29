@@ -2,6 +2,9 @@ const stats = [{ "Curve Ball Speed": 130, "Fast Ball Speed": 168, "Cursed Ball":
 
 const BatterHitbox = [{ 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0999999046325684, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.30000001192092896, 'VerticalRangeBack': 1.899999976158142, 'EasyBattingSpotHorizontal': -1.7999999523162842, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.4000000059604645, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.6500000953674316, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 1.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.30000001192092896, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.5, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.2999999523162842, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6000000238418579, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.2999999523162842, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.049999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7000000476837158, 'EasyBattingSpotHorizontal': -1.7999999523162842, 'EasyBattingSpotVertical': -1.2999999523162842, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.149999976158142, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 1.4500000476837158, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 0.20000000298023224, 'EasyBattingSpotHorizontal': -3.5999999046325684, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.75, 'VerticalRangeFront': 0.4000000059604645, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.4000000953674316, 'EasyBattingSpotVertical': -1.600000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.30000001192092896, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.5, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.1500000953674316, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.949999988079071, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.4000000953674316, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.100000023841858, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.5, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7000000476837158, 'EasyBattingSpotHorizontal': -1.7999999523162842, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.30000001192092896, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.20000000298023224, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.200000047683716, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.5, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.5, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.5, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.2000000476837158, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.2000000476837158, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.2000000476837158, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 1.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -1.75, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 1.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.44999998807907104, 'VerticalRangeFront': -0.6000000238418579, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.44999998807907104, 'VerticalRangeFront': -0.6000000238418579, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.44999998807907104, 'VerticalRangeFront': -0.6000000238418579, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.44999998807907104, 'VerticalRangeFront': -0.6000000238418579, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6000000238418579, 'HorizontalRangeFar': 0.699999988079071, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6000000238418579, 'HorizontalRangeFar': 0.699999988079071, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6000000238418579, 'HorizontalRangeFar': 0.699999988079071, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6000000238418579, 'HorizontalRangeFar': 0.699999988079071, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.2000000476837158, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.399999976158142, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.100000023841858, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': 0.20000000298023224, 'VerticalRangeBack': 1.7000000476837158, 'EasyBattingSpotHorizontal': -1.600000023841858, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.2000000476837158, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': 0.0, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0999999046325684, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.5, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.1500000953674316, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.0999999046325684, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.100000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.100000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.100000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.100000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 1.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 1.0 }]
 
+const stadiums = [  {'Name': "Mario Stadium", 'foulX': -57, 'startingX': [-57, -44, -14, 16],'endingX': [-44, -14, 16, 57], 'wallHeight': [3, 3, 3, 3], 'm': [1.65, 0.69, 0, -1.05], 'c': [151.3, 110.7, 100, 116.8]},
+                    {'Name': "Peach Gardens", 'foulX': -59, 'startingX': [-59, -53, -45, -35, -32, -30, -14.3, -7, -5, 5, 7, 14.3, 30, 32, 35, 45, 53], 'endingX': [-53, -45, -35, -32, -30, -14.3, -7, -5, 5, 7, 14.3, 30, 32, 35, 45, 53, 59], 'wallHeight': [8, 8, 8, 18, 18, 18, 18, 21, 23, 21, 18, 18, 18, 18, 8, 8, 8], 'm': [2, 1.5, 0.7, -1/3, 0.5, -.064, -.205, -.1, 0, .1, .205, .064, -0.5, 1/3, -0.7, -1.5, -2], 'c': [177, 150.5, 114.5, 78.33, 105, 88.08, 86.07, 86.8, 87.3, 86.8, 86.07, 88.08, 105, 78.33, 114.5, 150.5, 177]}];
+
 const BallContactArray_807b6294 = [[[[50, 98, 106, 150, 30, 95, 109, 170], [40, 98, 106, 160, 20, 95, 109, 180]], [[60, 99, 101, 150, 40, 97, 103, 170], [55, 99, 101, 160, 35, 97, 103, 180]], [[50, 99, 101, 140, 40, 97, 103, 160], [45, 99, 101, 145, 35, 97, 103, 165]], [[80, 98, 102, 120, 35, 95, 105, 165], [80, 98, 102, 110, 35, 95, 105, 165]], [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]]], [[[40, 96, 104, 150, 30, 93, 107, 170], [30, 96, 104, 170, 20, 93, 107, 180]], [[60, 96, 104, 140, 35, 93, 107, 170], [50, 96, 104, 150, 25, 93, 107, 180]], [[60, 99, 101, 140, 40, 97, 103, 160], [40, 99, 101, 160, 30, 97, 103, 170]], [[90, 98, 102, 110, 75, 95, 105, 125], [90, 98, 102, 110, 75, 95, 105, 125]], [[0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0]]]];
 
 const UINT_ARRAY_ARRAY_807b7134 = [[100, 100, 0x00111110, 0x00111110, 0],[100, 100, 0x00111110, 0x00111110, 2],[101, 102, 0x00111110, 0x00111110, 1],[90, 90, 0x00111110, 0x00111110, 0],[94, 95, 0x00111110, 0x00111110, 0],[102, 103, 0x00111110, 0x00111110, 1],[90, 90, 0x00111110, 0x01100000, 0],[85, 90, 0x00111110, 0x00111110, 0],[102, 103, 0x00111110, 0x00111110, 1],[100, 100, 0x00111110, 0x00111110, 0],[95, 100, 0x00111110, 0x00111110, 2],[104, 105, 0x00111110, 0x00111110, 1],[60, 60, 0x00111110, 0x00111110, 0],[70, 75, 0x00111110, 0x00111110, 0],[87, 90, 0x00111110, 0x00111110, 1],[70, 70, 0x00111110, 0x00111110, 0],[80, 85, 0x00111110, 0x00111110, 0],[105, 110, 0x00111110, 0x00111110, 1],[50, 50, 0x00110110, 0x00110110, 0]]
@@ -98,6 +101,7 @@ var AddedContactGravity = 0;
 var Display_Output = {};
 var homeRunInd = [];
 var outfieldWallDist = [];
+var outfieldWallHeight = [];
 var hitToDraw = [];
 var numSims = 200;
 
@@ -1195,7 +1199,7 @@ function calculateValues() {
 
         calculateHitGround(i);
 
-        isHomeRun(i);
+        isHomeRun(i, 1);
 
         i = i + 1;
     }
@@ -1262,7 +1266,7 @@ function drawVerticalGraph() {
     ctx.moveTo(highRange.X + offset.X, highRange.Y + offset.Y);
     ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
     ctx.lineTo(lowRange.X + offset.X, lowRange.Y + offset.Y);
-    ctx.lineTo(lowRange.X + offset.X, lowRange.Y + offset.Y - 3*scale); //draw outfield wall
+    ctx.lineTo(lowRange.X + offset.X, lowRange.Y + offset.Y - outfieldWallHeight[0]*scale); //draw outfield wall
     ctx.lineTo(lowRange.X + offset.X, lowRange.Y + offset.Y);
     ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
     ctx.closePath();
@@ -1322,7 +1326,7 @@ function drawVerticalGraph() {
     ctx.stroke();
 }
 
-function drawHorizontalGraph() {
+function drawHorizontalGraph(stadiumNum) {
     let ctx = horizontalCanvas.getContext('2d');
     ctx.clearRect(0, 0, horizontalCanvas.width, horizontalCanvas.height);
 
@@ -1335,19 +1339,33 @@ function drawHorizontalGraph() {
     let origin = { "X": 0, "Y": 0 }
     let length = 190;
     let leftPole = degreeToPoint(135, length);
-    let RightPole = degreeToPoint(45, length);
+    let rightPole = degreeToPoint(45, length);
     let scale = length / Math.sqrt(2*57*57); // converts length to m at mario stadium (since the foul pole is at (57,57))
 
     // Draw Mario Stadium boundaries
-    ctx.beginPath();
+    /*ctx.beginPath();
     ctx.moveTo(leftPole.X + offset.X, leftPole.Y + offset.Y);
     ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
-    ctx.lineTo(RightPole.X + offset.X, RightPole.Y + offset.Y);
+    ctx.lineTo(rightPole.X + offset.X, rightPole.Y + offset.Y);
     ctx.lineTo(16*scale + offset.X, -100*scale + offset.Y);
     ctx.lineTo(-14*scale + offset.X, -100*scale +offset.Y);
     ctx.lineTo(-44*scale + offset.X, -78.7*scale + offset.Y);
     ctx.closePath();
+    ctx.stroke();*/
+
+    ctx.beginPath();
+    ctx.moveTo(rightPole.X + offset.X, rightPole.Y + offset.Y);
+    ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
+    ctx.lineTo(leftPole.X + offset.X, leftPole.Y + offset.Y);
+    let segment = 0;
+    while (segment < stadiums[stadiumNum].startingX.length) {
+        calcZ = stadiums[stadiumNum].m[segment]*stadiums[stadiumNum].startingX[segment] + stadiums[stadiumNum].c[segment];
+        ctx.lineTo(stadiums[stadiumNum].startingX[segment]*scale + offset.X, -calcZ*scale + offset.Y);
+        segment +=1;
+    }
+    ctx.closePath();
     ctx.stroke();
+
 
     // Draw horizontal region
     ctx.beginPath();
@@ -2044,7 +2062,7 @@ function renderTrajectories() {
     hitToDraw = CalculatedPoints[0];
 
     drawVerticalGraph();
-    drawHorizontalGraph();
+    drawHorizontalGraph(1);
     // drawScaleGraph();
     // drawAllBatsGraph();
     drawContactGraph();
@@ -2102,9 +2120,9 @@ function calculateBall()
     }
 }
 
-function isHomeRun(j)
+function isHomeRun(j, stadiumNum)
 { 
-    function checkHeight(x, y, z, m, c) 
+    /*function checkHeight(x, y, z, m, c) 
     {
         wallZ = m*x+c;
         outfieldWallDist[j] = Math.sqrt(x*x + wallZ*wallZ);
@@ -2114,14 +2132,38 @@ function isHomeRun(j)
                 outfieldWallDist[j] = Math.sqrt(x*x + z*z);
             } 
         }
-    }
+    }*/
 
     homeRunInd[j] = 0;
 
     CalculatedPoints[j].forEach(element => {
         if (homeRunInd[j] == 1) {
             // nothing 
-        } else if (element.X < -57) { //foul
+        } else if (element.X < stadiums[stadiumNum].foulX) { //foul
+            outfieldWallDist[j] = Math.sqrt(2*(stadiums[stadiumNum].startingX[0]**2));
+            outfieldWallHeight[j] = stadiums[stadiumNum].wallHeight[0];
+        } else if (element.X > stadiums[stadiumNum].startingX[stadiums[stadiumNum].startingX.length-1]) { //foul
+            outfieldWallDist[j] = Math.sqrt(2*(stadiums[stadiumNum].startingX[0]**2));
+            outfieldWallHeight[j] = stadiums[stadiumNum].wallHeight[0];
+        } else {
+            let segment = 0;
+            while (segment < stadiums[stadiumNum].startingX.length) {
+                if (element.X >= stadiums[stadiumNum].startingX[segment] && element.X < stadiums[stadiumNum].endingX[segment]) {
+                    wallZ = stadiums[stadiumNum].m[segment] * element.X + stadiums[stadiumNum].c[segment];
+                    outfieldWallDist[j] = Math.sqrt(element.X**2 + wallZ**2);
+                    outfieldWallHeight[j] = stadiums[stadiumNum].wallHeight[segment];
+                    if (element.Z > wallZ) {
+                        if  (element.Y > stadiums[stadiumNum].wallHeight[segment]) {
+                            homeRunInd[j] = 1;
+                            outfieldWallDist[j] = Math.sqrt(element.X**2 + element.Z**2);
+                            outfieldWallHeight[j] = stadiums[stadiumNum].wallHeight[segment];
+                        }
+                    }
+                }
+                segment += 1;
+            }
+        } /*
+        if (element.X < -57) { //foul
             outfieldWallDist[j] = Math.sqrt(2*57*57);
         } else if (element.X < -44) {
             checkHeight(element.X, element.Y, element.Z, 1.65, 151.3)
@@ -2133,10 +2175,10 @@ function isHomeRun(j)
             checkHeight(element.X, element.Y, element.Z, -1.05, 116.8)
         } else { //foul  
             outfieldWallDist[j] = Math.sqrt(2*57*57);
-        } 
+        } */
     });
 }
-
+//const stadiums = [{'Name': "Mario Stadium", 'startingX': [-57, -44, -14, 16, 57], 'wallHeight': [3, 3, 3, 3, 3], 'm': [1.65, 0.69, 0, -1.05, 1000], 'c': [151.3, 110.7, 100, 116.8, 1000]}];
 function average(array1, n)
 {
     // Find sum of array element
