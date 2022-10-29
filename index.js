@@ -100,7 +100,8 @@ var Hit_VerticalAngle = [];
 var Hit_HorizontalPower = [];
 var AddedContactGravity = 0;
 var Display_Output = {};
-var homeRunInd = [];
+var homeRunInd = [[0],[0],[0]];
+var hRSum = 0;
 var outfieldWallDist = [];
 var outfieldWallHeight = [];
 var hitToDraw = [];
@@ -910,7 +911,7 @@ function parseValues() {
         USHORT_8089269c = floor(Math.random() * 2 ** 15 - 1)
     }
 
-    ChosenStadium = readValues.stadiumID;
+    ChosenStadium = parseInt(readValues.stadiumID);
     numSims = readValues.simulations;
     
     inMemBatter = {};
@@ -1210,8 +1211,17 @@ function calculateValues() {
 
         isHomeRun(i, ChosenStadium);
 
-        i = i + 1;
+        i += 1;
     }
+
+    // check if hit was home run on other stadiums.
+    let stadiumCounter = 0;
+    while (stadiumCounter < 3) {
+        isHomeRun(0, parseInt(stadiumCounter));
+        hRSum += homeRunInd[stadiumCounter][0];
+        stadiumCounter +=1;
+    };
+
 
     Display_Output["Hit Ground"] = { "Frames": CalculatedPoints[0].length, "Point": CalculatedPoints[0][CalculatedPoints[0].length - 1], "Distance": Math.sqrt(CalculatedPoints[0][CalculatedPoints[0].length - 1].X ** 2 + CalculatedPoints[0][CalculatedPoints[0].length - 1].Z ** 2) }
     console.log(CalculatedPoints[0])
@@ -2085,8 +2095,9 @@ function displayValues() {
     Display_Output["Horzontal Hit Angle (in degrees)"] = (Hit_HorizontalAngle[0] - 0x400) * 360 / 4096;
     Display_Output["Vertical Hit Angle (in degrees)"] = (Hit_VerticalAngle[0]) * 360 / 4096;
     Display_Output["ball"] = inMemBall; 
-    Display_Output["Is Home Run?"] = homeRunInd[0];
-    Display_Output["% of RNG that would've resulted in a Home Run"] = average(homeRunInd, homeRunInd.length);
+    Display_Output["Is Home Run?"] = homeRunInd[ChosenStadium][0];
+    Display_Output["% of RNG that would've resulted in a Home Run"] = average(homeRunInd[ChosenStadium], homeRunInd[ChosenStadium].length);
+    Display_Output["% of stadiums that hit would've been a HR at"] = hRSum;
     output.innerText = JSON.stringify(Display_Output, null, 4);
 }
 
@@ -2131,22 +2142,10 @@ function calculateBall()
 
 function isHomeRun(j, stadiumNum)
 { 
-    /*function checkHeight(x, y, z, m, c) 
-    {
-        wallZ = m*x+c;
-        outfieldWallDist[j] = Math.sqrt(x*x + wallZ*wallZ);
-        if (z > wallZ) {
-            if (y > 3) {// wall height of mario stadium
-                homeRunInd[j] = 1;
-                outfieldWallDist[j] = Math.sqrt(x*x + z*z);
-            } 
-        }
-    }*/
-
-    homeRunInd[j] = 0;
+    homeRunInd[stadiumNum][j] = 0;
 
     CalculatedPoints[j].forEach(element => {
-        if (homeRunInd[j] == 1) {
+        if (homeRunInd[stadiumNum][j] == 1) {
             // nothing 
         } else if (element.X < stadiums[stadiumNum].foulX) { //foul
             outfieldWallDist[j] = Math.sqrt(2*(stadiums[stadiumNum].startingX[0]**2));
@@ -2163,7 +2162,7 @@ function isHomeRun(j, stadiumNum)
                     outfieldWallHeight[j] = stadiums[stadiumNum].wallHeight[segment];
                     if (element.Z > wallZ) {
                         if  (element.Y > stadiums[stadiumNum].wallHeight[segment]) {
-                            homeRunInd[j] = 1;
+                            homeRunInd[stadiumNum][j] = 1;
                             outfieldWallDist[j] = Math.sqrt(element.X**2 + element.Z**2);
                             outfieldWallHeight[j] = stadiums[stadiumNum].wallHeight[segment];
                         }
@@ -2171,20 +2170,7 @@ function isHomeRun(j, stadiumNum)
                 }
                 segment += 1;
             }
-        } /*
-        if (element.X < -57) { //foul
-            outfieldWallDist[j] = Math.sqrt(2*57*57);
-        } else if (element.X < -44) {
-            checkHeight(element.X, element.Y, element.Z, 1.65, 151.3)
-        } else if (element.X < -14) {
-            checkHeight(element.X, element.Y, element.Z, 0.69, 110.7)
-        } else if (element.X < 16) {
-            checkHeight(element.X, element.Y, element.Z, 0, 100)
-        } else if (element.X < 57) {
-            checkHeight(element.X, element.Y, element.Z, -1.05, 116.8)
-        } else { //foul  
-            outfieldWallDist[j] = Math.sqrt(2*57*57);
-        } */
+        } 
     });
 }
 //const stadiums = [{'Name': "Mario Stadium", 'startingX': [-57, -44, -14, 16, 57], 'wallHeight': [3, 3, 3, 3, 3], 'm': [1.65, 0.69, 0, -1.05, 1000], 'c': [151.3, 110.7, 100, 116.8, 1000]}];
