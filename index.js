@@ -1346,7 +1346,7 @@ function drawHorizontalGraph(stadiumNum) {
 
     let offset = { "X": horizontalCanvas.width / 2, "Y": 300 }
     let origin = { "X": 0, "Y": 0 }
-    let length = 190;
+    let length = 175;
     let leftPole = degreeToPoint(135, length);
     let rightPole = degreeToPoint(45, length);
     let scale = length / Math.sqrt(2*stadiums[ChosenStadium].foulX**2); // converts length to m at mario stadium (since the foul pole is at (57,57))
@@ -2151,7 +2151,7 @@ function isHomeRun(j, stadiumNum)
         } else if (element.X < stadiums[stadiumNum].foulX) { //foul
             outfieldWallDist[j] = Math.sqrt(2*(stadiums[stadiumNum].startingX[0]**2));
             outfieldWallHeight[j] = stadiums[stadiumNum].wallHeight[0];
-        } else if (element.X > stadiums[stadiumNum].startingX[stadiums[stadiumNum].startingX.length-1]) { //foul
+        } else if (element.X > stadiums[stadiumNum].endingX[stadiums[stadiumNum].startingX.length-1]) { //foul
             outfieldWallDist[j] = Math.sqrt(2*(stadiums[stadiumNum].startingX[0]**2));
             outfieldWallHeight[j] = stadiums[stadiumNum].wallHeight[0];
         } else {
