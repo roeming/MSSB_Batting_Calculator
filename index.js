@@ -110,6 +110,10 @@ var outfieldWallHeight = [[0],[0],[0],[0],[0],[0],[0]];
 var hitToDraw = [];
 var numSims = 1;
 var ChosenStadium = 0;
+var randomType = 1;
+var randomCounter1 = 0;
+var randomCounter2 = 0;
+var randomCounter3 = 0;
 
 function floor(f) {
     return Math.trunc(f);
@@ -864,6 +868,8 @@ function parseInputs()
     readValues.stadiumID = document.getElementById("stadiumID").value;
 
     readValues.simulations = parseFloat(document.getElementById("numberOfSims").value);
+   
+    readValues.simulationType = document.getElementById("simulationType").value; 
 }
 
 function parseValues() {
@@ -916,6 +922,7 @@ function parseValues() {
 
     ChosenStadium = parseInt(readValues.stadiumID);
     numSims = readValues.simulations;
+    randomType = parseInt(readValues.simulationType);
     
     inMemBatter = {};
     let id = readValues.batter_id;
@@ -1194,12 +1201,39 @@ function calculateValues() {
     calculateContact();
     
     i = 0
+
+    obsPerDim = floor((numSims-1)**(1/3))-1;
+    randomCounter1 = 0;
+    randomCounter2 = 0;
+    randomCounter3 = 0;    
+
     while (i < numSims)
     {
         if (i > 0) {
-            StaticRandomInt1 = floor(Math.random()*32767);
-            StaticRandomInt2 = floor(Math.random()*32767);
-            USHORT_8089269c = floor(Math.random()*32767);
+            if (randomType == 0) {
+                StaticRandomInt1 = floor(Math.random()*32767);
+                StaticRandomInt2 = floor(Math.random()*32767);
+                USHORT_8089269c = floor(Math.random()*32767);
+            } else {
+                StaticRandomInt1 = 32767 * randomCounter1/obsPerDim;
+                StaticRandomInt2 = 32767 * randomCounter2/obsPerDim;
+                USHORT_8089269c = 32767 * randomCounter3/obsPerDim;
+
+                randomCounter1 += 1;
+                if (randomCounter1 > obsPerDim) {
+                    randomCounter1 = 0;
+                    randomCounter2 += 1;
+                    if (randomCounter2 > obsPerDim) {
+                        randomCounter2 = 0;
+                        randomCounter3 +=1; 
+                        if (randomCounter3 > obsPerDim) {
+                            randomCounter3 = 0;
+                        }
+                    }
+                }
+
+            }
+
         }
 
         calculateHorizontalAngle(i);
