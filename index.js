@@ -114,6 +114,11 @@ var randomType = 1;
 var randomCounter1 = 0;
 var randomCounter2 = 0;
 var randomCounter3 = 0;
+var dotColour = "#000000"; 
+var plotMode = "compareSims"; // singleSim, singlePoint, compareSims, varyInputs
+var CalculatedPoints = [];
+var CalculatedPointsPrev = [];
+var runNum = 0;
 
 function floor(f) {
     return Math.trunc(f);
@@ -1167,8 +1172,6 @@ function convertPowerToVelocity(j) {
     }
 }
 
-var CalculatedPoints = [];
-
 function calculateHitGround(j)
 {
     let p = { X: 0, Y: BatterHitbox[inMemBatter.Batter_CharID].PitchingHeight, Z: 0 }
@@ -1206,7 +1209,8 @@ function calculateValues() {
     randomCounter1 = 0;
     randomCounter2 = 0;
     randomCounter3 = 0;    
-
+    
+    CalculatedPoints.length = 0; //empty the array from the previous run.
     while (i < numSims)
     {
         if (i > 0) {
@@ -1387,6 +1391,7 @@ function drawVerticalGraph() {
 function drawHorizontalGraph(stadiumNum) {
     let ctx = horizontalCanvas.getContext('2d');
     ctx.clearRect(0, 0, horizontalCanvas.width, horizontalCanvas.height);
+    ctx.strokeStyle = "#000000";
 
     // Set line width
     ctx.lineWidth = 1;
@@ -1461,12 +1466,26 @@ function drawHorizontalGraph(stadiumNum) {
     let i = 0
 
     ctx.globalAlpha = 0.25;
+    
+    ctx.strokeStyle = "#FF0000";
     while (i < numSims) {
         ctx.beginPath();
         ctx.arc(CalculatedPoints[i][CalculatedPoints[i].length-1].X*scale + offset.X, -CalculatedPoints[i][CalculatedPoints[i].length-1].Z*scale + offset.Y,2,0,2*Math.PI,false);
-        ctx.stroke();
-
+        ctx.stroke();        
         i = i+1;
+    }
+
+    plotMode = "compareSims" //temp variable setter
+    if (plotMode = "compareSims" && runNum > 0) {
+        ctx.strokeStyle = "#0000ff80";
+        let k = 0;
+        while (k < CalculatedPointsPrev.length) {
+            ctx.beginPath();
+            ctx.arc(CalculatedPointsPrev[k][CalculatedPointsPrev[k].length-1].X*scale + offset.X, -CalculatedPointsPrev[k][CalculatedPointsPrev[k].length-1].Z*scale + offset.Y,2,0,2*Math.PI,false);
+            ctx.stroke();
+
+            k += 1;
+        }
     }
     ctx.globalAlpha = 1;
 }
@@ -2151,6 +2170,10 @@ document.addEventListener('DOMContentLoaded', function (event) {
         parseInputs();
         parseValues();
         calculateBall();
+        CalculatedPointsPrev.length = 0;
+        CalculatedPointsPrev = CalculatedPoints.slice(0); //track previous simulations so they can be used for comparision on the next run;
+        runNum += 1;
+    
     };
 
     document.getElementById("randomData").onclick = async function(ev){
@@ -2158,6 +2181,10 @@ document.addEventListener('DOMContentLoaded', function (event) {
         parseInputs();
         parseValues();
         calculateBall();
+        CalculatedPointsPrev.length = 0;
+        CalculatedPointsPrev = CalculatedPoints.slice(0); //track previous simulations so they can be used for comparision on the next run;
+        runNum += 1;
+    
     };
 
 });
