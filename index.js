@@ -119,6 +119,8 @@ var plotMode = "compareSims"; // singleSim, singlePoint, compareSims, varyInputs
 var CalculatedPoints = [];
 var CalculatedPointsPrev = [];
 var runNum = 0;
+var batterStarsOnIncrease = 0;
+var pitcherStarsOnIncrease = 0;
 
 function floor(f) {
     return Math.trunc(f);
@@ -832,6 +834,7 @@ function parseInputs()
     readValues = {};
     readValues.pitcher_id = pitcher_id = document.getElementById("pitcherID").value;
     readValues.pitcherChargeVal = document.getElementById("pitchType").value;
+    readValues.pitcherStarsOn = document.getElementById("pitcherSuperstar").checked;
 
     if (!isEmptyOrSpaces(document.getElementById("randomInt1").value)) {
         readValues.StaticRandomInt1 = parseInt(document.getElementById("randomInt1").value);
@@ -846,6 +849,7 @@ function parseInputs()
     }
 
     readValues.batter_id = document.getElementById("batterID").value;
+    readValues.batterStarsOn = document.getElementById("batterSuperstar").checked;
 
     readValues.ballContact_X = parseFloat(document.getElementById("ballX").value);
     readValues.posX = parseFloat(document.getElementById("batterX").value);
@@ -881,7 +885,18 @@ function parseValues() {
     Display_Output = {};
     inMemBall = {};
     inMemPitcher = {};
-    inMemPitcher.calced_cursedBall = stats[readValues.pitcher_id]["Cursed Ball"];
+    
+    //batterStarsOn = true;
+    //pitcherStarsOn = true;
+    //set stars on buffs
+    if (readValues.batterStarsOn) {batterStarsOnIncrease = 50}
+    else {batterStarsOnIncrease = 0};
+    
+    if (readValues.pitcherStarsOn) {pitcherStarsOnIncrease = 50}
+    else {pitcherStarsOnIncrease = 0};
+    
+
+    inMemPitcher.calced_cursedBall = stats[readValues.pitcher_id]["Cursed Ball"] + pitcherStarsOnIncrease;
     let pitcherChargeVal = readValues.pitcherChargeVal;
     if (pitcherChargeVal == 0) {
         inMemPitcher.Pitcher_TypeOfPitch = PitchCurve;
@@ -928,7 +943,8 @@ function parseValues() {
     ChosenStadium = parseInt(readValues.stadiumID);
     numSims = readValues.simulations;
     randomType = parseInt(readValues.simulationType);
-    
+
+
     inMemBatter = {};
     let id = readValues.batter_id;
 
@@ -949,8 +965,8 @@ function parseValues() {
     inMemBatter.BatterAtPlate_BatterCharge_Down = readValues.chargeDown;
     inMemBatter.AtBat_IsFullyCharged = inMemBatter.BatterAtPlate_BatterCharge_Up == 1.0;
 
-    inMemBatter.Batter_SlapHitPower = stats[id]["Slap Hit Power"]
-    inMemBatter.BatterAtPlate_ChargePower = stats[id]["Charge Hit Power"]
+    inMemBatter.Batter_SlapHitPower = stats[id]["Slap Hit Power"] + batterStarsOnIncrease;
+    inMemBatter.BatterAtPlate_ChargePower = stats[id]["Charge Hit Power"] + batterStarsOnIncrease;
 
     inMemBatter.Batter_SlapContactSize = stats[id]["Slap Contact Spot Size"];
     inMemBatter.Batter_ChargeContactSize = stats[id]["Charge Contact Spot Size"];
@@ -1318,7 +1334,7 @@ function drawVerticalGraph() {
     // Make Lines
     let offset = { "X": 20, "Y": 250 }
     let origin = { "X": 0, "Y": 0 }
-    let length = 200;
+    let length = 180;
     let scale = length / outfieldWallDist[0];
     let highRange = degreeToPoint(90, length);
     let lowRange = degreeToPoint(0, length);
@@ -1369,7 +1385,6 @@ function drawVerticalGraph() {
 
     // Draw point
 
-    outfield = 100;
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y);
@@ -1377,11 +1392,10 @@ function drawVerticalGraph() {
     function pointToRender(x, y)
     {        
         return {X: offset.X + x * scale, Y: offset.Y - y * scale};
-        //return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
     }
     
     hitToDraw.forEach(element => {
-        let newP = pointToRender(Math.sqrt(element.X*element.X + element.Z*element.Z), element.Y);
+        let newP = pointToRender(Math.sqrt(element.X**2 + element.Z**2), element.Y);
         ctx.lineTo(newP.X, newP.Y);
 
     });
@@ -1420,7 +1434,7 @@ function drawHorizontalGraph(stadiumNum) {
     ctx.moveTo(rightPole.X + offset.X, rightPole.Y + offset.Y);
     ctx.lineTo(origin.X + offset.X, origin.Y + offset.Y);
     ctx.lineTo(leftPole.X + offset.X, leftPole.Y + offset.Y);
-    let segment = 1;
+    let segment = 0;
     while (segment < stadiums[stadiumNum].startingX.length) {
         calcZ = stadiums[stadiumNum].m[segment]*stadiums[stadiumNum].startingX[segment] + stadiums[stadiumNum].c[segment];
         ctx.lineTo(stadiums[stadiumNum].startingX[segment]*scale + offset.X, -calcZ*scale + offset.Y);
@@ -1444,7 +1458,6 @@ function drawHorizontalGraph(stadiumNum) {
     ctx.fill();
 
     // Draw point
-    //let outfield = 75;
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(origin.X + offset.X, origin.Y + offset.Y);
@@ -1452,7 +1465,6 @@ function drawHorizontalGraph(stadiumNum) {
     function pointToRender(x, y)
     {
         return {X: offset.X + x * scale, Y: offset.Y - y * scale};
-        //return {X: offset.X + (x / outfield) * length, Y: offset.Y - (y / outfield) * length };
     }
     
     hitToDraw.forEach(element => {
@@ -2217,8 +2229,8 @@ function isHomeRun(j, stadiumNum)
             outfieldWallDist[j] = Math.sqrt(2*(stadiums[stadiumNum].startingX[0]**2));
             outfieldWallHeight[stadiumNum][j] = stadiums[stadiumNum].wallHeight[0];
         } else if (element.X > stadiums[stadiumNum].endingX[stadiums[stadiumNum].startingX.length-1]) { //foul
-            outfieldWallDist[j] = Math.sqrt(2*(stadiums[stadiumNum].startingX[0]**2));
-            outfieldWallHeight[stadiumNum][j] = stadiums[stadiumNum].wallHeight[0];
+            outfieldWallDist[j] = Math.sqrt(2*(stadiums[stadiumNum].endingX[stadiums[stadiumNum].startingX.length-1]**2));
+            outfieldWallHeight[stadiumNum][j] = stadiums[stadiumNum].wallHeight[stadiums[stadiumNum].startingX.length-1];
         } else {
             let segment = 0;
             while (segment < stadiums[stadiumNum].startingX.length) {
