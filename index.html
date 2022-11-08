@@ -83,6 +83,87 @@
 <label for="batterSuperstar">Superstar?</label>
 <input id="batterSuperstar" name="batterSuperstar" type="checkbox" /><br><br>
 
+<section id="batterOverride" hidden="hidden" style="margin-left:30px;">
+
+    <label for="slapContactSize">Slap Contact Size</label>
+    <input id="slapContactSize" name="slapContactSize" placeholder="Optional" type="text"/><br><br>
+
+    <label for="chargeContactSize">Charge Contact Size</label>
+    <input id="chargeContactSize" name="chargeContactSize" placeholder="Optional" type="text"/><br><br>
+
+    <label for="slapPowerOverride">Slap Power</label>
+    <input id="slapPowerOverride" name="slapPowerOverride" placeholder="Optional" type="text"/><br><br>
+    
+    <label for="chargePowerOverride">Charge Power</label>
+    <input id="chargePowerOverride" name="chargePowerOverride" placeholder="Optional" type="text"/><br><br>
+<!----
+    <label for="captainStarType">Captain Star Hit</label>
+    <select id="captainStarType" name="captainStarType">
+        <option value="-1">No override</option>
+        <option value="1">Fireball</option>
+        <option value="2">Green Fireball</option>
+        <option value="3">Phony Ball</option>
+        <option value="4">Liar Ball</option>
+        <option value="5">Banana Ball</option>
+        <option value="6">Boomerang Ball</option>
+        <option value="7">Killer Ball</option>
+        <option value="8">Killer Jr. Ball</option>
+        <option value="9">Egg Ball</option>
+        <option value="10">Weird Ball</option>
+        <option value="11">Heart Ball</option>
+        <option value="12">Flower Ball</option>
+    </select><br><br>
+
+        <label for="nonCaptainStarType">Non-Captain Star Hit</label>
+        <select id="nonCaptainStarType" name="nonCaptainStarType">
+            <option value="-1">No override</option>
+            <option value="1">Pop Fly</option>
+            <option value="2">Grounder</option>
+            <option value="3">Line Drive</option>
+        </select><br><br> -->
+
+        <label for="horizHitTraj">Horizontal Hit Trajectory</label>
+        <select id="horizHitTraj" name="horizHitTraj">
+            <option value="-1">No override</option>
+            <option value="0">Mid</option>
+            <option value="1">Pull</option>
+            <option value="2">Push</option>
+        </select><br><br>
+
+        <label for="vertHitTraj">Vertical Hit Trajectory</label>
+        <select id="vertHitTraj" name="vertHitTraj">
+            <option value="-1">No override</option>
+            <option value="0">Mid</option>
+            <option value="1">High</option>
+            <option value="2">Low</option>
+        </select><br><br>
+
+        <label for="superCurve">Hit Curve Type</label>
+        <select id="superCurve" name="superCurve">
+            <option value="-1">No override</option>
+            <option value="0">Normal</option>
+            <option value="1">Super Curve</option>
+        </select><br><br>
+
+  </section>
+  <br />
+  <button onclick="toggle(this)">Show Batter Override</button>
+  
+  <script>
+    let toggle = button => {
+      let element = document.getElementById("batterOverride");
+      let hidden = element.getAttribute("hidden");
+  
+      if (hidden) {
+         element.removeAttribute("hidden");
+         button.innerText = "Hide Batter Override";
+      } else {
+         element.setAttribute("hidden", "hidden");
+         button.innerText = "Show Batter Override";
+      }
+    }
+  </script> <br><br>
+
 <label for="pitcherID">Pitcher ID</label>
 <select id="pitcherID" name="pitcherID">
     <option value="0">(0) Mario</option>
