@@ -1165,7 +1165,7 @@ function convertPowerToVelocity(j) {
     if ((inMemBatter.Batter_IsBunting == false) && (Hit_HorizontalAngle[j] < 0x901 || 0xeff < Hit_HorizontalAngle[j])) {
         // has Super Curve
         let hasSuperCurve = [0xe, 0x35, 0x25].find(x => x == inMemBatter.Batter_CharID) != undefined ? 1 : 0;
-        if (readValues.oRSuperCurve != -1) {
+        if (readValues.oRSuperCurve != -1) { //override
             hasSuperCurve = readValues.oRSuperCurve;
         }
 
