@@ -126,6 +126,10 @@ var batterStarsOnIncrease = 0;
 var pitcherStarsOnIncrease = 0;
 var isLefty = 0;
 
+var ballXRandom = undefined;
+var ballXLower = 0;
+var ballXUpper = 0;
+
 function floor(f) {
     return Math.trunc(f);
 }
@@ -855,8 +859,16 @@ function parseInputs()
     readValues.batter_id = document.getElementById("batterID").value;
     readValues.batterStarsOn = document.getElementById("batterSuperstar").checked;
 
-    readValues.ballContact_X = parseFloat(document.getElementById("ballX").value);
     readValues.posX = parseFloat(document.getElementById("batterX").value);
+    readValues.ballContact_X = parseFloat(document.getElementById("ballX").value);
+
+    if (!isEmptyOrSpaces(document.getElementById("ballXMin").value)) {
+        readValues.ballContact_X_Lower = parseFloat(document.getElementById("ballXMin").value);
+    }
+
+    if (!isEmptyOrSpaces(document.getElementById("ballXMax").value)) {
+        readValues.ballContact_X_Upper = parseFloat(document.getElementById("ballXMax").value);
+    }
 
     readValues.AtBat_BatterHand = document.getElementById("handedness").value;
 
@@ -967,8 +979,25 @@ function parseValues() {
     inMemBatter.AtBat_Mystery_BatDirection = 0;
     inMemBatter.AtBat_TrimmedBat = BatterHitbox[id]["TrimmedBat"] == 0.0 ? 0 : 1;
 
-    inMemBatter.ballContact_X = readValues.ballContact_X;
     inMemBatter.posX = readValues.posX;
+    inMemBatter.ballContact_X = readValues.ballContact_X;
+
+    if (readValues.ballContact_X_Lower != undefined && readValues.ballContact_X_Upper != undefined) {
+        if (readValues.ballContact_X_Lower < readValues.ballContact_X && readValues.ballContact_X < readValues.ballContact_X_Upper) {
+            ballXLower = readValues.ballContact_X_Lower;
+            ballXUpper = readValues.ballContact_X_Upper;
+            ballXRandom = true;
+        }
+        else {
+             alert("Ensure the ball contact x lower bound is less than the real value, and that the upper bound is greater than the real value");
+            return;
+        }
+    }
+    else{
+        ballXLower = readValues.ballContact_X;
+        ballXUpper = readValues.ballContact_X;
+        ballXRandom = false;
+    }
 
     inMemBatter.AtBat_BatterHand = readValues.AtBat_BatterHand;
 
@@ -1267,8 +1296,6 @@ function calculateHitGround(j)
 }
 
 function calculateValues() {
-    calculateContact();
-    
     i = 0
 
     obsPerDim = floor((numSims-1)**(1/3))-1;
@@ -1279,7 +1306,9 @@ function calculateValues() {
     CalculatedPoints.length = 0; //empty the array from the previous run.
     while (i < numSims)
     {
-        if (i > 0) {
+       
+        if (i > 0) { // if not the first sim, then randomize
+            //randomize RNG
             if (randomType == 0) {
                 StaticRandomInt1 = floor(Math.random()*32767);
                 StaticRandomInt2 = floor(Math.random()*32767);
@@ -1304,8 +1333,26 @@ function calculateValues() {
 
             }
 
+            //randomize ball X, if chosen by the user.
+            if (ballXRandom == true) {
+                inMemBatter.interstitialBallContact_X = Math.random() * (ballXUpper - ballXLower) + ballXLower;
+                inMemBatter.ballContact_X = inMemBatter.interstitialBallContact_X;
+            }
+
         }
 
+        try {
+            if (!hitBall()) {
+                alert("These values would not make contact with the ball");
+                return;
+            }
+                // await new Promise(r => setTimeout(r, 1));
+        } catch (ex) {
+            console.log(ex)
+            alert(ex);
+        }
+        calculateContact();
+    
         calculateHorizontalAngle(i);
 
         calculateVerticalAngle(i);
