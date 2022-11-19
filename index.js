@@ -2317,6 +2317,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
             parseInputs();
 
             readValues.batter_id = character;
+            
+            readValues.ballContact_X = 0;
 
             if (BatterHitbox[character].TrimmedBat == 0) {
                 readValues.ballContact_X_Lower = -.85;
