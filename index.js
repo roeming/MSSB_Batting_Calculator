@@ -134,6 +134,9 @@ var ballXUpper = 0;
 randomContactHRFinished = 0;
 randHrPercent = [];
 
+frameUpper = 0;
+frameLower = 0;
+
 function floor(f) {
     return Math.trunc(f);
 }
@@ -889,6 +892,7 @@ function parseInputs()
     readValues.RandomBattingFactors_ChemLinksOnBase = document.getElementById("chemOnBase").value;
 
     readValues.frameOfContact = document.getElementById("frameOfContact").value;
+    readValues.frameRange = parseInt(document.getElementById("contactFrameRange").value);
 
     readValues.EasyBatting = document.getElementById("isEasyBatting").checked ? 1 : 0;
     
@@ -1057,6 +1061,14 @@ function parseValues() {
 
     inMemBatter.RandomBattingFactors_ChemLinksOnBase = readValues.RandomBattingFactors_ChemLinksOnBase;
     inMemBatter.Frame_SwingContact1 = readValues.frameOfContact
+    if (readValues.frameRange == 0) {
+        frameUpper = parseInt(readValues.frameOfContact);
+        frameLower = parseInt(readValues.frameOfContact);
+    } else {
+        frameUpper = Math.min(parseInt(readValues.frameOfContact) + readValues.frameRange, 10);
+        frameLower = Math.max(parseInt(readValues.frameOfContact) - readValues.frameRange, 2);
+    }
+
 
     inMemBatter.EasyBatting = readValues.EasyBatting;
     inMemBatter.isStar = readValues.isStar;
@@ -1343,6 +1355,8 @@ function calculateValues() {
                 inMemBatter.ballContact_X = inMemBatter.interstitialBallContact_X;
             }
 
+            //randomize frame of contact, if chosen by the user.
+            inMemBatter.Frame_SwingContact1 = Math.floor(Math.random() * (frameUpper - frameLower + 1)) + frameLower;
         }
 
         try {
@@ -2311,6 +2325,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
     document.getElementById("randomHR").onclick = async function(ev){
         randHrPercent = [];
         randomContactHRFinished = 0;
+        homeRunInd = [[0],[0],[0],[0],[0],[0],[0]];
 
         let character = 0;
         while (character < 54) {
