@@ -326,7 +326,13 @@
     <option value=4>DK Jungle</option>
     <option value=5>Bowser Castle</option>
     <!--<option value=6>Toy Field</option> -->
-</select><label> </label><br><br>
+</select><label> </label>
+
+<label for="showNoteBlocks" title="Display blocks that can turn into note blocks on the horizontal map">Show Note Blocks:</label>
+<input id="showNoteBlocks" name="showNoteBlocks" type="checkbox" /><br><br>
+
+<label for="invisToNotePercent">Percent of time invisible blocks turn into note blocks</label>
+<input id="invisToNotePercent" name="invisToNotePercent" type="text" value="50"/><label> </label><br><br>
 
 <label for="numberOfSims">Number of Simulations</label>
 <input id="numberOfSims" name="numberOfSims" type="text" value="250"/><label> </label><br><br>
@@ -335,7 +341,7 @@
 <select id="simulationType" name="simulationType">
     <option value=0>Random</option>
     <option value=1>Uniform</option>
-</select><label> </label><br><br>
+</select><br><br>
 
 <label>Input Stick</label><br>
 <label for="inputUp">Up</label>
