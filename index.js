@@ -2426,7 +2426,7 @@ function hitNoteBlock(j)
     CalculatedPoints[j].forEach(element => {
         if (hitNoteBlockInd[j] != 0) {
             //nothing
-        } else if (element.Y > 6 && element.Y < 13) {
+        } else if (element.Y > 6 && element.Y < 15) {
             let blockNum = 0;
             while (blockNum < noteBlocks.length) {
                 blockBallDist = Math.sqrt((noteBlocks[blockNum].X - element.X)**2 + (noteBlocks[blockNum].Y - element.Y)**2 + (noteBlocks[blockNum].Z - element.Z)**2);
