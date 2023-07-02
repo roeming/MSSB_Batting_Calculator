@@ -22,7 +22,7 @@
 
 </head>
 
-<label for="batterID">Batter ID</label>
+<label for="batterID" title="Batter who's stats are used in the calculations">Batter</label>
 <select id="batterID" name="batterID">
     <option value="0">(0) Mario</option>
     <option value="1">(1) Luigi</option>
@@ -78,9 +78,9 @@
     <option value="51">(51) Dry Bones(B)</option>
     <option value="52">(52) Bro(F)</option>
     <option value="53">(53) Bro(B)</option>
-</select><label>(short) 80890972</label>
+</select><!--label>(short) 80890972</label-->
 
-<label for="batterSuperstar">Superstar?</label>
+<label for="batterSuperstar" title="Adds 50 to batting power">Superstar?</label>
 <input id="batterSuperstar" name="batterSuperstar" type="checkbox" /><br><br>
 
 <section id="batterOverride" hidden="hidden" style="margin-left:30px;">
@@ -149,6 +149,7 @@
   <br />
   <button onclick="toggle(this)">Show Batter Override</button>
   
+  <!-- to toggle batter override options-->
   <script>
     let toggle = button => {
       let element = document.getElementById("batterOverride");
@@ -164,7 +165,7 @@
     }
   </script> <br><br>
 
-<label for="pitcherID">Pitcher ID</label>
+<label for="pitcherID" title="Pitcher who's stats are used in the calculations">Pitcher</label>
 <select id="pitcherID" name="pitcherID">
     <option value="0">(0) Mario</option>
     <option value="1">(1) Luigi</option>
@@ -220,59 +221,59 @@
     <option value="51">(51) Dry Bones(B)</option>
     <option value="52">(52) Bro(F)</option>
     <option value="53">(53) Bro(B)</option>
-</select><label>(short) 80890ada</label>
+</select><!--label>(short) 80890ada</label-->
 
-<label for="pitcherSuperstar">Superstar?</label>
+<label for="pitcherSuperstar" title="Adds 50 to the cursed ball stat">Superstar?</label>
 <input id="pitcherSuperstar" name="pitcherSuperstar" type="checkbox" /><br><br>
 
-<label for="isEasyBatting">Easy Batting</label>
-<input id="isEasyBatting" name="isEasyBatting" type="checkbox"/><label>(bool) 8089098a</label><br><br>
+<label for="isEasyBatting" title="Turns on easy batting mode, which increases contact zones on the bat">Easy Batting</label>
+<input id="isEasyBatting" name="isEasyBatting" type="checkbox"/><!--label>(bool) 8089098a</label--><br><br>
 
-<label for="handedness">Handedness</label>
+<label for="handedness" title="Sets the batting stance of the batter">Handedness</label>
 <select name="handedness" id="handedness">
     <option value="0">(0) Righty</option>
     <option value="1">(1) Lefty</option>
-</select><label>(byte) 8089098b</label><br><br>
+</select><!--label>(byte) 8089098b</label--><br><br>
 
-<label for="batterX">Batter X Position</label>
-<input id="batterX" name="batterX" type="text" value="0"/><label>(float) 8089095c</label><br><br>
+<label for="batterX" title="The position of the batter when contact was made">Batter X Position</label>
+<input id="batterX" name="batterX" type="text" value="0"/><!--label>(float) 8089095c</label--><br><br>
 
-<label for="ballX">Ball X Position</label>
-<input id="ballX" name="ballX" type="text" value="0"/><label>(float) 80890934</label><br><br>
+<label for="ballX" title="The position of the ball when contact was made">Ball X Position</label>
+<input id="ballX" name="ballX" type="text" value="0"/><!--label>(float) 80890934</label--><br><br>
 
-<label for="chemOnBase">Chem on Base</label>
+<label for="chemOnBase" title="The number of runners on base who have chemistry with the batter">Chemistry Links on Base</label>
 <select id="chemOnBase" name="chemOnBase">
     <option value="0">0</option>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
-</select><label>(byte) 808909ba</label><br><br>
+</select><!--label>(byte) 808909ba</label--><br><br>
 
-<label for="slapChargeStarBunt">Slap/Charge/Star/Bunt</label>
+<label for="slapChargeStarBunt" title="The type of swing">Slap/Charge/Star/Bunt</label>
 <select name="slapChargeStarBunt" id="slapChargeStarBunt">
     <option value="0">(0) Slap</option>
     <option value="1">(1) Charge</option>
     <!-- <option value="2">(2) Star</option> -->
     <!-- <option value="3">(3) Bunt</option> -->
-</select><label>(byte) 8089099b</label><br><br>
+</select><!--label>(byte) 8089099b</label--><br><br>
 
-<label for="isStar">Is Star</label>
-<input id="isStar" name="isStar" type="checkbox"/><label>(bool) 808909b1</label><br><br>
+<label for="isStar" title="Was the hit a special star hit?">Is Star Hit?</label>
+<input id="isStar" name="isStar" type="checkbox"/><!--label>(bool) 808909b1</label--><br><br>
 
-<label for="pitchType">Pitch Curve/Charge/ChangeUp</label>
+<label for="pitchType" title="Sets the pitch type">Pitch Curve/Charge/ChangeUp</label>
 <select name="pitchType" id="pitchType">
     <option value="0">Curve</option>
     <option value="1">Charge</option>
     <option value="2">Perfect Charge</option>
     <option value="3">Change Up</option>
-</select><label>(byte) 80890b21, (byte) 80890b1f</label><br><br>
+</select><!--label>(byte) 80890b21, (byte) 80890b1f</label--><br><br>
 
 
-<label for="chargeUp">Charge Up</label>
-<input id="chargeUp" name="chargeUp" type="text" value="0"/><label>(float) 80890968</label><br><br>
+<label for="chargeUp" title="If this is <=0, game treats charge hits like slaps.">Charge Up</label>
+<input id="chargeUp" name="chargeUp" type="text" value="0"/><!--label>(float) 80890968</label--><br><br>
 
 <label for="chargeDown">Charge Down</label>
-<input id="chargeDown" name="chargeDown" type="text" value="0"/><label>(float) 8089096c</label><br><br>
+<input id="chargeDown" name="chargeDown" type="text" value="0"/><!--label>(float) 8089096c</label--><br><br>
 
 <label for="frameOfContact">Frame of Contact</label>
 <select id="frameOfContact" name="frameOfContact">
@@ -285,17 +286,17 @@
     <option value="8">8</option>
     <option value="9">9</option>
     <option value="10">10</option>
-</select><label>(short) 80890976</label><br><br>
+</select><!--label>(short) 80890976</label--><br><br>
 
 
 <label for="randomInt1">Random Int 1</label>
-<input id="randomInt1" name="randomInt1" placeholder="Optional" type="text"/><label>(uint) 80892684</label><br><br>
+<input id="randomInt1" name="randomInt1" placeholder="Optional" type="text"/><!--label>(uint) 80892684</label--><br><br>
 
 <label for="randomInt2">Random Int 2</label>
-<input id="randomInt2" name="randomInt2" placeholder="Optional" type="text"/><label>(uint) 80892688</label><br><br>
+<input id="randomInt2" name="randomInt2" placeholder="Optional" type="text"/><!--label>(uint) 80892688</label--><br><br>
 
 <label for="randomCounter">Random Counter</label>
-<input id="randomCounter" name="randomCounter" placeholder="Optional" type="text"/><label>(ushort) 8089269C</label><br><br>
+<input id="randomCounter" name="randomCounter" placeholder="Optional" type="text"/><!--label>(ushort) 8089269C</label--><br><br>
 
 <label for="stadiumID">Stadium</label>
 <select id="stadiumID" name="stadiumID">
