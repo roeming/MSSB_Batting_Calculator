@@ -124,6 +124,7 @@ var CalculatedPointsPrev = [];
 var runNum = 0;
 var batterStarsOnIncrease = 0;
 var pitcherStarsOnIncrease = 0;
+var isLefty = 0;
 
 function floor(f) {
     return Math.trunc(f);
@@ -1495,6 +1496,11 @@ function drawHorizontalGraph(stadiumNum) {
     ctx.closePath();
     ctx.stroke();
 
+    // Draw batter
+    if (inMemBatter.AtBat_BatterHand == Lefty) {isLefty = 1;} 
+    else {isLefty = 0};
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(offset.X - 10 + isLefty*15, offset.Y-10, 5, 10);
 
     // Draw horizontal region
     ctx.beginPath();
