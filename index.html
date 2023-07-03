@@ -180,7 +180,6 @@
   </section>
   <br />
   <button onclick="toggle(this)">Show Batter Override</button>
-
   
   <!-- to toggle batter override options-->
   <script>
@@ -272,7 +271,13 @@
 <input id="batterX" name="batterX" type="text" value="0"/><!--label>(float) 8089095c</label--><br><br>
 
 <label for="ballX" title="The position of the ball when contact was made">Ball X Position</label>
-<input id="ballX" name="ballX" type="text" value="0"/><!--label>(float) 80890934</label--><br><br>
+<input id="ballX" name="ballX" type="text" value="0"/><!--label>(float) 80890934</label-->
+
+<label for="ballXMin">Lower Bound</label>
+<input id="ballXMin" name="ballXMin" type="text" placeholder="Optional"/><!--label>(float) 8089095c</label-->
+
+<label for="ballXMax">Upper Bound</label>
+<input id="ballXMax" name="ballXMax" type="text" placeholder="Optional"/><!--label>(float) 8089095c</label--><br><br>
 
 <label for="chemOnBase" title="The number of runners on base who have chemistry with the batter">Chemistry Links on Base</label>
 <select id="chemOnBase" name="chemOnBase">
@@ -319,7 +324,20 @@
     <option value="8">8</option>
     <option value="9">9</option>
     <option value="10">10</option>
-</select><!--label>(short) 80890976</label--><br><br>
+</select><!--label>(short) 80890976</label-->
+
+<label for="contactFrameRange">Optional: Simulate Using a Range of Frames</label>
+<select id="contactFrameRange" name="contactFrameRange">
+    <option value="0">Single Frame</option>
+    <option value="1">± 1 frame</option>
+    <option value="2">± 2 frames</option>
+    <option value="3">± 3 frames</option>
+    <option value="4">± 4 frames</option>
+    <option value="5">± 5 frames</option>
+    <option value="10">All Frames</option>
+</select>
+
+<br><br>
 
 
 <label for="randomInt1">Random Int 1</label>
@@ -340,7 +358,13 @@
     <option value=4>DK Jungle</option>
     <option value=5>Bowser Castle</option>
     <!--<option value=6>Toy Field</option> -->
-</select><label> </label><br><br>
+</select><label> </label>
+
+<label for="showNoteBlocks" title="Display blocks that can turn into note blocks on the horizontal map">Show Note Blocks:</label>
+<input id="showNoteBlocks" name="showNoteBlocks" type="checkbox" /><br><br>
+
+<label for="invisToNotePercent">Percent of time invisible blocks turn into note blocks</label>
+<input id="invisToNotePercent" name="invisToNotePercent" type="text" value="50"/><label> </label><br><br>
 
 <label for="numberOfSims">Number of Simulations</label>
 <input id="numberOfSims" name="numberOfSims" type="text" value="250"/><label> </label><br><br>
@@ -349,7 +373,7 @@
 <select id="simulationType" name="simulationType">
     <option value=0>Random</option>
     <option value=1>Uniform</option>
-</select><label> </label><br><br>
+</select><br><br>
 
 <label>Input Stick</label><br>
 <label for="inputUp">Up</label>
@@ -366,6 +390,7 @@
 
 <input id="submitData" type="submit" value="Calculate"/><br><br>
 <input id="randomData" type="submit" value="Random Data"/><br><br>
+<input id="randomHR" type="submit" value="Random Contact HR Calculator"/>Simulates random contact and outputs the HR% for each batter based on the above parameters<br><br>
 
 <img id="ballImg" src="ball.png" hidden="true"><br>
 <img id="batImg" src="bat transparent.png" hidden="true"><br>
@@ -381,6 +406,7 @@
         <canvas id="contactOutput" width="650", height="450"></canvas><br>
         <canvas id="verticalOutput" width="300", height="300" ></canvas><br>
         <canvas id="horizontalOutput" width="300", height="300"></canvas><br>
+        <label>Red = current simulation; Blue =  previous simulation</label>
     </div>
     <div class="output">
         <pre id="outputText"></pre>
