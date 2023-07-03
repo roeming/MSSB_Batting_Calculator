@@ -48,6 +48,68 @@ const BattingExtensions = [[-0.85, 0.15], [-0.35, 0.35]]
 
 const FLOAT_ARRAY_ARRAY_807b72bc = [[0.5, 0.001, 0.003], [0.25, 0.006, 0.008]]
 
+var char_dict = {
+    "Mario": 0,
+    "Luigi": 1,
+    "DK": 2,
+    "Diddy": 3,
+    "Peach": 4,
+    "Daisy": 5,
+    "Yoshi": 6,
+    "Baby Mario": 7,
+    "Baby Luigi": 8,
+    "Bowser": 9,
+    "Wario": 10,
+    "Waluigi": 11,
+    "Koopa(R)": 12,
+    "Toad(R)": 13,
+    "Boo": 14,
+    "Toadette": 15,
+    "Shy Guy(R)": 16,
+    "Birdo": 17,
+    "Monty": 18,
+    "Bowser Jr": 19,
+    "Paratroopa(R)": 20,
+    "Pianta(B)": 21,
+    "Pianta(R)": 22,
+    "Pianta(Y)": 23,
+    "Noki(B)": 24,
+    "Noki(R)": 25,
+    "Noki(G)": 26,
+    "Bro(H)": 27,
+    "Toadsworth": 28,
+    "Toad(B)": 29,
+    "Toad(Y)": 30,
+    "Toad(G)": 31,
+    "Toad(P)": 32,
+    "Magikoopa(B)": 33,
+    "Magikoopa(R)": 34,
+    "Magikoopa(G)": 35,
+    "Magikoopa(Y)": 36,
+    "King Boo": 37,
+    "Petey": 38,
+    "Dixie": 39,
+    "Goomba": 40,
+    "Paragoomba": 41,
+    "Koopa(G)": 42,
+    "Paratroopa(G)": 43,
+    "Shy Guy(B)": 44,
+    "Shy Guy(Y)": 45,
+    "Shy Guy(G)": 46,
+    "Shy Guy(Bk)": 47,
+    "Dry Bones(Gy)": 48,
+    "Dry Bones(G)": 49,
+    "Dry Bones(R)": 50,
+    "Dry Bones(B)": 51,
+    "Bro(F)": 52,
+    "Bro(B)": 53
+}
+
+var stad_dict = {
+    "Mario Stadium": 0,
+    "Peach's Garden": 1
+
+} // TODO: finish list
 var StaticRandomInt1 = 7769; // <= 32767
 var StaticRandomInt2 = 5359; // <= 32767
 var USHORT_8089269c = 1828; // <= 32767
@@ -833,6 +895,68 @@ function randomInputs()
     document.getElementById("inputRight").checked   = r2 >= 2;
 }
 
+function useStatFileValues()
+{
+    let statFile = JSON.parse(document.getElementById("result").value)
+    let eventNumber =  document.getElementById("eventNum").value
+    let event = statFile["Events"][eventNumber]
+    let pitch = event["Pitch"]
+    let contact = pitch["Contact"]
+    
+    if(pitch["Pitcher Team Id"] == 0){
+        pTeamID = "Away"
+        bTeamID = "Home"
+    } else {
+        pTeamID = "Home"
+        bTeamID = "Away"
+    }
+
+    bRosterLoc = event["Runner Batter"]["Runner Roster Loc"]
+
+    let batter = statFile["Character Game Stats"][bTeamID + ' Roster ' + bRosterLoc]
+
+    if(event["Pitch"].hasOwnProperty("Contact")) {
+        //if the event shows a contact event, remove the warning
+        document.getElementById("noContactWarning").setAttribute("hidden", "hidden");
+
+        document.getElementById("batterID").value = char_dict[event["Runner Batter"]["Runner Char Id"]]
+        document.getElementById("batterSuperstar").checked = batter["Superstar"]
+        document.getElementById("pitcherID").value = char_dict[pitch["Pitcher Char Id"]]
+        document.getElementById("pitcherSuperstar").checked = batter["Superstar"] //TODO switch this to pitcher - mathing batter for now since very unusual for them to be different
+        document.getElementById("handedness").value = ((batter["Batting Hand"] == "Right") ? 0 : 1) 
+        document.getElementById("batterX").value = pitch["Bat Contact Pos - X"]
+        document.getElementById("ballX").value = contact["Ball Contact Pos - X"]
+        document.getElementById("chemOnBase").value = event["Chemistry Links on Base"]
+        document.getElementById("slapChargeStarBunt").value = ((pitch["Type of Swing"] == "Charge") ? 1 : 0) 
+        document.getElementById("isStar").checked = ((pitch["Type of Swing"] == "Star") ? 1 : 0) 
+        if(pitch["Pitch Type"] == "Curve") {
+            document.getElementById("pitchType").value = 0
+        } else if (pitch["Pitch Type"] == "Charge") {
+            if (pitch["Charge Type"] == "Slider") {
+                document.getElementById("pitchType").value = 1
+            } else {
+                document.getElementById("pitchType").value = 2
+            }
+        } else {
+            document.getElementById("pitchType").value = 3
+        }
+        document.getElementById("chargeUp").value = contact["Charge Power Up"]
+        document.getElementById("chargeDown").value = contact["Charge Power Down"]
+        document.getElementById("frameOfContact").value = contact["Frame of Swing Upon Contact"]
+        document.getElementById("randomInt1").value = contact["RNG1"].replace(/,/g, '')
+        document.getElementById("randomInt2").value = contact["RNG2"].replace(/,/g, '')
+        document.getElementById("randomCounter").value = contact["RNG3"].replace(/,/g, '')
+        document.getElementById("stadiumID").value = stad_dict[statFile["StadiumID"]]
+        document.getElementById("inputUp").checked = ((contact["Input Direction - Stick"].search("Up") == -1) ? 0 : 1)
+        document.getElementById("inputDown").checked = ((contact["Input Direction - Stick"].search("Down") == -1) ? 0 : 1)
+        document.getElementById("inputLeft").checked = ((contact["Input Direction - Stick"].search("Left") == -1) ? 0 : 1)
+        document.getElementById("inputRight").checked = ((contact["Input Direction - Stick"].search("Right") == -1) ? 0 : 1)
+    } else {
+        //if the event doesn't have any contact, then show the warning that the values weren't updated
+        document.getElementById("noContactWarning").removeAttribute("hidden");
+    }
+}
+
 function parseInputs()
 {
     readValues = {};
@@ -903,7 +1027,7 @@ function parseValues() {
     //batterStarsOn = true;
     //pitcherStarsOn = true;
     //set stars on buffs
-    if (readValues.batterStarsOn) {batterStarsOnIncrease = 50}
+    if (readValues.batterStarsOn) {batterStarsOnIncrease = 50} //TODO fix with actual buffs with caps
     else {batterStarsOnIncrease = 0};
     
     if (readValues.pitcherStarsOn) {pitcherStarsOnIncrease = 50}
@@ -2256,6 +2380,31 @@ document.addEventListener('DOMContentLoaded', function (event) {
         runNum += 1;
     
     };
+
+    document.getElementById("useStatFileValues").onclick = async function(ev){
+        useStatFileValues()
+    };
+
+    //Take stat file input and put into textbox so it can be parsed
+    document.getElementById('import').onclick = function() {
+        var files = document.getElementById('selectFiles').files;
+      console.log(files);
+      if (files.length <= 0) {
+        return false;
+      }
+    
+      var fr = new FileReader();
+    
+      fr.onload = function(e) { 
+      console.log(e);
+        var result = JSON.parse(e.target.result);
+        var formatted = JSON.stringify(result, null, 2);
+            document.getElementById('result').value = formatted;
+      }
+    
+      fr.readAsText(files.item(0));
+    };
+
 
 });
 
