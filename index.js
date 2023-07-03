@@ -191,6 +191,8 @@ var CalculatedPointsPrev = [];
 var runNum = 0;
 var batterStarsOnIncrease = 0;
 var pitcherStarsOnIncrease = 0;
+var hitNoteBlockInd = []
+var randomContactHRFinished = false
 
 function floor(f) {
     return Math.trunc(f);
@@ -2454,6 +2456,31 @@ document.addEventListener('DOMContentLoaded', function (event) {
         runNum += 1;
     
     };
+
+    document.getElementById("useStatFileValues").onclick = async function(ev){
+        useStatFileValues()
+    };
+
+    //Take stat file input and put into textbox so it can be parsed
+    document.getElementById('import').onclick = function() {
+        var files = document.getElementById('selectFiles').files;
+      console.log(files);
+      if (files.length <= 0) {
+        return false;
+      }
+
+      var fr = new FileReader();
+
+      fr.onload = function(e) { 
+      console.log(e);
+        var result = JSON.parse(e.target.result);
+        var formatted = JSON.stringify(result, null, 2);
+            document.getElementById('result').value = formatted;
+      }
+
+      fr.readAsText(files.item(0));
+    };
+
 
 });
 
