@@ -110,11 +110,15 @@ var char_dict = {
     "Bro(B)": 53
 }
 
-var stad_dict = {
+var stad_dict = { // this is the order used in this script, but not the actual values in memory
     "Mario Stadium": 0,
-    "Peach's Garden": 1
+    "Peach's Garden": 1,
+    "Wario's Palace": 2,
+    "Yoshi's Island": 3,
+    "DK's Jungle": 4,
+    "Bowser's Castle": 5
+}
 
-} // TODO: finish list
 var StaticRandomInt1 = 7769; // <= 32767
 var StaticRandomInt2 = 5359; // <= 32767
 var USHORT_8089269c = 1828; // <= 32767
