@@ -197,6 +197,12 @@ var batterStarsOnIncrease = 0;
 var pitcherStarsOnIncrease = 0;
 var hitNoteBlockInd = []
 var randomContactHRFinished = false
+var currentStarSwing = 0;
+var currentStarSwing2 = 0;
+var hangtimeOfHit = 100;
+var directionOfBananaHit = 0;
+var bananaHitStartFrame = 15;
+var bananaHitEndFrame = 60;
 
 function floor(f) {
     return Math.trunc(f);
@@ -941,6 +947,7 @@ function useStatFileValues()
         document.getElementById("chemOnBase").value = event["Chemistry Links on Base"]
         document.getElementById("slapChargeStarBunt").value = ((pitch["Type of Swing"] == "Charge") ? 1 : 0) 
         document.getElementById("isStar").checked = ((pitch["Type of Swing"] == "Star") ? 1 : 0) 
+        document.getElementById("hangtime").value = contact["Ball Hang Time"]
         if(pitch["Pitch Type"] == "Curve") {
             document.getElementById("pitchType").value = 0
         } else if (pitch["Pitch Type"] == "Charge") {
@@ -1023,6 +1030,8 @@ function parseInputs()
     readValues.EasyBatting = document.getElementById("isEasyBatting").checked ? 1 : 0;
     
     readValues.isStar = document.getElementById("isStar").checked ? 1 : 0;
+    
+    readValues.hangtime = parseInt(document.getElementById("hangtime").value);
 
     readValues.stadiumID = document.getElementById("stadiumID").value;
 
@@ -1045,6 +1054,7 @@ function parseInputs()
 }
 
 function parseValues() {
+    // Corresponds with function at 806515e8
     Display_Output = {};
     inMemBall = {};
     inMemPitcher = {};
@@ -1278,6 +1288,52 @@ function parseValues() {
             inMemBatter.Batter_Contact_SlapChargeBuntStar = Bunt;
             inMemBatter.AtBat_MoonShot = false;
         }
+    }
+
+    hangtimeOfHit = readValues.hangtime
+
+    if (inMemBatter.AtBat_Mystery_CaptainStarSwing != 0) {
+        currentStarSwing = inMemBatter.AtBat_Mystery_CaptainStarSwing;
+        currentStarSwing2 = inMemBatter.AtBat_Mystery_CaptainStarSwing;                                                                   
+        //inAirOrBefore2ndBounceOrLowBallEnergy = false;
+                        /* DK and diddy */
+        if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 5) ||
+           (inMemBatter.AtBat_Mystery_CaptainStarSwing == 6)) {
+            directionOfBananaHit = Number(inMemBatter.AtBat_BatterHand);
+            bananaHitStartFrame = Math.trunc(hangtimeOfHit * 0.25);
+            bananaHitEndFrame = Math.trunc(hangtimeOfHit * 0.95);
+        }
+        else {
+                        /* wario and walu */
+            if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 3) ||
+                (inMemBatter.AtBat_Mystery_CaptainStarSwing == 4)) {
+                //lower = RandomInt_Game(2);
+                warioWaluStarHitDirection = (Math.random() < 0.5 ? 0 : 1); //TODO: use actual RNG value to get this to match exactly, if possible
+                //DAT_8089265c = 0.0;
+                matchFramesAndBallAngle.garlicHitFramesUntilHitGroundForSplit = 120;
+            }
+            else { // not needed for this calculator
+                            /* bowser and BJ
+                            Multiply the hit power by 4 to get initial energy. */
+                /*if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 7) ||
+                (inMemBatter.AtBat_Mystery_CaptainStarSwing == 8)) {
+                    local_20 = (double)(CONCAT44(0x43300000,(int)Hit_HorizontalPower/bODBasePoints) ^
+                                        0x80000000);
+                    inAirOrBefore2ndBounceOrLowBallEnergy = true;
+                    hardHitIndicator = 1;
+                    ballEnergy = (float)(local_20 - const_IntToDouble) *
+                                const_4.0_bowserStarHitBallEnergyMultiplier;
+                }*/
+                /*else {*/
+                                /* peach daisy */
+                    /*if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 0xb) ||
+                        (inMemBatter.AtBat_Mystery_CaptainStarSwing == 0xc)) {
+                        autoFielderAvoidDropSpotForPeachesStarHit = 1;
+                    }
+                } */
+            }
+        }
+      
     }
 }
 
