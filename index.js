@@ -112,11 +112,11 @@ var char_dict = {
 
 var stad_dict = { // this is the order used in this script, but not the actual values in memory
     "Mario Stadium": 0,
-    "Peach's Garden": 1,
-    "Wario's Palace": 2,
-    "Yoshi's Island": 3,
-    "DK's Jungle": 4,
-    "Bowser's Castle": 5
+    "Peach Garden": 1,
+    "Wario Palace": 2,
+    "Yoshi Island": 3,
+    "DK Jungle": 4,
+    "Bowser Castle": 5
 }
 
 var StaticRandomInt1 = 7769; // <= 32767
@@ -858,6 +858,7 @@ function randomInputs()
     let batter_id = document.getElementById("batterID").value;
     
     randRange(document.getElementById("ballX"), BattingExtensions[BatterHitbox[batter_id].TrimmedBat][0], BattingExtensions[BatterHitbox[batter_id].TrimmedBat][1], 4);
+    randRange(document.getElementById("ballZ"), 0.2, 2); //Guessed at the range based on 1 stat file
     document.getElementById("batterX").value = 0;
     randIndex(document.getElementById("handedness"));
     randIndex(document.getElementById("chemOnBase"));
@@ -936,6 +937,7 @@ function useStatFileValues()
         document.getElementById("handedness").value = ((batter["Batting Hand"] == "Right") ? 0 : 1) 
         document.getElementById("batterX").value = pitch["Bat Contact Pos - X"]
         document.getElementById("ballX").value = contact["Ball Contact Pos - X"]
+        document.getElementById("ballZ").value = contact["Ball Contact Pos - Z"]
         document.getElementById("chemOnBase").value = event["Chemistry Links on Base"]
         document.getElementById("slapChargeStarBunt").value = ((pitch["Type of Swing"] == "Charge") ? 1 : 0) 
         document.getElementById("isStar").checked = ((pitch["Type of Swing"] == "Star") ? 1 : 0) 
@@ -991,6 +993,7 @@ function parseInputs()
 
     readValues.posX = parseFloat(document.getElementById("batterX").value);
     readValues.ballContact_X = parseFloat(document.getElementById("ballX").value);
+    readValues.ballContact_Z = parseFloat(document.getElementById("ballZ").value);
 
     if (!isEmptyOrSpaces(document.getElementById("ballXMin").value)) {
         readValues.ballContact_X_Lower = parseFloat(document.getElementById("ballXMin").value);
@@ -1115,6 +1118,7 @@ function parseValues() {
 
     inMemBatter.posX = readValues.posX;
     inMemBatter.ballContact_X = readValues.ballContact_X;
+    inMemBatter.ballContact_Z = readValues.ballContact_Z;
 
     if (readValues.ballContact_X_Lower != undefined && readValues.ballContact_X_Upper != undefined) {
         if (readValues.ballContact_X_Lower < readValues.ballContact_X && readValues.ballContact_X < readValues.ballContact_X_Upper) {
@@ -1411,7 +1415,7 @@ function convertPowerToVelocity(j) {
 
 function calculateHitGround(j)
 {
-    let p = { X: 0, Y: BatterHitbox[inMemBatter.Batter_CharID].PitchingHeight, Z: 0 }
+    let p = { X: inMemBatter.ballContact_X, Y: BatterHitbox[inMemBatter.Batter_CharID].PitchingHeight, Z: inMemBatter.ballContact_Z }
     CalculatedPoints[j] = []
     
     let v = JSON.parse(JSON.stringify(inMemBall.ballVelocity));
