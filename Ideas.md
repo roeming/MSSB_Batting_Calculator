@@ -1,0 +1,9 @@
+-Add starting x and z coords (check 80651ce8)
+-Add star hit functionality
+  - Banana ball (80651b7c)
+  - Garlic ball
+  - Traj zones for all
+- Add ball energy as an output
+- Bunts
+- Bomb omb derby and barrel batter
+- For debugging, add feature to compare calculated output with the stat file
