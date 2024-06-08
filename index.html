@@ -279,6 +279,9 @@
 <label for="ballXMax">Upper Bound</label>
 <input id="ballXMax" name="ballXMax" type="text" placeholder="Optional"/><!--label>(float) 8089095c</label--><br><br>
 
+<label for="ballZ" title="The Z position of the ball when contact was made">Ball Z Position</label>
+<input id="ballZ" name="ballZ" type="text" value="1"/><!--label>(float) 8089093C</label--><br><br>
+
 <label for="chemOnBase" title="The number of runners on base who have chemistry with the batter">Chemistry Links on Base</label>
 <select id="chemOnBase" name="chemOnBase">
     <option value="0">0</option>
@@ -291,12 +294,18 @@
 <select name="slapChargeStarBunt" id="slapChargeStarBunt">
     <option value="0">(0) Slap</option>
     <option value="1">(1) Charge</option>
-    <!-- <option value="2">(2) Star</option> -->
+    <option value="2">(2) Star</option>
     <!-- <option value="3">(3) Bunt</option> -->
 </select><!--label>(byte) 8089099b</label--><br><br>
 
-<label for="isStar" title="Was the hit a special star hit?">Is Star Hit?</label>
-<input id="isStar" name="isStar" type="checkbox"/><!--label>(bool) 808909b1</label--><br><br>
+<!--<label for="isStar" title="Was the hit a special star hit?">Is Star Hit?</label> No longer needed since now derived using previous drop down
+<input id="isStar" name="isStar" type="checkbox"/--><!--label>(bool) 808909b1</label--><!--br><br-->
+
+<label for="isMoonshot" title="Was the hit a 5 star dinger?">Is 5 Star Dinger?</label>
+<input id="isMoonshot" name="isMoonshot" type="checkbox"/><!--label>(bool) 808909b5</label--><br><br>
+
+<label for="hangtime" title="The game's estimated number of frames in the air - used for Banana Balls">Estimated Hang Time (for Banana Star Hits)</label>
+<input id="hangtime" name="hangtime" type="text" placeholder="Optional for Normal Hits"/><!--label>(bool) 80892696</label--><br><br>
 
 <label for="pitchType" title="Sets the pitch type">Pitch Curve/Charge/ChangeUp</label>
 <select name="pitchType" id="pitchType">

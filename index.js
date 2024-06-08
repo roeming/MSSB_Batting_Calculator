@@ -6,6 +6,13 @@ const stats = [{ "Curve Ball Speed": 130, "Fast Ball Speed": 168, "Cursed Ball":
 const BatterHitbox = [{ 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0999999046325684, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.30000001192092896, 'VerticalRangeBack': 1.899999976158142, 'EasyBattingSpotHorizontal': -1.7999999523162842, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.4000000059604645, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.6500000953674316, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 1.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.30000001192092896, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.5, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.2999999523162842, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6000000238418579, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.2999999523162842, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.049999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7000000476837158, 'EasyBattingSpotHorizontal': -1.7999999523162842, 'EasyBattingSpotVertical': -1.2999999523162842, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.149999976158142, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 1.4500000476837158, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 0.20000000298023224, 'EasyBattingSpotHorizontal': -3.5999999046325684, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.75, 'VerticalRangeFront': 0.4000000059604645, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.4000000953674316, 'EasyBattingSpotVertical': -1.600000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.30000001192092896, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.5, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.1500000953674316, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.949999988079071, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.4000000953674316, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.100000023841858, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.5, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7000000476837158, 'EasyBattingSpotHorizontal': -1.7999999523162842, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.30000001192092896, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.20000000298023224, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.200000047683716, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.5, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.5, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.8500000238418579, 'VerticalRangeFront': 0.5, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.2000000476837158, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.2000000476837158, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': 0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.2000000476837158, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 1.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -1.75, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 1.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.44999998807907104, 'VerticalRangeFront': -0.6000000238418579, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, 
 { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.44999998807907104, 'VerticalRangeFront': -0.6000000238418579, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.44999998807907104, 'VerticalRangeFront': -0.6000000238418579, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.44999998807907104, 'HorizontalRangeFar': 0.44999998807907104, 'VerticalRangeFront': -0.6000000238418579, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6000000238418579, 'HorizontalRangeFar': 0.699999988079071, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6000000238418579, 'HorizontalRangeFar': 0.699999988079071, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6000000238418579, 'HorizontalRangeFar': 0.699999988079071, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6000000238418579, 'HorizontalRangeFar': 0.699999988079071, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.7999999523162842, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.2000000476837158, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.399999976158142, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.100000023841858, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': 0.20000000298023224, 'VerticalRangeBack': 1.7000000476837158, 'EasyBattingSpotHorizontal': -1.600000023841858, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.2000000476837158, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': 0.0, 'VerticalRangeBack': 1.5, 'EasyBattingSpotHorizontal': -2.0999999046325684, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 0.75, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.299999952316284, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.5, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.1500000953674316, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.600000023841858, 'EasyBattingSpotHorizontal': -2.0999999046325684, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.550000011920929, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.399999976158142, 'EasyBattingSpotHorizontal': -2.5, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.100000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.100000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.100000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.75, 'HorizontalRangeFar': 0.550000011920929, 'VerticalRangeFront': -0.10000000149011612, 'VerticalRangeBack': 1.2999999523162842, 'EasyBattingSpotHorizontal': -1.899999976158142, 'EasyBattingSpotVertical': -1.100000023841858, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 0.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 1.0 }, { 'HorizontalRangeNear': -0.6499999761581421, 'HorizontalRangeFar': 0.6499999761581421, 'VerticalRangeFront': -0.20000000298023224, 'VerticalRangeBack': 1.2000000476837158, 'EasyBattingSpotHorizontal': -1.7000000476837158, 'EasyBattingSpotVertical': -1.0, 'BoxMoveSpeed': 0.05000000074505806, 'PitchingHeight': 1.0, 'TrimmedBat': 1.0 }]
 
+const BatterHitboxMultiplier = [[1.18, 1.1], [1.18, 1.1], [1.11, 1.0], [1.18, 1.15], [1.18, 1.08], [1.18, 1.1], [1.18, 1.1], [1.2, 1.1], [1.2, 1.18], [1.0, 0.8], 
+                                [1.18, 1.06], [1.0, 0.8], [1.18, 1.1], [1.4, 1.32], [1.2, 1.12], [1.4, 1.32], [1.2, 1.12], [1.18, 1.1], [1.0, 0.92], [1.2, 1.12],
+                                [1.2, 1.12], [1.2, 1.08], [1.2, 1.08], [1.2, 1.08], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.4, 1.32], [1.4, 1.32],
+                                [1.4, 1.32], [1.4, 1.32], [1.4, 1.32], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.1, 0.7], [1.18, 1.15],
+                                [1.2, 1.12], [1.2, 1.12], [1.18, 1.1], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12],
+                                [1.2, 1.12], [1.2, 1.12], [1.2, 1.12], [1.2, 1.12]]
+
 const noteBlocks = [    {"X":-51, "Y": 9, "Z": 65, "Type": "Note"}, {"X":-39, "Y": 10, "Z": 51, "Type": "Note"}, {"X":51, "Y": 9, "Z": 65, "Type": "Note"}, {"X":39, "Y": 10, "Z": 52, "Type": "Note"},
                         {"X":-12, "Y": 12, "Z": 55, "Type": "Random"}, {"X":12, "Y": 12, "Z": 55, "Type": "Random"}, {"X":-20, "Y": 9, "Z": 73, "Type": "Random"}, {"X":20, "Y": 9, "Z": 73, "Type": "Random"}, {"X":-25, "Y": 9, "Z": 45, "Type": "Random"}, {"X":25, "Y": 9, "Z": 45, "Type": "Random"},
                         {"X":-39, "Y":10, "Z":36, "Type": "Brick"}, {"X":39, "Y":10, "Z":36, "Type": "Brick"}];
@@ -112,11 +119,11 @@ var char_dict = {
 
 var stad_dict = { // this is the order used in this script, but not the actual values in memory
     "Mario Stadium": 0,
-    "Peach's Garden": 1,
-    "Wario's Palace": 2,
-    "Yoshi's Island": 3,
-    "DK's Jungle": 4,
-    "Bowser's Castle": 5
+    "Peach Garden": 1,
+    "Wario Palace": 2,
+    "Yoshi Island": 3,
+    "DK Jungle": 4,
+    "Bowser Castle": 5
 }
 
 var StaticRandomInt1 = 7769; // <= 32767
@@ -197,6 +204,13 @@ var batterStarsOnIncrease = 0;
 var pitcherStarsOnIncrease = 0;
 var hitNoteBlockInd = []
 var randomContactHRFinished = false
+var currentStarSwing = 0;
+var currentStarSwing2 = 0;
+var hangtimeOfHit = 100;
+var directionOfBananaHit = 0;
+var bananaHitStartFrame = 15;
+var bananaHitEndFrame = 60;
+var garlicHitFramesUntilHitGroundForSplit = 120;
 
 function floor(f) {
     return Math.trunc(f);
@@ -820,7 +834,7 @@ function calculateHitPower(j) {
     }
 
     if (inMemBatter.AtBat_MoonShot) {
-        fVar1 = (fVar1 * AtBat_MoonShotMultiplier);
+        fVar1 = (fVar1 * 1.5);
     }
 
     Hit_HorizontalPower[j] = floor(fVar1);
@@ -858,6 +872,7 @@ function randomInputs()
     let batter_id = document.getElementById("batterID").value;
     
     randRange(document.getElementById("ballX"), BattingExtensions[BatterHitbox[batter_id].TrimmedBat][0], BattingExtensions[BatterHitbox[batter_id].TrimmedBat][1], 4);
+    randRange(document.getElementById("ballZ"), 0.2, 2); //Guessed at the range based on 1 stat file
     document.getElementById("batterX").value = 0;
     randIndex(document.getElementById("handedness"));
     randIndex(document.getElementById("chemOnBase"));
@@ -936,9 +951,20 @@ function useStatFileValues()
         document.getElementById("handedness").value = ((batter["Batting Hand"] == "Right") ? 0 : 1) 
         document.getElementById("batterX").value = pitch["Bat Contact Pos - X"]
         document.getElementById("ballX").value = contact["Ball Contact Pos - X"]
+        document.getElementById("ballZ").value = contact["Ball Contact Pos - Z"]
         document.getElementById("chemOnBase").value = event["Chemistry Links on Base"]
-        document.getElementById("slapChargeStarBunt").value = ((pitch["Type of Swing"] == "Charge") ? 1 : 0) 
-        document.getElementById("isStar").checked = ((pitch["Type of Swing"] == "Star") ? 1 : 0) 
+        if (pitch["Type of Swing"] == "Slap") {
+            document.getElementById("slapChargeStarBunt").value = 0;
+        } else if (pitch["Type of Swing"] == "Charge") {
+            document.getElementById("slapChargeStarBunt").value = 1;
+        } else if (pitch["Type of Swing"] == "Star") {
+            document.getElementById("slapChargeStarBunt").value = 2;
+        } else {
+            document.getElementById("slapChargeStarBunt").value = -1; // can't handle anything else right now - particularily bunts
+        }
+        //document.getElementById("isStar").checked = ((pitch["Type of Swing"] == "Star") ? 1 : 0) 
+        document.getElementById("isMoonshot").checked = ((contact["Star Swing Five-Star"] == 1) ? 1 : 0) 
+        document.getElementById("hangtime").value = contact["Ball Hang Time"]
         if(pitch["Pitch Type"] == "Curve") {
             document.getElementById("pitchType").value = 0
         } else if (pitch["Pitch Type"] == "Charge") {
@@ -991,6 +1017,7 @@ function parseInputs()
 
     readValues.posX = parseFloat(document.getElementById("batterX").value);
     readValues.ballContact_X = parseFloat(document.getElementById("ballX").value);
+    readValues.ballContact_Z = parseFloat(document.getElementById("ballZ").value);
 
     if (!isEmptyOrSpaces(document.getElementById("ballXMin").value)) {
         readValues.ballContact_X_Lower = parseFloat(document.getElementById("ballXMin").value);
@@ -1019,7 +1046,11 @@ function parseInputs()
 
     readValues.EasyBatting = document.getElementById("isEasyBatting").checked ? 1 : 0;
     
-    readValues.isStar = document.getElementById("isStar").checked ? 1 : 0;
+    //readValues.isStar = document.getElementById("isStar").checked ? 1 : 0; Now derived lower down
+
+    readValues.isMoonshot = document.getElementById("isMoonshot").checked ? 1 : 0;
+    
+    readValues.hangtime = parseInt(document.getElementById("hangtime").value);
 
     readValues.stadiumID = document.getElementById("stadiumID").value;
 
@@ -1042,6 +1073,7 @@ function parseInputs()
 }
 
 function parseValues() {
+    // Corresponds with function at 806515e8
     Display_Output = {};
     inMemBall = {};
     inMemPitcher = {};
@@ -1115,6 +1147,7 @@ function parseValues() {
 
     inMemBatter.posX = readValues.posX;
     inMemBatter.ballContact_X = readValues.ballContact_X;
+    inMemBatter.ballContact_Z = readValues.ballContact_Z;
 
     if (readValues.ballContact_X_Lower != undefined && readValues.ballContact_X_Upper != undefined) {
         if (readValues.ballContact_X_Lower < readValues.ballContact_X && readValues.ballContact_X < readValues.ballContact_X_Upper) {
@@ -1135,12 +1168,19 @@ function parseValues() {
 
     inMemBatter.AtBat_BatterHand = readValues.AtBat_BatterHand;
 
-    inMemBatter.Batter_Contact_SlapChargeBuntStar = readValues.Batter_Contact_SlapChargeBuntStar;
+    //inMemBatter.isStar = readValues.isStar;
+    //inMemBatter.Batter_Contact_SlapChargeBuntStar = readValues.Batter_Contact_SlapChargeBuntStar;
+    if (readValues.Batter_Contact_SlapChargeBuntStar < 2) {
+        inMemBatter.Batter_Contact_SlapChargeBuntStar = readValues.Batter_Contact_SlapChargeBuntStar; // slap or charge
+    } else { // star hits
+        inMemBatter.isStar = true;
+    }
+
     inMemBatter.Batter_IsBunting = inMemBatter.Batter_Contact_SlapChargeBuntStar == Bunt;
 
     inMemBatter.BatterAtPlate_BatterCharge_Up = readValues.chargeUp;
     inMemBatter.BatterAtPlate_BatterCharge_Down = readValues.chargeDown;
-    inMemBatter.AtBat_IsFullyCharged = inMemBatter.BatterAtPlate_BatterCharge_Up == 1.0;
+    inMemBatter.AtBat_IsFullyCharged = inMemBatter.BatterAtPlate_BatterCharge_Up == 1.0 || readValues.isMoonshot == 1;
 
     if (isNaN(readValues.oRSlapPower)) {
         inMemBatter.Batter_SlapHitPower = stats[id]["Slap Hit Power"] + batterStarsOnIncrease;
@@ -1197,7 +1237,6 @@ function parseValues() {
 
 
     inMemBatter.EasyBatting = readValues.EasyBatting;
-    inMemBatter.isStar = readValues.isStar;
 
     inMemBatter.AtBat_MoonShot = false;
 
@@ -1217,6 +1256,8 @@ function parseValues() {
     inMemBatter.AtBat_Mystery_DidPopFlyOrGrounderConnect = false;
 
     let starsForBatter = 4;
+    if (readValues.isMoonshot) {starsForBatter = 5};
+
     if (inMemBatter.isStar) {
         if (inMemBatter.Batter_IsBunting == false) {
             if (starsForBatter != 0) {
@@ -1274,6 +1315,52 @@ function parseValues() {
             inMemBatter.Batter_Contact_SlapChargeBuntStar = Bunt;
             inMemBatter.AtBat_MoonShot = false;
         }
+    }
+
+    hangtimeOfHit = readValues.hangtime
+
+    if (inMemBatter.AtBat_Mystery_CaptainStarSwing != 0) {
+        currentStarSwing = inMemBatter.AtBat_Mystery_CaptainStarSwing;
+        currentStarSwing2 = inMemBatter.AtBat_Mystery_CaptainStarSwing;                                                                   
+        //inAirOrBefore2ndBounceOrLowBallEnergy = false;
+                        /* DK and diddy */
+        if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 5) ||
+           (inMemBatter.AtBat_Mystery_CaptainStarSwing == 6)) {
+            directionOfBananaHit = Number(inMemBatter.AtBat_BatterHand);
+            bananaHitStartFrame = Math.trunc(hangtimeOfHit * 0.25);
+            bananaHitEndFrame = Math.trunc(hangtimeOfHit * 0.95);
+        }
+        else {
+                        /* wario and walu */
+            if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 3) ||
+                (inMemBatter.AtBat_Mystery_CaptainStarSwing == 4)) {
+                //lower = RandomInt_Game(2);
+                warioWaluStarHitDirection = (Math.random() < 0.5 ? 0 : 1); //TODO: use actual RNG value to get this to match exactly, if possible
+                //DAT_8089265c = 0.0;
+                garlicHitFramesUntilHitGroundForSplit = 120;
+            }
+            else { // not needed for this calculator
+                            /* bowser and BJ
+                            Multiply the hit power by 4 to get initial energy. */
+                /*if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 7) ||
+                (inMemBatter.AtBat_Mystery_CaptainStarSwing == 8)) {
+                    local_20 = (double)(CONCAT44(0x43300000,(int)Hit_HorizontalPower/bODBasePoints) ^
+                                        0x80000000);
+                    inAirOrBefore2ndBounceOrLowBallEnergy = true;
+                    hardHitIndicator = 1;
+                    ballEnergy = (float)(local_20 - const_IntToDouble) *
+                                const_4.0_bowserStarHitBallEnergyMultiplier;
+                }*/
+                /*else {*/
+                                /* peach daisy */
+                    /*if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 0xb) ||
+                        (inMemBatter.AtBat_Mystery_CaptainStarSwing == 0xc)) {
+                        autoFielderAvoidDropSpotForPeachesStarHit = 1;
+                    }
+                } */
+            }
+        }
+      
     }
 }
 
@@ -1410,8 +1497,11 @@ function convertPowerToVelocity(j) {
 }
 
 function calculateHitGround(j)
-{
-    let p = { X: 0, Y: BatterHitbox[inMemBatter.Batter_CharID].PitchingHeight, Z: 0 }
+{ // roughly based on 80649a04
+    //let starting_x = ((inMemBatter.AtBat_BatterHand == 0) ? inMemBatter.ballContact_X : -inMemBatter.ballContact_X);
+    let p = {   X: ((inMemBatter.AtBat_BatterHand == 0) ? inMemBatter.ballContact_X : -inMemBatter.ballContact_X), 
+                Y: BatterHitbox[inMemBatter.Batter_CharID].PitchingHeight * BatterHitboxMultiplier[inMemBatter.Batter_CharID][0], 
+                Z: inMemBatter.ballContact_Z }
     CalculatedPoints[j] = []
     
     let v = JSON.parse(JSON.stringify(inMemBall.ballVelocity));
@@ -1419,6 +1509,8 @@ function calculateHitGround(j)
 
     const airResistance = 0.996;
     const gravity = 0.00275;
+
+    let frameInAir = 1; //confirm 1 should be the starting frame
     
     while (p.Y > 0)
     {
@@ -1431,6 +1523,30 @@ function calculateHitGround(j)
         v.X = v.X * airResistance + a.X;
         v.Y = (v.Y - gravity) * airResistance + a.Y;
         v.Z = v.Z * airResistance + a.Z;
+
+        // DK and Diddy star hit adjustment to hit angle
+        if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 5 ||
+           inMemBatter.AtBat_Mystery_CaptainStarSwing == 6) &&
+           (frameInAir > bananaHitStartFrame && 
+            frameInAir < bananaHitEndFrame)) {
+            let groundVelocity = Math.sqrt(v.X*v.X + v.Z*v.Z);
+
+            let hitAngle = 0;
+            if (v.X != 0 && v.z != 0) {
+                hitAngle = Math.atan2(v.Z, v.X)
+            }
+
+            if (directionOfBananaHit == 0) {
+                hitAngle = hitAngle - 0.008
+            } else {
+                hitAngle = hitAngle + 0.008
+            }
+
+            v.X = Math.cos(hitAngle) * groundVelocity;
+            v.Z = Math.sin(hitAngle) * groundVelocity;
+        }
+
+        frameInAir += 1;
     }
 
     //Display_Output["Hit Ground"] = { "Frames": CalculatedPoints.length, "Point": CalculatedPoints[CalculatedPoints.length - 1], "Distance": Math.sqrt(CalculatedPoints[CalculatedPoints.length - 1].X ** 2 + CalculatedPoints[CalculatedPoints.length - 1].Z ** 2) }

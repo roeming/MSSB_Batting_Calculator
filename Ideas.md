@@ -1,0 +1,9 @@
+-DONE Add starting x and z coords (check 80651ce8)
+-Add star hit functionality
+  - DONE Banana ball (80651b7c)
+  - Garlic ball
+- Fix star player stat caps
+- Add ball energy as an output
+- Bunts
+- Bomb omb derby and barrel batter
+- For debugging, add feature to compare calculated output with the stat file
