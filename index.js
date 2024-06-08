@@ -1470,7 +1470,7 @@ function convertPowerToVelocity(j) {
 }
 
 function calculateHitGround(j)
-{
+{ // roughly based on 80649a04
     let p = { X: inMemBatter.ballContact_X, Y: BatterHitbox[inMemBatter.Batter_CharID].PitchingHeight, Z: inMemBatter.ballContact_Z }
     CalculatedPoints[j] = []
     
@@ -1479,6 +1479,8 @@ function calculateHitGround(j)
 
     const airResistance = 0.996;
     const gravity = 0.00275;
+
+    let frameInAir = 1; //confirm 1 should be the starting frame
     
     while (p.Y > 0)
     {
@@ -1491,6 +1493,31 @@ function calculateHitGround(j)
         v.X = v.X * airResistance + a.X;
         v.Y = (v.Y - gravity) * airResistance + a.Y;
         v.Z = v.Z * airResistance + a.Z;
+
+        // DK and Diddy star hit adjustment to hit angle
+        if ((inMemBatter.AtBat_Mystery_CaptainStarSwing == 5 ||
+           inMemBatter.AtBat_Mystery_CaptainStarSwing == 6) &&
+           (frameInAir > bananaHitStartFrame && 
+            frameInAir < bananaHitEndFrame)) {
+            let groundVelocity = Math.sqrt(v.X*v.X + v.Z*v.Z);
+
+            let hitAngle = 0;
+            if (v.X != 0 && v.z != 0) {
+                hitAngle = Math.atan(v.Z / v.X) 
+                if (hitAngle < 0) {hitAngle += Math.PI} 
+            }
+
+            if (directionOfBananaHit == 0) {
+                hitAngle = hitAngle - 0.008
+            } else {
+                hitAngle = hitAngle + 0.008
+            }
+
+            v.X = Math.cos(hitAngle) * groundVelocity;
+            v.Z = Math.sin(hitAngle) * groundVelocity;
+        }
+
+        frameInAir += 1;
     }
 
     //Display_Output["Hit Ground"] = { "Frames": CalculatedPoints.length, "Point": CalculatedPoints[CalculatedPoints.length - 1], "Distance": Math.sqrt(CalculatedPoints[CalculatedPoints.length - 1].X ** 2 + CalculatedPoints[CalculatedPoints.length - 1].Z ** 2) }
