@@ -126,9 +126,6 @@ var stad_dict = { // this is the order used in this script, but not the actual v
     "Bowser Castle": 5
 }
 
-const captainIDs = [0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 17, 19];
-const nonCaptainStarSwingType = [1, 2, 1, 2, 2, 1, 2, 2, 2, 1, 1, 3, 2, 1, 2, 2, 1, 1, 2, 1, 2, 2, 1, 2, 2, 1, 3, 1, 3, 2, 2, 2, 1, 3, 3, 3, 3, 1, 1, 2, 2, 2, 1, 3, 2, 2, 2, 1, 2, 3, 1, 2, 2, 3]
-
 var StaticRandomInt1 = 7769; // <= 32767
 var StaticRandomInt2 = 5359; // <= 32767
 var USHORT_8089269c = 1828; // <= 32767
