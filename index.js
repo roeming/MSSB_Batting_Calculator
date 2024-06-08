@@ -119,6 +119,9 @@ var stad_dict = { // this is the order used in this script, but not the actual v
     "Bowser Castle": 5
 }
 
+const captainIDs = [0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 17, 19];
+const nonCaptainStarSwingType = [1, 2, 1, 2, 2, 1, 2, 2, 2, 1, 1, 3, 2, 1, 2, 2, 1, 1, 2, 1, 2, 2, 1, 2, 2, 1, 3, 1, 3, 2, 2, 2, 1, 3, 3, 3, 3, 1, 1, 2, 2, 2, 1, 3, 2, 2, 2, 1, 2, 3, 1, 2, 2, 3]
+
 var StaticRandomInt1 = 7769; // <= 32767
 var StaticRandomInt2 = 5359; // <= 32767
 var USHORT_8089269c = 1828; // <= 32767
@@ -203,6 +206,7 @@ var hangtimeOfHit = 100;
 var directionOfBananaHit = 0;
 var bananaHitStartFrame = 15;
 var bananaHitEndFrame = 60;
+var garlicHitFramesUntilHitGroundForSplit = 120;
 
 function floor(f) {
     return Math.trunc(f);
@@ -826,7 +830,7 @@ function calculateHitPower(j) {
     }
 
     if (inMemBatter.AtBat_MoonShot) {
-        fVar1 = (fVar1 * AtBat_MoonShotMultiplier);
+        fVar1 = (fVar1 * 1.5);
     }
 
     Hit_HorizontalPower[j] = floor(fVar1);
@@ -945,8 +949,17 @@ function useStatFileValues()
         document.getElementById("ballX").value = contact["Ball Contact Pos - X"]
         document.getElementById("ballZ").value = contact["Ball Contact Pos - Z"]
         document.getElementById("chemOnBase").value = event["Chemistry Links on Base"]
-        document.getElementById("slapChargeStarBunt").value = ((pitch["Type of Swing"] == "Charge") ? 1 : 0) 
-        document.getElementById("isStar").checked = ((pitch["Type of Swing"] == "Star") ? 1 : 0) 
+        if (pitch["Type of Swing"] == "Slap") {
+            document.getElementById("slapChargeStarBunt").value = 0;
+        } else if (pitch["Type of Swing"] == "Charge") {
+            document.getElementById("slapChargeStarBunt").value = 1;
+        } else if (pitch["Type of Swing"] == "Star") {
+            document.getElementById("slapChargeStarBunt").value = 2;
+        } else {
+            document.getElementById("slapChargeStarBunt").value = -1; // can't handle anything else right now - particularily bunts
+        }
+        //document.getElementById("isStar").checked = ((pitch["Type of Swing"] == "Star") ? 1 : 0) 
+        document.getElementById("isMoonshot").checked = ((contact["Star Swing Five-Star"] == 1) ? 1 : 0) 
         document.getElementById("hangtime").value = contact["Ball Hang Time"]
         if(pitch["Pitch Type"] == "Curve") {
             document.getElementById("pitchType").value = 0
@@ -1029,7 +1042,9 @@ function parseInputs()
 
     readValues.EasyBatting = document.getElementById("isEasyBatting").checked ? 1 : 0;
     
-    readValues.isStar = document.getElementById("isStar").checked ? 1 : 0;
+    //readValues.isStar = document.getElementById("isStar").checked ? 1 : 0; Now derived lower down
+
+    readValues.isMoonshot = document.getElementById("isMoonshot").checked ? 1 : 0;
     
     readValues.hangtime = parseInt(document.getElementById("hangtime").value);
 
@@ -1149,12 +1164,19 @@ function parseValues() {
 
     inMemBatter.AtBat_BatterHand = readValues.AtBat_BatterHand;
 
-    inMemBatter.Batter_Contact_SlapChargeBuntStar = readValues.Batter_Contact_SlapChargeBuntStar;
+    //inMemBatter.isStar = readValues.isStar;
+    //inMemBatter.Batter_Contact_SlapChargeBuntStar = readValues.Batter_Contact_SlapChargeBuntStar;
+    if (readValues.Batter_Contact_SlapChargeBuntStar < 2) {
+        inMemBatter.Batter_Contact_SlapChargeBuntStar = readValues.Batter_Contact_SlapChargeBuntStar; // slap or charge
+    } else { // star hits
+        inMemBatter.isStar = true;
+    }
+
     inMemBatter.Batter_IsBunting = inMemBatter.Batter_Contact_SlapChargeBuntStar == Bunt;
 
     inMemBatter.BatterAtPlate_BatterCharge_Up = readValues.chargeUp;
     inMemBatter.BatterAtPlate_BatterCharge_Down = readValues.chargeDown;
-    inMemBatter.AtBat_IsFullyCharged = inMemBatter.BatterAtPlate_BatterCharge_Up == 1.0;
+    inMemBatter.AtBat_IsFullyCharged = inMemBatter.BatterAtPlate_BatterCharge_Up == 1.0 || readValues.isMoonshot == 1;
 
     if (isNaN(readValues.oRSlapPower)) {
         inMemBatter.Batter_SlapHitPower = stats[id]["Slap Hit Power"] + batterStarsOnIncrease;
@@ -1211,7 +1233,6 @@ function parseValues() {
 
 
     inMemBatter.EasyBatting = readValues.EasyBatting;
-    inMemBatter.isStar = readValues.isStar;
 
     inMemBatter.AtBat_MoonShot = false;
 
@@ -1231,6 +1252,8 @@ function parseValues() {
     inMemBatter.AtBat_Mystery_DidPopFlyOrGrounderConnect = false;
 
     let starsForBatter = 4;
+    if (readValues.isMoonshot) {starsForBatter = 5};
+
     if (inMemBatter.isStar) {
         if (inMemBatter.Batter_IsBunting == false) {
             if (starsForBatter != 0) {
@@ -1310,7 +1333,7 @@ function parseValues() {
                 //lower = RandomInt_Game(2);
                 warioWaluStarHitDirection = (Math.random() < 0.5 ? 0 : 1); //TODO: use actual RNG value to get this to match exactly, if possible
                 //DAT_8089265c = 0.0;
-                matchFramesAndBallAngle.garlicHitFramesUntilHitGroundForSplit = 120;
+                garlicHitFramesUntilHitGroundForSplit = 120;
             }
             else { // not needed for this calculator
                             /* bowser and BJ

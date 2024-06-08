@@ -294,12 +294,15 @@
 <select name="slapChargeStarBunt" id="slapChargeStarBunt">
     <option value="0">(0) Slap</option>
     <option value="1">(1) Charge</option>
-    <!-- <option value="2">(2) Star</option> -->
+    <option value="2">(2) Star</option>
     <!-- <option value="3">(3) Bunt</option> -->
 </select><!--label>(byte) 8089099b</label--><br><br>
 
-<label for="isStar" title="Was the hit a special star hit?">Is Star Hit?</label>
-<input id="isStar" name="isStar" type="checkbox"/><!--label>(bool) 808909b1</label--><br><br>
+<!--<label for="isStar" title="Was the hit a special star hit?">Is Star Hit?</label> No longer needed since now derived using previous drop down
+<input id="isStar" name="isStar" type="checkbox"/--><!--label>(bool) 808909b1</label--><!--br><br-->
+
+<label for="isMoonshot" title="Was the hit a 5 star dinger?">Is 5 Star Dinger?</label>
+<input id="isMoonshot" name="isMoonshot" type="checkbox"/><!--label>(bool) 808909b5</label--><br><br>
 
 <label for="hangtime" title="The game's estimated number of frames in the air - used for Banana Balls">Estimated Hang Time (for Banana Star Hits)</label>
 <input id="hangtime" name="hangtime" type="text" placeholder="Optional for Normal Hits"/><br><br>
