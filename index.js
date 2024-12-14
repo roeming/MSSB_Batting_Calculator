@@ -319,11 +319,21 @@ function calculateContact() {
 
     Display_Output["DiffInX"] = diffInX;
 
+    let hFar = BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeFar;
+    let hNear = BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeNear;
+
+    if (!isNaN(readValues.oRHorizRangeFar)) {
+        hFar = readValues.oRHorizRangeFar;
+    } 
+    if (!isNaN(readValues.oRHorizRangeNear)) {
+        hNear = readValues.oRHorizRangeNear;
+    } 
+
     if (diffInX >= 0.0) {
-        inMemBatter.CalculatedBallPos = 100.0 * (diffInX / BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeFar) + 100.0;
+        inMemBatter.CalculatedBallPos = 100.0 * (diffInX / hFar) + 100.0;
     }
     else {
-        inMemBatter.CalculatedBallPos = -(100.0 * (diffInX / BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeNear) - 100.0);
+        inMemBatter.CalculatedBallPos = -(100.0 * (diffInX / hNear) - 100.0);
     }
 
     if (inMemBatter.CalculatedBallPos < 0.0) {
@@ -1066,6 +1076,8 @@ function parseInputs()
     readValues.oRChargeContactSize = parseInt(document.getElementById("chargeContactSize").value);
     readValues.oRSlapPower = parseInt(document.getElementById("slapPowerOverride").value);
     readValues.oRChargePower = parseInt(document.getElementById("chargePowerOverride").value);
+    readValues.oRHorizRangeNear = parseFloat(document.getElementById("horizRangeNearOverride").value);
+    readValues.oRHorizRangeFar = parseFloat(document.getElementById("horizRangeFarOverride").value);
     readValues.oRHTraj = parseInt(document.getElementById("horizHitTraj").value);
     readValues.oRVTraj = parseInt(document.getElementById("vertHitTraj").value);
     readValues.oRSuperCurve = parseInt(document.getElementById("superCurve").value);
@@ -1643,7 +1655,6 @@ function calculateValues() {
     Display_Output["% Hit Note Block"] = average(hitNoteBlockInd, hitNoteBlockInd.length);
 
     Display_Output["Hit Ground"] = { "Frames": CalculatedPoints[0].length, "Point": CalculatedPoints[0][CalculatedPoints[0].length - 1], "Distance": Math.sqrt(CalculatedPoints[0][CalculatedPoints[0].length - 1].X ** 2 + CalculatedPoints[0][CalculatedPoints[0].length - 1].Z ** 2) }
-    console.log(CalculatedPoints[0])
 
 }
 
@@ -1916,6 +1927,12 @@ function drawAllBatsGraph()
     {
         let hFar = BatterHitbox[i].HorizontalRangeFar;
         let hNear = BatterHitbox[i].HorizontalRangeNear;
+        if (!isNaN(readValues.oRHorizRangeFar)) {
+            hFar = readValues.oRHorizRangeFar;
+        } 
+        if (!isNaN(readValues.oRHorizRangeNear)) {
+            hNear = readValues.oRHorizRangeNear;
+        } 
 
         function calcContactFar(x) {
             return 100.0 * (x / hFar) + 100.0;
@@ -2269,9 +2286,16 @@ function drawContactGraph()
         return boxOffsetX + boxWidth * x;
     }
     
-    
+
     let hFar = BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeFar;
     let hNear = BatterHitbox[inMemBatter.Batter_CharID].HorizontalRangeNear;
+
+    if (!isNaN(readValues.oRHorizRangeFar)) {
+        hFar = readValues.oRHorizRangeFar;
+    } 
+    if (!isNaN(readValues.oRHorizRangeNear)) {
+        hNear = readValues.oRHorizRangeNear;
+    } 
     
     let nearReach = BattingExtensions[inMemBatter.AtBat_TrimmedBat][0];
     let farReach = BattingExtensions[inMemBatter.AtBat_TrimmedBat][1];
@@ -2584,7 +2608,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
     //Take stat file input and put into textbox so it can be parsed
     document.getElementById('import').onclick = function() {
         var files = document.getElementById('selectFiles').files;
-      console.log(files);
       if (files.length <= 0) {
         return false;
       }
